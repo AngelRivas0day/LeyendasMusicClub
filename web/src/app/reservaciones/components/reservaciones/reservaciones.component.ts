@@ -6,6 +6,7 @@ import { ReservationsService } from 'src/app/shared/services/reservations.servic
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import * as _moment from 'moment';
+import { AppDateAdapter, APP_DATE_FORMATS } from '../../../../app/utils/dateFormatter';
 // tslint:disable-next-line:no-duplicate-imports
 
 const moment = _moment;
@@ -27,16 +28,8 @@ const MY_FORMATS = {
   templateUrl: './reservaciones.component.html',
   styleUrls: ['./reservaciones.component.scss'],
   providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
   ]
 })
 export class ReservacionesComponent implements OnInit {
@@ -83,6 +76,7 @@ export class ReservacionesComponent implements OnInit {
 
   submitReserv(): any{
     console.log(this.form.value);
+    // this.form.value.date.toString();
     this.apiService.createReservation(this.form.value).subscribe((data: any)=>{
       console.log('Reservacion creada: ');
       console.log(data);
