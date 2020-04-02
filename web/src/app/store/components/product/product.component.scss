@@ -1,0 +1,118 @@
+@import "../../../../assets/vars";
+
+#product{
+    padding: 50px 0;
+    .productSlider{
+        &__container{
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            flex-direction: row;
+            align-items: flex-end;
+            .image__container{
+                display: block;
+                width: calc(100% - 80px);
+                .productSlider__image{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
+            }
+            .productSlider__selector{
+                max-width: 80px;
+                .selector{
+                    padding: 10px 0 0 0;
+                    margin: 0;
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    .selector__item{
+                        margin-bottom: 10px;
+                        img{
+                            width: 80px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .productInfo__{
+        &container{
+            padding-left: 1rem;
+            padding-right: 1rem;
+            h3{
+                margin: 10px 0 0 0;
+            }
+        }
+        &title{
+            font-size: 70px;
+            line-height: 1em;
+            margin: 0 0 10px 0;
+        }
+        &category{
+            font-size: 15px;
+        }
+        &sizes-chart{
+            font-size: 15px;
+            margin: 10px 0 !important;
+            padding: 0;
+        }
+        &quantity-container{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            button{
+                border: 1px solid black;
+                border-radius: 0px !important;
+                height: 30px;
+                width: 30px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            span{
+                width: 35px;
+                height: 28px;
+                border: 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                border-bottom: 1px solid black;
+                border-top: 1px solid black;
+                padding: 0;
+                margin: 0;
+            }
+        }
+        &order-button{
+            display: block;
+            border-radius: 35px;
+            width: 100%;
+            border: 1px solid white;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0;
+            text-transform: uppercase;
+            font-size: 15px;
+            background-color: orange;
+            padding: 3px 0;
+        }
+        &desc{
+            font-size: 16px;
+        }
+    }
+    .relatedProducts{
+        padding-top: 30px;
+        h1{
+            text-align: center;
+            font-size: 30px;
+        }
+        &__slider{
+            height: 250px;
+            width: 100%;
+            background-color: gray;
+        }
+    }
+}

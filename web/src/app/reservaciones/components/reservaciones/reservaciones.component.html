@@ -1,0 +1,52 @@
+<div id="reservaciones">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 reservaciones__image-container">
+                <img class="reservaciones__image" src="..." alt="">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="row form__container">
+                    <h1 class="font-bebas">Reservaciones</h1>
+                    <div class="col-xs-12">
+                        <form [formGroup]="form" (ngSubmit)="submitReserv()" class="form row no-gutters">
+                            <div class="col-xs-12">
+                                <mat-form-field>
+                                    <input matInput placeholder="Nombre y Apellido" formControlName="name" type="text">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <mat-form-field>
+                                    <input matInput placeholder="Número de teléfono" formControlName="phone" type="text">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <mat-form-field>
+                                    <input matInput placeholder="Cantidad de personas" formControlName="people" type="number">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <mat-form-field>
+                                    <mat-label>Fecha de la reservación</mat-label>
+                                    <input matInput [matDatepicker]="picker" formControlName="date">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-12 col-md-12">
+                                <h3 class="font-bebas">Zona preferencial</h3>
+                                <mat-radio-group formControlName="pref_zone">
+                                    <mat-radio-button class="example-radio-button" *ngFor="let zona of zonas" [value]="zona.id">
+                                        {{zona.name}}
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="col-xs-12">
+                                <button mat-raised-button [disabled]="!form.valid">Enviar</button>
+                            </div>                 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

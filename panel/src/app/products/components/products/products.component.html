@@ -1,0 +1,50 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Productos</h5>
+                </div>
+                <div class="card-body">
+                    <button mat-raised-button (click)="openCreate()">
+                        <i class="now-ui-icons shopping_basket"></i>  Nuevo producto
+                    </button>
+                    <div class="table-responsive">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table">
+                            <thead class="text-primary">
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Tags</th>
+                                    <th>Stock</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let product of products; index as i">
+                                    <td>
+                                        <img [src]="'http://localhost:3000/products/get-image/'+product.imageUrl" class="image-tabla">
+                                    </td>
+                                    <td>{{product.name}}</td>
+                                    <td>{{product.tags}}</td>
+                                    <td>{{product.stock}}</td>
+                                    <td>
+                                        <i class="material-icons icon-trash" color="warning" (click)="eraseProduct(product.id)">
+                                            cancel
+                                        </i>
+                                        &nbsp;
+                                        <i class="material-icons icon-edit" (click)="openEditProduct(product.id)">
+                                            edit
+                                        </i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

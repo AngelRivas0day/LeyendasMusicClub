@@ -1,0 +1,29 @@
+<div *ngIf="(products$ | async) as products">
+    <div class="cart__empty" *ngIf="products.length === 0">
+        <div class="empty__content">
+            <h1 class="font-bebas">No hay productos en el carrito</h1>
+            <a routerLink="/tienda" mat-stroked-button class="empty__button font-bebas">COMPRAR!</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row cart__container" *ngIf="products.length != 0">
+            <h1 class="font-bebas">CARRITO</h1>
+            <ul class="cart__prods">
+                <li class="cart__item" *ngFor="let product of products">
+                    <div class="item__image">
+                        <img class="image" [src]="product.imageUrl" alt="">
+                    </div>
+                    <div class="item__name">
+                        <span>{{ product.name }}</span>
+                    </div>
+                    <div class="item__price">
+                        <span>{{ product.price | currency }}</span>
+                    </div>
+                    <div class="item__quantity">
+                        <span></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

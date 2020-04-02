@@ -1,0 +1,20 @@
+#game{
+    .game__container{
+        width: 100%;
+        .game__prop{
+            display: flex;
+            justify-content: flex-start;
+            justify-items: center;
+            flex-direction: row;
+            margin-bottom: 15px;
+            h3{
+                padding: 0;
+                margin: 0;
+                font-weight: bold;
+                span{
+                    font-weight: 200 !important;
+                }
+            }
+        }
+    }
+}

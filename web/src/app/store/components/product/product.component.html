@@ -1,0 +1,50 @@
+<div id="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-7 productSlider">
+                <div class="productSlider__container">
+                    <div class="image__container">
+                        <img [src]="currentImage" class="productSlider__image" alt="">
+                    </div>
+                    <div class="productSlider__selector">
+                        <ul class="selector">
+                            <li (click)="changeCurrentImage(image.id)" *ngFor="let image of currentImages" class="selector__item">
+                                <img [src]="image.url" alt="" />
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-5">
+                <div class="row">
+                    <div class="col-sm-12 productInfo__container">
+                        <h1 class="productInfo__title font-bebas">{{ product.name }}</h1>
+                        <span class="productInfo__category font-roboto">{{ product.category }} - {{ product.price | currency }}</span>
+                        <p class="productInfo__sizes-chart">Tamaños disponibles: </p>
+                        <div class="productInfo__sizes-selector">
+                            <mat-chip-list>
+                                <mat-chip (click)="setSize(size)" *ngFor="let size of sizes">{{ size.size | uppercase}}</mat-chip>
+                            </mat-chip-list>
+                        </div>
+                        <h3>Cantidad: </h3>
+                        <div class="productInfo__quantity-container">
+                            <button (click)="minusQuantity()">-</button>
+                            <span class="productInfo__quantity-selector">{{quantity}}</span>
+                            <button (click)="plusQuantity()">+</button>
+                        </div>
+                        <button (click)="addProd(product, quantity, selectedSize)" mat-stroked-button class="productInfo__order-button font-roboto">Comprar ahora</button>
+                        <p class="productInfo__desc font-roboto">
+                            {{ product.description }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 relatedProducts">
+                <h1 class="font-bebas">Productos similares</h1>
+                <div class="relatedProducts__slider">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

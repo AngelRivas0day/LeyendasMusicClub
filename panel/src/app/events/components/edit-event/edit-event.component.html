@@ -1,0 +1,24 @@
+<form enctype="multipart/form-data" [formGroup]="form" class="edit-form" (ngSubmit)="saveChanges(event.id)">
+    <h1 mat-dialog-title>Editar datos del producto</h1>
+    <div id="product" mat-dialog-content>
+        <mat-tab-group>
+            <mat-tab label="Producto">
+                <div class="form-wrapper">
+                    <div class="form__image-container">
+                        <img [src]="'http://localhost:3000/events/get-image/'+event.imageUrl" alt="" class="form__image" />
+                    </div>
+                    <mat-form-field>
+                        <mat-label>Fecha del evento</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Salir</button>
+        <button type="submit" mat-raised-button [disabled]="!form.valid" color="primary">Guardar</button>
+    </mat-dialog-actions>
+</form>

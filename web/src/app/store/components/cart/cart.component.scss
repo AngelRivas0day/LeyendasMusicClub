@@ -1,0 +1,93 @@
+@import "../../../../assets//vars";
+
+.cart__empty{
+    height:  calc(100vH - 50px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .empty__content{
+        text-align: center;
+        h1{
+            font-size: 20px;
+            @media #{$break-medium}{
+                font-size: 40px;
+            }
+            @media #{$break-large}{
+                font-size: 50px;
+            }
+        }
+        .empty__button{
+            margin-top: 20px;
+            font-size: 16px;
+            border-radius: 0px;
+            padding: 5px 25px;
+            color: black;
+            background-color: transparent;
+            border: 1px solid black;
+            text-decoration: none;
+            transition: all .3s;
+            position: relative;
+            z-index: 1;
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            &:after{
+                transition: all .3s;
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 0px;
+                background-color: black;
+                z-index: -1;
+                bottom: 0;
+                left: 0;
+            }
+            &:hover{
+                color: white;
+            }
+            &:hover:after{
+                height: 100%;
+            }
+        }
+    }
+}
+
+.cart__container{
+    padding: 50px 0;
+    min-height: calc(100vH - 250px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    h1{
+        font-size: 18px;
+        @media #{$break-medium}{
+            font-size: 25px;
+        }
+        @media #{$break-large}{
+            font-size: 35px;
+        }
+    }
+    .cart__prods{
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+        .cart__item{
+            &:first-of-type{
+                border-top: 1px solid black;
+            }
+            padding-bottom: 10px;
+            padding-top: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-bottom: 1px solid black;
+            .image{
+                width: 150px;
+                height: auto;
+            }
+        }
+    }
+}

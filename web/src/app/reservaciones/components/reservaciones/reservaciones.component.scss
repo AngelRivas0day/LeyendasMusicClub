@@ -1,0 +1,31 @@
+#reservaciones{
+    .reservaciones__image-container{
+        .reservaciones__image{
+            height: calc(100vH - 50px);
+            width: 100%;
+            background-color: gray;
+        }
+    }
+    .form__container{
+        padding: 50px 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        .form{
+            // display: flex;
+            // justify-content: center;
+            // align-items: center;
+            // flex-direction: column;
+            mat-form-field{
+                margin-bottom: 15px;
+                width: 100%;
+            }
+            mat-radio-group{
+                display: flex;
+                flex-direction: column;
+                mat-radio-button{
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+}

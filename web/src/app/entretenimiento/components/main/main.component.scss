@@ -1,0 +1,70 @@
+#mainEntretenimiento{
+    height: calc(100vH - 50px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .opt{
+        width: 100%;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        transition: all .3s;
+        &.juegos{
+            background-color: aqua;
+            background-image: 
+            /* top, transparent red */
+            linear-gradient(
+            rgba(0, 0, 0, 0.45), 
+            rgba(0, 0, 0, 0.65)
+            ),
+            /* your image */
+            url('src/assets/images/backgrounds/rumman-amin-yNP1lz924-4-unsplash.jpg');
+            &:hover{
+                background-image: 
+            /* top, transparent red */
+            linear-gradient(
+            rgba(0, 0, 0, 0.25), 
+            rgba(0, 0, 0, 0.25)
+            ),
+            /* your image */
+            url('src/assets/images/backgrounds/rumman-amin-yNP1lz924-4-unsplash.jpg');
+            }
+        }
+        &.maquinas{
+            background-color: red;
+            background-image: 
+            /* top, transparent red */
+            linear-gradient(
+            rgba(0, 0, 0, 0.45), 
+            rgba(0, 0, 0, 0.45)
+            ),
+            /* your image */
+            url('src/assets/images/backgrounds/wls_mlbn-dkXn0RbgdU4-unsplash.jpg');
+            &:hover{
+                background-image: 
+            /* top, transparent red */
+            linear-gradient(
+            rgba(0, 0, 0, 0.25), 
+            rgba(0, 0, 0, 0.25)
+            ),
+            /* your image */
+            url('src/assets/images/backgrounds/wls_mlbn-dkXn0RbgdU4-unsplash.jpg');
+            }
+        }
+        h1{
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 40px;
+            a{
+                text-decoration: none;
+                color: white;
+            }
+        }
+    }
+}

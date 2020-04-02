@@ -1,0 +1,23 @@
+<div id="store">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="slider">
+
+                </div>
+            </div>
+        </div>
+        <div class="row products__container">
+            <div *ngFor="let product of products" class="col-xs-6 col-md-4 col-lg-3 products__item">
+                <div class="item__card" (click)="goToItem(product.id)">
+                    <div class="item__card-image-container">
+                        <img [src]="'http://localhost:3000/products/get-image/'+product.imageUrl" alt="" class="item__card-image">
+                    </div>
+                    <div class="item__card-content">
+                        <h3>{{product.name}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

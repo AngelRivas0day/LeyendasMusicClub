@@ -1,0 +1,17 @@
+<nav id="nav">
+    <div class="container main-navbar">
+        <div class="navbar-logo">
+            <img src="" alt="">
+            <span>Logo</span>
+        </div>
+        <button class="toggleNav" (click)="toggleNav()">
+            
+        </button>
+        <ul #navbar class="navbar-menu font-bebas closed">
+            <a (click)="closeNav()" *ngFor="let option of navOptions" [routerLink]="[option.path]">{{ option.name }}</a>
+            <a (click)="closeNav()" routerLink="/tienda/carrito">
+                <mat-icon [matBadge]="total$ | async" matBadgeColor="warn" aria-hidden="false" aria-label="Example thumbs up SVG icon">shopping_cart</mat-icon>
+            </a>
+        </ul>
+    </div>
+</nav>
