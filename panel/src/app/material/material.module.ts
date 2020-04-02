@@ -8,6 +8,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatChipsModule} from '@angular/material/chips';  
+import {MatTableModule} from '@angular/material/table';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -22,7 +25,10 @@ import {MatChipsModule} from '@angular/material/chips';
     MatTabsModule,
     MatSelectModule,
     MatStepperModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatPaginatorModule
   ]
 })
 export class MaterialModule { }
