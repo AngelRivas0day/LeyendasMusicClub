@@ -3,6 +3,7 @@ import { GamesService } from 'src/app/shared/services/games.service';
 import { MatDialog } from '@angular/material/dialog';
 import { GameComponent } from '../game/game.component';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-juegos',
@@ -10,8 +11,11 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./juegos.component.scss']
 })
 export class JuegosComponent implements OnInit {
-
-  games: any[];
+  baseUrl = environment.baseUrl + '/games/get-image/';
+  games: any[] = [];
+  misteryGames: any[];
+  coopGames: any[];
+  vsGames: any[];
 
   constructor(
     public gamesService: GamesService,
@@ -20,10 +24,13 @@ export class JuegosComponent implements OnInit {
 
   fetchGames(){
     // this.games = this.gamesService.getGames();
-    this.gamesService.getGames().subscribe((data:any)=>{
-      this.games = data;
+    this.gamesService.getGamePerCat().subscribe((data:any)=>{
+      // this.games = data;
+      this.coopGames = data.data[0].games;
+      this.vsGames = data.data[1].games;
+      this.misteryGames = data.data[2].games;
       console.log(data);
-    })
+    });
   }
 
   ngOnInit(): void {

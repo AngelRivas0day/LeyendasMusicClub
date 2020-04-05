@@ -13,6 +13,7 @@ export class GameComponent implements OnInit {
   itemToShow: any;
   category: string;
   itemId: number;
+  isLoaded: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<GameComponent>,
@@ -32,9 +33,16 @@ export class GameComponent implements OnInit {
   fetchGame(){
     console.log('cat: ' + this.category);
     if(this.category == "boardgame"){
-      this.itemToShow = this.gamesService.getProduct(this.itemId)[0];
+      this.gamesService.getGame(this.itemId).subscribe((data:any)=>{
+        console.log(data);
+        this.itemToShow = data[0];
+      },err=>{
+        console.log('Hubo un error');
+      },()=>{
+        this.isLoaded = true;
+      });
     }else{
-      this.itemToShow = this.machinesService.getProduct(this.itemId)[0];
+      this.itemToShow = this.machinesService.getProduct(this.itemId);
     }
   }
 

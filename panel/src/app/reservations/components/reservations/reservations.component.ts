@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ApiService } from 'app/services/services';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {merge, Observable, of as observableOf} from 'rxjs';
 
 @Component({
   selector: 'app-reservations',
@@ -10,21 +12,29 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 })
 export class ReservationsComponent implements OnInit {
 
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
+
   reservations: any[];
-  dataSource: MatTableDataSource<any>;
+  dataSource: any[];
   displayedColumns: string[] = ['id', 'cliente', 'telefono', 'fecha', 'personas'];
-  // @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  resultsLength = 0;
+  isLoadingResults = true;
+  isRateLimitReached = false;
 
   constructor(
     private apiService: ApiService
   ) { 
-    this.fetchData();
   }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<any>(this.reservations);
-    this.dataSource.sort = this.sort;
+    this.fetchData();
+  }
+
+  ngAfterContentInit(): void {
+    //Called after ngOnInit when the component's or directive's content has been initialized.
+    //Add 'implements AfterContentInit' to the class.
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
   }
 
   fetchData(){
@@ -37,20 +47,7 @@ export class ReservationsComponent implements OnInit {
       // this.dataSource = new MatTableDataSource<any>(this.reservations);
       // this.dataSource.sort = this.sort;
       // setTimeout(() => this.dataSource.paginator = this.paginator, 1300);
+      this.resultsLength = this.reservations.length;
     });
   }
-
-  applyFilter(filterValue: string) {
-    // const filterValue = (event.target as HTMLInputElement).value;
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // const filterValue = (event.target as HTMLInputElement).value;
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
-    this.dataSource.filter = filterValue;
-  }
-
 }

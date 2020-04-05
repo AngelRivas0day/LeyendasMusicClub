@@ -1,16 +1,5 @@
-.form-wrapper{
-    margin-top: 18px;
-    display: flex !important;
-    flex-direction: column !important;
-    .form-field{
-        margin-bottom: 1.25em;
-    }
-    .image-preview{
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 1.25em;
-        img{
-            width: 40%;
-        }
-    }
+@import "../../../../assets/vars";
+
+#product{
+    @include dialog-form;
 }

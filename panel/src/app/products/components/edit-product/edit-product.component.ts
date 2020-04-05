@@ -25,7 +25,7 @@ export class EditProductComponent implements OnInit {
     this.editProdForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       description: new FormControl('',[Validators.required]),
-      imageUrl: new FormControl(null,[Validators.required]),
+      image: new FormControl(null),
       category: new FormControl('',[Validators.required]),
       stock: new FormControl(0, [Validators.required]),
       price: new FormControl(0, [Validators.required]),
@@ -69,20 +69,8 @@ export class EditProductComponent implements OnInit {
     });
   }
 
-  // handleFile(event) {
-  //   this.selectedFile = <File>event.target.files[0];
-  //   this.editProdForm.value.image = this.selectedFile;
-  // }
-
-  // toFormData(formValue) {
-  //   const formData = new FormData();
-  //   for (const key of Object.keys(formValue)) {
-  //     const value = formValue[key];
-  //     if (value != null) {
-  //       formData.append(key, value);
-  //     }
-  //   }
-  //   return formData;
-  // }
-
+  handleFile(event) {
+    this.selectedFile = <File>event.target.files[0];
+    this.editProdForm.value.image = this.selectedFile;
+  }
 }

@@ -1,33 +1,40 @@
-<form [formGroup]="form" (ngSubmit)="create()">
-    <mat-horizontal-stepper [linear]="true" #stepper>
-        <mat-step [stepControl]="form">
-            <ng-template matStepLabel>Información del producto</ng-template>
-            <div class="form-wrapper">
-                <mat-form-field>
+<form [formGroup]="form" (ngSubmit)="create()" class="edit-form">
+    <h1 mat-dialog-title>Datos del producto a crear</h1>
+    <div id="product" mat-dialog-content>
+        <div class="row form-wrapper">
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
                     <input placeholder="Nombre del producto" matInput formControlName="name">
                 </mat-form-field>
-                <mat-form-field>
-                    <input matInput formControlName="imageUrl" placeholder="Url de la imagen" type="text">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput formControlName="stock" placeholder="Stock" type="number">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput formControlName="price" placeholder="Precio" type="number">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput formControlName="category" placeholder="Categoria" type="text">
-                </mat-form-field>
-                <mat-form-field>
-                    <textarea placeholder="Descripción" matInput formControlName="description"></textarea>
-                </mat-form-field>
-                <!-- <div class='form-field'>
+            </div>
+            <div class="col-sm-12 col-md-6 form-file-wrapper">
+                <div class='form-field form-file w-100'>
                     <mat-label>Imagen</mat-label><br>
                     <input (change)="handleChange($event)" formControlName="image" type="file">
-                </div> -->
+                </div>
             </div>
-        </mat-step>
-    </mat-horizontal-stepper>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <input matInput formControlName="stock" placeholder="Stock" type="number">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <input matInput formControlName="price" placeholder="Precio" type="number">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <input matInput formControlName="category" placeholder="Categoria" type="text">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <textarea placeholder="Descripción" matInput formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancelar</button>
         <button mat-raised-button type="submit" [disabled]="!form.valid">Guardar</button>

@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Actualizar foto del producto</h1>
+<div mat-dialog-content>
+    <div class="">
+        <input type="file" (change)="handleChange($event)" [formControl]="image" />
+    </div>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-raised-button (click)="updateImage()">Guardar</button>
+</mat-dialog-actions>

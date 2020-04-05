@@ -50,7 +50,7 @@ export class EventsComponent implements OnInit {
       hasBackdrop: true,
       disableClose: true
     });
-    dialogRef.beforeClose().subscribe(()=>{
+    dialogRef.beforeClosed().subscribe(()=>{
       this.fetchEvents();
     });
   }

@@ -1,4 +1,19 @@
+@import "../../../../assets/vars";
+
 #reservaciones{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: calc(90vH - 50px);
+    .cont{
+        width: 90%;
+        margin: 0 auto;
+        @media #{$break-medium}{
+            width: 60%;
+            max-width: 800px;
+        }
+    }
     .reservaciones__image-container{
         .reservaciones__image{
             height: calc(100vH - 50px);

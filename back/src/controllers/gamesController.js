@@ -1,4 +1,29 @@
 const controller = {};
+const fs = require('fs');
+const path = require('path');
+var multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'src/uploads/games')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.jpg')
+    }
+});
+var upload = multer({ storage: storage }).single('image');
+
+controller.list = (req, res) => {
+    // res.send("Si jala el customer list");
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM products', (err, prods) => {
+            if(err){
+                res.send("Hubo un error");
+            }
+            console.log(prods);
+            res.json(prods);
+        });
+    });
+};
 
 controller.listAll = (req, res) => {
     // res.send("Si jala el customer list");
@@ -11,6 +36,45 @@ controller.listAll = (req, res) => {
             res.json(games);
         });
     });;
+};
+
+controller.listPerCategory = (req, res) => {
+  req.getConnection((err, conn)=>{
+    const query = conn.query('SELECT * FROM games', (err, data)=>{
+      var dataToSend = [];
+      if(err){
+        res.status(500).send({
+          success: false,
+          message: 'Hubo un error',
+          error: err
+        });
+      }else{
+        var gamesResponse = [];
+        var splitGames = function(data, category){
+          var arrayOfGames = [];
+          data.forEach(game => {
+            if(game.category == category){
+              arrayOfGames.push(game);
+            }
+          });
+          return arrayOfGames;
+        }
+        var coopGames = splitGames(data, 'co-op');
+        var vsGames = splitGames(data, '1vs1');
+        var misteryGames = splitGames(data, 'mistery');
+        gamesResponse.push(
+          {category: "co-op", 'games':coopGames},
+          {category: "1vs1",'games':vsGames},
+          {category: 'mistery', 'games':misteryGames}
+        );
+        res.status(200).send({
+          success: true,
+          message: 'Juegos traidos por categoria',
+          data: gamesResponse
+        });
+      }
+    });
+  });
 };
 
 controller.create = (req, res) => {
@@ -54,6 +118,42 @@ controller.delete = (req, res) => {
         res.redirect('/');
       });
     });
+};
+
+controller.uploadImage = (req, res) => {
+  const id = req.params.id;
+    upload(req, res, function (err) {
+        if (err) {
+            res.status(500).send({
+                message: 'La foto no fue actulizada con exito'
+              });
+        }
+        // Everything went fine
+        const fileName = req.file.filename;
+        req.getConnection((err, conn) => {
+            const query = conn.query('UPDATE games SET image = ? WHERE id = ?', [fileName, id], (err, rows) => {
+              res.status(200).send({
+                message: 'La foto fue actulizada con exito'
+              });
+            });
+        });
+    })
+};
+
+controller.getImage = (req, res) => {
+  const fileName = req.params.fileName;
+  var filePath = 'src/uploads/games/' + fileName;
+  console.log(filePath);
+  fs.exists(filePath, (exists)=>{
+    if(exists){
+      console.log(path.resolve(filePath));
+      res.sendFile(path.resolve(filePath));
+    }else{
+      res.send({
+        message: 'no existe'
+      })
+    }
+  });
 };
 
 module.exports = controller;

@@ -10,7 +10,10 @@ export const ROUTES: RouteInfo[] = [
   { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: '' },
   { path: '/productos', title: 'Productos', icon: 'shopping_basket', class: '' },
   { path: '/eventos', title: 'Eventos', icon: 'design_bullet-list-67', class: '' },
-  { path: '/reservaciones', title: 'Reservaciones', icon: 'files_single-copy-04', class: '' }
+  { path: '/reservaciones', title: 'Reservaciones', icon: 'files_single-copy-04', class: '' },
+  { path: '/ordenes', title: 'Ordenes', icon: 'files_single-copy-04', class: '' },
+  { path: '/juegos-de-mesa', title: 'Juegos de mesa', icon: 'files_single-copy-04', class: '' },
+  { path: '/maquinitas', title: 'Maquinitas', icon: 'files_single-copy-04', class: '' }
 ];
 
 @Component({

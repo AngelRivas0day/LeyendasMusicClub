@@ -26,14 +26,34 @@ controller.list = (req, res) => {
 };
 
 controller.add = (req, res) => {
-    const data = req.body;
-    console.log(req.body)
-    req.getConnection((err, connection) => {
-    const query = connection.query('INSERT INTO products set ?', data, (err, data) => {
-      console.log(data);
-      res.json(data);
-    })
-  });
+      // the same req, res params are passed to the upload function, in order to make it look like the og
+  upload(req, res, function (err) {
+    console.log(req.body);
+    let data = req.body;
+    if (err) {
+        res.status(500).send({
+            message: 'La info no fue actulizada con exito'
+          });
+    }else{
+      if(req.file){
+        const fileName = req.file.filename;
+        data.image = fileName;
+      }else{
+        data.image = "No seteado...";
+      }
+      req.getConnection((err, conn) => {
+          const query = conn.query('INSERT INTO products SET ?', [data], (err, rows) => {
+            if(err){
+              console.log(err);
+            }else{
+              res.status(200).send({
+                message: 'La into fue creada con exito'
+              });
+            }
+          });
+      });
+    }
+});
 };
 
 controller.edit = (req, res) => {
@@ -54,10 +74,18 @@ controller.update = (req, res) => {
   const newData = req.body;
   req.getConnection((err, conn) => {
     conn.query('UPDATE products set ? where id = ?', [newData, id], (err, rows) => {
-      res.status(200).send({
-        success: true,
-        message: "ok"
-      })
+      if(err){
+        res.status(500).send({
+          success: false,
+          message: "Hubo un error al actualizar la información",
+          error: err
+        });
+      }else{
+        res.status(200).send({
+          success: true,
+          message: "ok"
+        });
+      }
     });
   });
 };

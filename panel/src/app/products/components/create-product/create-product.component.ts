@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ApiService } from 'app/services/services';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-product',
@@ -26,7 +26,7 @@ export class CreateProductComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       description: new FormControl('',[Validators.required]),
-      imageUrl: new FormControl(null,[Validators.required]),
+      image: new FormControl(null),
       category: new FormControl('',[Validators.required]),
       stock: new FormControl(0, [Validators.required]),
       price: new FormControl(0, [Validators.required]),
@@ -46,7 +46,6 @@ export class CreateProductComponent implements OnInit {
 
   create(){
     const token = localStorage.getItem('access_token');
-    console.log(token);
     this.apiService.createProduct(token, this.form.value).subscribe((data:any)=>{
       console.log(data);
     },(error)=>{

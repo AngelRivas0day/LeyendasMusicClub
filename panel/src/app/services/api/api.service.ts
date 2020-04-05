@@ -184,7 +184,7 @@ export class ApiService {
 
   public updateProduct(id:number, token: string, data: any){
     const headers = this.setHeaders(token);
-    return this.http.put(`${this.base_url}/products/update/${id}`, data, {headers}).pipe(
+    return this.http.put(`${this.base_url}/products/update/${id}`, this.toFormData(data), {headers}).pipe(
       retry(3)
     );
   }
@@ -192,7 +192,7 @@ export class ApiService {
   createProduct(token, data:any){
     // const newData = this.toFormData(data);
     const headers = this.setHeadersWithJustToken(token);
-    return this.http.post(this.base_url+'/products/create', data, {headers}).pipe(
+    return this.http.post(this.base_url+'/products/create', this.toFormData(data), {headers}).pipe(
       retry(3),
     );
   }
@@ -288,6 +288,21 @@ export class ApiService {
     return this.http.delete(this.base_url+'/reservations/delete/'+id,{headers}).pipe(
       retry(3),
     );
+  }
+
+  //********************************************************
+  //
+  //         G A M E S  M E T H O D S
+  //
+  //********************************************************
+
+  updateGameImage(id: number, token: string, data: any){
+    const headers = this.setHeadersWithJustToken(token);
+    // var newData = new FormData;
+    // newData.append('image', data);
+    return this.http.put<any>(this.base_url+'/games/update-image/'+id, data, {headers}).pipe(
+      retry(3)
+    )
   }
 
 }

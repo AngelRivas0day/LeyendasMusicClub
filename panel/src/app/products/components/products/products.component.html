@@ -25,7 +25,7 @@
                             <tbody>
                                 <tr *ngFor="let product of products; index as i">
                                     <td>
-                                        <img [src]="'http://localhost:3000/products/get-image/'+product.imageUrl" class="image-tabla">
+                                        <img [src]="'http://localhost:3000/products/get-image/'+product.image" class="image-tabla">
                                     </td>
                                     <td>{{product.name}}</td>
                                     <td>{{product.tags}}</td>

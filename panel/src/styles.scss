@@ -96,3 +96,5 @@ a {
 @include md-and-up 		{ .show-on-md { display: none !important; } }
 @include lg-and-down 	{ .hide-on-lg { display: none !important; } }
 @include lg-and-up 		{ .show-on-lg { display: none !important; } }
+
+.no-padding{padding: 0 !important;} .no-margin{margin: 0 !important;}

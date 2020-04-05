@@ -1,30 +1,38 @@
 <form enctype="multipart/form-data" [formGroup]="editProdForm" class="edit-form" (ngSubmit)="saveChanges(product.id)">
     <h1 mat-dialog-title>Editar datos del producto</h1>
     <div id="product" mat-dialog-content>
-        <mat-tab-group>
-            <mat-tab label="Producto">
-                <div class="form-wrapper">
-                    <mat-form-field>
-                        <input placeholder="Nombre del producto" matInput formControlName="name">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput formControlName="imageUrl" placeholder="Url de la imagen" type="text">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput formControlName="stock" placeholder="Stock" type="number">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput formControlName="price" placeholder="Precio" type="number">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <input matInput formControlName="category" placeholder="Categoria" type="text">
-                    </mat-form-field>
-                    <mat-form-field>
-                        <textarea placeholder="Descripción" matInput formControlName="description"></textarea>
-                    </mat-form-field>
+        <div class="row no-padding no-margin form-wrapper">
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <input placeholder="Nombre del producto" matInput formControlName="name">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6 form-file-wrapper">
+                <div class="w-100 form-field form-file">
+                    <input formControlName="image" placeholder="Url de la imagen" type="file">
                 </div>
-            </mat-tab>
-        </mat-tab-group>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <input matInput formControlName="stock" placeholder="Stock" type="number">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <input matInput formControlName="stock" placeholder="Stock" type="number">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <input matInput formControlName="category" placeholder="Categoria" type="text">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <textarea placeholder="Descripción" matInput formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
     </div>
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Salir</button>

@@ -99,9 +99,17 @@ export class GamesService {
       retry(3)
     )
   }
+  
+  getGamePerCat(){
+    return this.http.get(`${this.baseUrl}/games/listPerCategory/`).pipe(
+      retry(3)
+    )
+  }
 
-  getProduct(id: any): any{
-    return this.juegos.filter(x => x.id == id);
+  getGame(id: any): any{
+    return this.http.get(`${this.baseUrl}/games/list/${id}`).pipe(
+      retry(3)
+    );
   }
 
 }

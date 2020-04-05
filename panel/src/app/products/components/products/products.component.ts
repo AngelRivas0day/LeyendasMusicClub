@@ -49,7 +49,7 @@ export class ProductsComponent implements OnInit {
       hasBackdrop: true,
       disableClose: true
     });
-    dialogRef.beforeClose().subscribe(()=>{
+    dialogRef.beforeClosed().subscribe(()=>{
       this.getProducts();
     });
   }

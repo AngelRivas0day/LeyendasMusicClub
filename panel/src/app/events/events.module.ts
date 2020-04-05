@@ -9,7 +9,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'app/material/material.module';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatNativeDateModule } from '@angular/material';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [EventsComponent, EditEventComponent, CreateEventComponent],
