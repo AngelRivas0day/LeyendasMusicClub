@@ -47,8 +47,7 @@ export class ApiService {
   private setToken( token: string ) {
     localStorage.setItem( 'access_token', token );
     this.options.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Token: token,
+      'token': token
     });
   }
 
@@ -112,42 +111,61 @@ export class ApiService {
   }
 
   fetch( endpoint: string ) {
-    return this.http.get( this.base_url + endpoint, this.options ).pipe(
+    return this.http.get(`${this.base_url}/${endpoint}`, this.options ).pipe(
       retry(2),
       this.catchRequestError()
     );
   }
 
-  get( endpoint: string, id: any ) {
-    return this.http.get( this.base_url + endpoint + '/' + id, this.options ).pipe(
+  getOne( endpoint: string, id: any , token: any) {
+    this.setToken(token);
+    return this.http.get(`${this.base_url}/${endpoint}/${id}`, this.options ).pipe(
       retry(2),
       this.catchRequestError()
     );
   }
 
-  post( endpoint: string, data = null ) {
-    return this.http.post( this.base_url + endpoint, data, this.options ).pipe(
+  getAll( endpoint: string ) {
+    return this.http.get(`${this.base_url}/${endpoint}/`, this.options ).pipe(
       retry(2),
       this.catchRequestError()
     );
   }
 
-  put( endpoint: string, id: any, data = null ) {
-    return this.http.put( this.base_url + endpoint + '/' + id, data, this.options ).pipe(
+  post( endpoint: string, data = null , token: any) {
+    this.setToken(token);
+    return this.http.post(`${this.base_url}/${endpoint}/`, data, this.options ).pipe(
       retry(2),
+      this.catchRequestError()
+    );
+  }
+
+  postWithImage( endpoint: string, data = null , token: any) {
+    this.setToken(token);
+    return this.http.post(`${this.base_url}/${endpoint}`, this.toFormData(data), this.options ).pipe(
+      retry(2),
+      this.catchRequestError()
+    );
+  }
+
+  put( endpoint: string, id: any, data: any , token: any) {
+    this.setToken(token);
+    return this.http.put(`${this.base_url}/${endpoint}/${id}`, data, this.options ).pipe(
+      retry(3),
       this.catchRequestError()
     );
   }
 
   patch( endpoint: string, id: any, data = null ) {
-    return this.http.patch( this.base_url + endpoint + '/' + id, data, this.options ).pipe(
+    return this.http.patch(`${this.base_url}/${endpoint}/${id}`, data, this.options ).pipe(
       retry(2),
       this.catchRequestError()
     );
   }
 
-  delete( endpoint: string, id: any ) {
-    return this.http.delete( this.base_url + endpoint + '/' + id, this.options ).pipe(
+  delete( endpoint: string, id: any , token: any) {
+    this.setToken(token);
+    return this.http.delete(`${this.base_url}/${endpoint}/${id}`, this.options ).pipe(
       retry(2),
       this.catchRequestError()
     );
@@ -295,6 +313,12 @@ export class ApiService {
   //         G A M E S  M E T H O D S
   //
   //********************************************************
+
+  getGames(){
+    return this.http.get(`${this.base_url}/games/list/`).pipe(
+      retry(3)
+    )
+  }
 
   updateGameImage(id: number, token: string, data: any){
     const headers = this.setHeadersWithJustToken(token);

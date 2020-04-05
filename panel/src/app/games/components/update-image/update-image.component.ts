@@ -36,7 +36,7 @@ export class UpdateImageComponent implements OnInit {
     const token = localStorage.getItem('access_token');
     const data = new FormData();
     data.append('image', this.selectedFile, this.fileName);
-    this.apiService.updateGameImage(this.data.id, token, data).subscribe((data:any)=>{
+    this.apiService.put('games/update-image', this.data.id, data, token).subscribe((data:any)=>{
       console.log(data);
     }, err =>{
       console.log(err);

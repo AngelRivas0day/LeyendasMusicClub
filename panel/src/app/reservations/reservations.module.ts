@@ -15,6 +15,11 @@ import { DataTablesModule } from 'angular-datatables';
     CommonModule,
     ReservationsRoutingModule,
     MaterialModule,
+    DataTablesModule
+  ],
+  entryComponents: [
+    EditReservationComponent, 
+    CreateReservationComponent
   ]
 })
 export class ReservationsModule { }

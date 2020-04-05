@@ -1,0 +1,11 @@
+@import "../../../../assets/vars";
+.horaActual{
+    color: black;
+    font-size: 18px;
+    span{
+        font-weight: bold;
+    }
+}
+table{
+    @include table;
+}

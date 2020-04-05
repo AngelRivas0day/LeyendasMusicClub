@@ -72,7 +72,6 @@ export class ProductsComponent implements OnInit {
 
   eraseProduct(id){
     const token = localStorage.getItem('access_token');
-    console.log(token);
     this.apiService.eraseProduct(id, token).subscribe((resp:any)=>{
       console.log('Se elminó el producto con éxito');
     },(error)=>{ 

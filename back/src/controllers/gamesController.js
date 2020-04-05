@@ -78,13 +78,32 @@ controller.listPerCategory = (req, res) => {
 };
 
 controller.create = (req, res) => {
-    const data = req.body;
-    console.log(req.body)
-    req.getConnection((err, connection) => {
-    const query = connection.query('INSERT INTO games set ?', data, (err, data) => {
-      console.log(data);
-      res.redirect('/');
-    })
+  upload(req, res, function (err) {
+    console.log(req.body);
+    let data = req.body;
+    if (err) {
+        res.status(500).send({
+            message: 'La info no fue actulizada con exito'
+          });
+    }else{
+      if(req.file){
+        const fileName = req.file.filename;
+        data.image = fileName;
+      }else{
+        data.image = "No seteado...";
+      }
+      req.getConnection((err, conn) => {
+          const query = conn.query('INSERT INTO games SET ?', [data], (err, rows) => {
+            if(err){
+              console.log(err);
+            }else{
+              res.status(200).send({
+                message: 'La into fue creada con exito'
+              });
+            }
+          });
+      });
+    }
   });
 };
 
@@ -115,7 +134,18 @@ controller.delete = (req, res) => {
     const { id } = req.params;
     req.getConnection((err, connection) => {
       connection.query('DELETE FROM games WHERE id = ?', [id], (err, rows) => {
-        res.redirect('/');
+        if(err){
+          res.status(500).send({
+            success: false,
+            message: "Hubo un error"
+          });
+        }else{
+          res.status(200).send({
+            success: true,
+            message: "El juego fue borrado con exito",
+            rows: rows
+          })
+        }
       });
     });
 };
