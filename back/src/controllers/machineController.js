@@ -15,7 +15,7 @@ var upload = multer({ storage: storage }).single('image');
 controller.listAll = (req, res) => {
     // res.send("Si jala el customer list");
     req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM games WHERE type = 1', (err, games) => {
+        conn.query('SELECT * FROM games WHERE type = 0', (err, games) => {
             if(err){
                 res.send("Hubo un error");
             }
@@ -27,7 +27,7 @@ controller.listAll = (req, res) => {
 
 controller.listPerCategory = (req, res) => {
   req.getConnection((err, conn)=>{
-    const query = conn.query('SELECT * FROM games WHERE type = 1', (err, data)=>{
+    const query = conn.query('SELECT * FROM games WHERE type = 0', (err, data)=>{
       var dataToSend = [];
       if(err){
         res.status(500).send({

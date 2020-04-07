@@ -8,11 +8,12 @@ import { MaterialModule } from 'app/material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { CreateProductComponent } from './components/create-product/create-product.component';
+import { UpdateImageComponent } from './components/update-image/update-image.component';
 
 
 
 @NgModule({
-  declarations: [ProductsComponent, EditProductComponent, CreateProductComponent],
+  declarations: [ProductsComponent, EditProductComponent, CreateProductComponent, UpdateImageComponent],
   imports: [
     CommonModule,
     ProductsRoutingModule,
@@ -22,7 +23,8 @@ import { CreateProductComponent } from './components/create-product/create-produ
   ],
   entryComponents: [
     EditProductComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    UpdateImageComponent
   ]
 })
 export class ProductsModule { }

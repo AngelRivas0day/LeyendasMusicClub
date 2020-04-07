@@ -47,7 +47,7 @@ export class EditGameComponent implements OnInit {
 
   fetchGame(){
     const token = localStorage.getItem('access_token');
-    this.apiService.getOne('games/list', this.data.id, token).subscribe((data: any)=>{
+    this.apiService.getOne('games/list', this.data.id).subscribe((data: any)=>{
       this.game = data[0];
     },(err)=>{
       console.log(err);

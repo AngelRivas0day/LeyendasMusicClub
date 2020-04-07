@@ -1,1 +1,51 @@
-<p>edit-reservation works!</p>
+<form id="form" [formGroup]="form" class="edit-form" (ngSubmit)="saveChanges(item.id)">
+    <ng-container *ngIf="!isChecked; else verifying">
+        <h1 mat-dialog-title>Datos del cliente</h1>
+    </ng-container>
+    <ng-template #verifying>
+        <h1 mat-dialog-title>Confirmar datos del cliente</h1>
+    </ng-template>
+    <div mat-dialog-content>
+        <div class="row no-padding no-margin form-wrapper">
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <mat-label>Nombrel y Apellido</mat-label>
+                    <input placeholder="Ej: John Wick" matInput formControlName="name">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6 form-file-wrapper">
+                <mat-form-field class="w-100">
+                    <mat-label>Telefono</mat-label>
+                    <input placeholder="Ej: 1vs1, co-op, mistery..." matInput formControlName="phone">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <mat-label>Fecha de la reservacion</mat-label>
+                    <input matInput formControlName="date" type="datetime">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <mat-label>Número de personas</mat-label>
+                    <input matInput formControlName="people" placeholder="Ej: 33 1882 6414" type="number">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <mat-label>Zona</mat-label>
+                    <input matInput formControlName="pref_zone" placeholder="Ej: 50, 120..." type="text">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Salir</button>
+        <ng-container *ngIf="!isChecked; else confirm">
+            <button type="submit" mat-raised-button [disabled]="!form.valid" color="primary">Guardar</button>
+        </ng-container>
+        <ng-template #confirm>
+            <button type="submit" mat-raised-button [disabled]="!form.valid" color="primary">Confirmar reservacion</button>
+        </ng-template>
+    </mat-dialog-actions>
+</form>

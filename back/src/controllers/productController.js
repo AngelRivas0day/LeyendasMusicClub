@@ -114,7 +114,7 @@ controller.uploadImage = (req, res) => {
         // Everything went fine
         const fileName = req.file.filename;
         req.getConnection((err, conn) => {
-            const query = conn.query('UPDATE products SET imageUrl = ? WHERE id = ?', [fileName, id], (err, rows) => {
+            const query = conn.query('UPDATE products SET image = ? WHERE id = ?', [fileName, id], (err, rows) => {
               res.status(200).send({
                 message: 'La foto fue actulizada con exito'
               });

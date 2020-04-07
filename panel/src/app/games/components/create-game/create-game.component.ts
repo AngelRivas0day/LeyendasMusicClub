@@ -13,6 +13,7 @@ export class CreateGameComponent implements OnInit {
   form: FormGroup;
   selectedFile: File;
   values:any;
+  categories: any[] = ['co-op','mistery','1vs1'];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +29,8 @@ export class CreateGameComponent implements OnInit {
       recomendedPlayers: new FormControl('', [Validators.required]),
       timePerGame: new FormControl('', [Validators.required]),
       tutorial: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required])
+      description: new FormControl('', [Validators.required]),
+      type: new FormControl(0)
     });
   }
 

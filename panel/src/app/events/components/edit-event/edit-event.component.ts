@@ -38,7 +38,7 @@ export class EditEventComponent implements OnInit {
 
   fetchEvent(id) {
     if (this.data.id) {
-      this.apiService.getEvent(id).subscribe((data: any) => {
+      this.apiService.getOne('events/list',id).subscribe((data: any) => {
         console.log("data: ");
         console.log(data[0]);
         this.event = data[0];
@@ -54,7 +54,7 @@ export class EditEventComponent implements OnInit {
     // const formData = new FormData();
     let token = localStorage.getItem('access_token');
     // console.log(this.editProdForm.get('image').value);
-    this.apiService.updateEvent(id, token, this.form.value).subscribe((data) => {
+    this.apiService.put('event/update', id, this.form.value, token).subscribe((data) => {
       console.log("Si jalo el update");
       console.log(data);
     },(error)=>{

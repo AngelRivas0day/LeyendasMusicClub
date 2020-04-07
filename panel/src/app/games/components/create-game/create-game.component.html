@@ -14,10 +14,20 @@
                     <input (change)="handleChange($event)" formControlName="image" type="file">
                 </div>
             </div>
-            <div class="col-sm-12 col-md-6 form-file-wrapper">
+            <!-- <div class="col-sm-12 col-md-6 form-file-wrapper">
                 <mat-form-field class="w-100">
                     <mat-label>Categoria del juego</mat-label>
                     <input placeholder="Ej: 1vs1, co-op, mistery..." matInput formControlName="category">
+                </mat-form-field>
+            </div> -->
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class='w-100'>
+                    <mat-label>Categoria del juego</mat-label>
+                    <mat-select formControlName="category" name="category">
+                        <mat-option *ngFor="let category of categories" [value]="category">
+                            {{category}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm-12 col-md-6">

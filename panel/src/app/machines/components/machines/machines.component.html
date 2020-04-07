@@ -1,1 +1,54 @@
-<p>machines works!</p>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Productos</h5>
+                </div>
+                <div class="card-body">
+                    <button mat-raised-button (click)="openCreate()">
+                        <i class="now-ui-icons ui-1_simple-add"></i>  Nuevo juego
+                    </button>
+                    <div class="table-responsive mt-4">
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover dataTable">
+                            <thead>
+                              <tr>
+                                <th>ID</th>
+                                <th>Image</th>
+                                <th>Nombre del juego</th>
+                                <th>Categoria</th>
+                                <th>Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let machine of machines">
+                                    <td>{{ machine.id }}</td>
+                                    <td class='image-container'>
+                                        <img [src]="baseUrl + machine.image" class='image-tabla' alt="">
+                                        <div class="imageEdit__container">
+                                            <i class="now-ui-icons media-1_album icon-edit" (click)="openUpdateImage(machine.id)">
+                                            </i>
+                                        </div>
+                                    </td>
+                                    <td>{{ machine.name }}</td>
+                                    <td>{{ machine.category }}</td>
+                                    <td>
+                                        <i class="material-icons icon-trash" color="warning" (click)="erase(machine.id)">
+                                            cancel
+                                        </i>
+                                        &nbsp;
+                                        <i class="material-icons icon-edit" (click)="openEdit(machine.id)">
+                                            edit
+                                        </i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

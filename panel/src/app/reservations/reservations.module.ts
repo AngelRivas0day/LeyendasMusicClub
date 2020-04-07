@@ -7,6 +7,8 @@ import { EditReservationComponent } from './components/edit-reservation/edit-res
 import { CreateReservationComponent } from './components/create-reservation/create-reservation.component';
 import { MaterialModule } from 'app/material/material.module';
 import { DataTablesModule } from 'angular-datatables';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { DataTablesModule } from 'angular-datatables';
     CommonModule,
     ReservationsRoutingModule,
     MaterialModule,
-    DataTablesModule
+    DataTablesModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   entryComponents: [
     EditReservationComponent, 

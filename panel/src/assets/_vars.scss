@@ -46,6 +46,11 @@ $break-extra: "screen and (min-width: 1200px)";
         &:hover{color: red !important;
         }
     }
+    .icon-confirm{
+        transition:all .3s !important;
+        &:hover{color: blue !important;
+        }
+    }
     .image-container{
         position: relative;
         text-align: center;

@@ -59,17 +59,6 @@ export class ApiService {
     }
   }
 
-  // loginUser(credentials){
-  //   // this._auth.next( true );
-  //   // return;
-  //   return this.http.post(this.base_url + "/admin/login",credentials).subscribe((data)=>{
-  //     if(data.hasOwnProperty('access_token')){
-  //       console.log("Si hay token");
-  //       this.setToken(data.access_token);
-  //     }
-  //   })
-  // }
-
   login( data: any ) {
     this.http.post(this.base_url+'/admin/login', data ).subscribe((data: any) => {
         if(data.token.length){
@@ -117,8 +106,7 @@ export class ApiService {
     );
   }
 
-  getOne( endpoint: string, id: any , token: any) {
-    this.setToken(token);
+  getOne( endpoint: string, id: any) {
     return this.http.get(`${this.base_url}/${endpoint}/${id}`, this.options ).pipe(
       retry(2),
       this.catchRequestError()
@@ -224,108 +212,13 @@ export class ApiService {
     );
   }
 
-  //********************************************************
-  //
-  //            E V E N T S  M E T H O D S
-  //
-  //********************************************************
-
-  public getEvents(){
-    return this.http.get(this.base_url+'/events/list').pipe(
+  updateImage(endpoint: string, id: number, token: string, file: File, fileName: string){
+    this.setToken(token);
+    const payload = new FormData();
+    payload.append('image', file, fileName);
+    return this.http.put<any>(`${this.base_url}/${endpoint}/${id}`, payload, this.options).pipe(
       retry(3),
-    );
-  }
-
-  public getEvent(id:number){
-    return this.http.get(this.base_url+"/events/list/"+id).pipe(
-      retry(3),
-    );
-  }
-
-  public updateEvent(id:number, token: string, data: any){
-    const headers = this.setHeaders(token);
-    return this.http.put(`${this.base_url}/events/update/${id}`, data, {headers}).pipe(
-      retry(3)
-    );
-  }
-
-  createEvent(token, data:any){
-    // const newData = this.toFormData(data);
-    const headers = this.setHeadersWithJustToken(token);
-    return this.http.post(this.base_url+'/events/create', data, {headers}).pipe(
-      retry(3),
-    );
-  }
-
-  public eraseEvent(id: number, token: any){
-    const headers = this.setHeaders(token);
-    console.log("headers:");
-    console.log(headers);
-    return this.http.delete(this.base_url+'/events/delete/'+id,{headers}).pipe(
-      retry(3),
-    );
-  }
-
-  //********************************************************
-  //
-  //         R E S E R V A T I O N S  M E T H O D S
-  //
-  //********************************************************
-
-  public getReservations(){
-    return this.http.get(this.base_url+'/reservations/list').pipe(
-      retry(3),
-    );
-  }
-
-  public getReservation(id:number){
-    return this.http.get(this.base_url+"/reservations/list/"+id).pipe(
-      retry(3),
-    );
-  }
-
-  public updateReservations(id:number, token: string, data: any){
-    const headers = this.setHeaders(token);
-    return this.http.put(`${this.base_url}/reservations/update/${id}`, data, {headers}).pipe(
-      retry(3)
-    );
-  }
-
-  createReservations(token, data:any){
-    // const newData = this.toFormData(data);
-    const headers = this.setHeadersWithJustToken(token);
-    return this.http.post(this.base_url+'/reservations/create', data, {headers}).pipe(
-      retry(3),
-    );
-  }
-
-  public eraseReservations(id: number, token: any){
-    const headers = this.setHeaders(token);
-    console.log("headers:");
-    console.log(headers);
-    return this.http.delete(this.base_url+'/reservations/delete/'+id,{headers}).pipe(
-      retry(3),
-    );
-  }
-
-  //********************************************************
-  //
-  //         G A M E S  M E T H O D S
-  //
-  //********************************************************
-
-  getGames(){
-    return this.http.get(`${this.base_url}/games/list/`).pipe(
-      retry(3)
-    )
-  }
-
-  updateGameImage(id: number, token: string, data: any){
-    const headers = this.setHeadersWithJustToken(token);
-    // var newData = new FormData;
-    // newData.append('image', data);
-    return this.http.put<any>(this.base_url+'/games/update-image/'+id, data, {headers}).pipe(
-      retry(3)
+      this.catchRequestError()
     )
   }
 

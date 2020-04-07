@@ -14,6 +14,7 @@ const eventRoutes = require('./routes/event');
 const gameRoutes = require('./routes/games');
 const adminRoutes = require('./routes/admin');
 const reservationRoutes = require('./routes/reservations');
+const machineRoutes = require('./routes/machines');
 
 // settings
 app.set('port', process.env.PORT || 3000);
@@ -48,6 +49,7 @@ app.use('/events', eventRoutes);
 app.use('/games', gameRoutes);
 app.use('/admin', adminRoutes);
 app.use('/reservations', reservationRoutes);
+app.use('/machines', machineRoutes);
 // app.use('/user', userRoutes);
 
 // static files

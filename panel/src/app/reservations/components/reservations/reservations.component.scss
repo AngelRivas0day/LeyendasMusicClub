@@ -9,3 +9,10 @@
 table{
     @include table;
 }
+
+tr.arrived{
+    background: rgba(0, 122, 0, .9);
+    &:hover{
+        background-color: rgba(0, 122, 0, .8) !important;
+    }
+}

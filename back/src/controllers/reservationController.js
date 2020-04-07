@@ -3,14 +3,28 @@ const controller = {};
 controller.listAll = (req, res) => {
     // res.send("Si jala el customer list");
     req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM reservations', (err, resp) => {
+        conn.query('SELECT * FROM reservations WHERE achieved = 0', (err, resp) => {
             if(err){
                 res.send("Hubo un error");
             }
             console.log(resp);
             res.json(resp);
         });
-    });;
+    });
+};
+
+controller.listDataTable = (req, res) => {
+  req.getConnection((err, conn) => {
+    const query = conn.query(
+    'SELECT * FROM reservations WHERE name LIKE ? AND achieved = 0', 
+    [`%${req.body.search.value}%`], 
+    (err, resp) => {
+        if(err){
+            res.send("Hubo un error");
+        }
+        res.json(resp);
+    });
+});
 };
 
 controller.create = (req, res) => {
@@ -33,6 +47,26 @@ controller.create = (req, res) => {
         });
       }
     })
+  });
+};
+
+controller.confirm = (req, res) => {
+  const { id } = req.params;
+  req.getConnection((err, conn) => {
+    conn.query("UPDATE reservations set arrived = 1 WHERE id = ?", [id], (err, rows) => {
+    console.log(rows);
+    res.json(rows);
+    });
+  });
+};
+
+controller.achieve = (req, res) => {
+  const { id } = req.params;
+  req.getConnection((err, conn) => {
+    conn.query("UPDATE reservations set achieved = 1 WHERE id = ?", [id], (err, rows) => {
+    console.log(rows);
+    res.json(rows);
+    });
   });
 };
 

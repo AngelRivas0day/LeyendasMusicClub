@@ -13,7 +13,7 @@ export class UpdateImageComponent implements OnInit {
   selectedFile: File;
   values:any;
   fileName: any;
-  component: string = 'machines';
+  component: string = 'products';
 
   constructor(
     public dialogRef: MatDialogRef<UpdateImageComponent>,

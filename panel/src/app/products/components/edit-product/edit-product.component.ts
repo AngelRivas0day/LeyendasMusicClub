@@ -25,7 +25,6 @@ export class EditProductComponent implements OnInit {
     this.editProdForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       description: new FormControl('',[Validators.required]),
-      image: new FormControl(null),
       category: new FormControl('',[Validators.required]),
       stock: new FormControl(0, [Validators.required]),
       price: new FormControl(0, [Validators.required]),
@@ -34,15 +33,11 @@ export class EditProductComponent implements OnInit {
 
   ngOnInit() {
     this.getProduct(this.data.id);
-    // this.editProdForm.valueChanges.subscribe(()=>{
-    //   this.editProdForm.value.image = this.selectedFile;
-    //   this.values = this.editProdForm.value;
-    // });
   }
 
   getProduct(id) {
     if (this.data.id) {
-      this.apiService.getProduct(id).subscribe((data: any) => {
+      this.apiService.getOne('products/list', id).subscribe((data: any) => {
         console.log("data: ");
         console.log(data[0]);
         this.product = data[0];
@@ -55,10 +50,8 @@ export class EditProductComponent implements OnInit {
   }
 
   saveChanges(id) {
-    // const formData = new FormData();
     let token = localStorage.getItem('access_token');
-    // console.log(this.editProdForm.get('image').value);
-    this.apiService.updateProduct(id, token, this.editProdForm.value).subscribe((data) => {
+    this.apiService.put('products/update', id, this.editProdForm.value, token).subscribe((data) => {
       console.log("Si jalo el update");
       console.log(data);
     },(error)=>{
@@ -67,10 +60,5 @@ export class EditProductComponent implements OnInit {
     },()=>{
       this.dialogRef.close();
     });
-  }
-
-  handleFile(event) {
-    this.selectedFile = <File>event.target.files[0];
-    this.editProdForm.value.image = this.selectedFile;
   }
 }

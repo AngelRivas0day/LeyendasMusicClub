@@ -33,20 +33,13 @@ export class CreateProductComponent implements OnInit {
     });
   }
 
-  ngOnInit(){
-    this.form.valueChanges.subscribe(()=>{
-      this.form.value.image = this.selectedFile;
-      this.values = this.form.value;
-    });
-  }
+  ngOnInit(): void{
 
-  // intentanto traer todos los colores y elementos disponles con los que se puede crear un producto
-  // para ser metidos dentro de un select o un multiple select y crear productos
-  // consultar relaciones en la base de datos para poder crear un flujo de creación correcto
+  }
 
   create(){
     const token = localStorage.getItem('access_token');
-    this.apiService.createProduct(token, this.form.value).subscribe((data:any)=>{
+    this.apiService.post('products/create', this.form.value, token).subscribe((data:any)=>{
       console.log(data);
     },(error)=>{
       console.log("Hubo un error al crear el producto");

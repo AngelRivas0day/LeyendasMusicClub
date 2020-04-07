@@ -60,7 +60,7 @@ export class EventsComponent implements OnInit {
   }
 
   fetchEvents(){
-      this.apiService.getEvents().subscribe((resp:any)=>{
+      this.apiService.getAll('events/list').subscribe((resp:any)=>{
         console.log(resp);
         this.events = resp;
       },(error)=>{
@@ -74,7 +74,7 @@ export class EventsComponent implements OnInit {
   eraseEvent(id){
     const token = localStorage.getItem('access_token');
     console.log(token);
-    this.apiService.eraseEvent(id, token).subscribe((resp:any)=>{
+    this.apiService.delete('events/delete',id,token).subscribe((resp:any)=>{
       console.log('Se elminó el producto con éxito');
     },(error)=>{ 
       console.log(error);

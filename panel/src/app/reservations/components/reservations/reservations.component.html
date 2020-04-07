@@ -7,9 +7,10 @@
           <h5 class="title">Reservaciones</h5>
         </div>
         <div class="card-body">
-            <div class="horaActual mb-3">
-                <span>Hora y fecha actual: </span>{{ currentDate | date:'dd-MM-yyyy HH:mm' }}
-            </div>
+          <div class="horaActual mb-3">
+            <span>Fecha y hora actual: </span
+            >{{ currentDate | date: "dd-MM-yyyy - HH:mm" }}
+          </div>
           <button mat-raised-button (click)="openCreate()">
             <i class="now-ui-icons shopping_basket"></i> Nueva reservación
           </button>
@@ -17,13 +18,13 @@
             <table
               datatable
               [dtOptions]="dtOptions"
-              [dtTrigger]="dtTrigger"
               class="row-border hover dataTable"
+              class="w-100"
             >
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Nombre del juego</th>
+                  <th>Nombre</th>
                   <th>Teléfono</th>
                   <th>Fecha</th>
                   <th>Personas</th>
@@ -31,32 +32,72 @@
                   <th>Acciones</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let reservation of reservations">
+              <tbody *ngIf="reservations.length != 0">
+                <tr
+                  [ngClass]="reservation.arrived?'arrived':'no-arrived'"
+                  *ngFor="let reservation of reservations"
+                >
                   <td>{{ reservation.id }}</td>
                   <td>{{ reservation.name }}</td>
                   <td>{{ reservation.phone }}</td>
                   <td>{{ reservation.date }}</td>
                   <td>{{ reservation.people }}</td>
                   <td>{{ reservation.pref_zone }}</td>
-                  <td>
-                    <i
+                  <td colspan="2">
+                    <ng-container *ngIf="!reservation.arrived">
+                      <i
                       class="material-icons icon-trash"
-                      color="warning"
+                      color="warn"
                       (click)="erase(reservation.id)"
                     >
                       cancel
                     </i>
                     &nbsp;
-                    <i
-                      class="material-icons icon-edit"
-                      (click)="openEdit(reservation.id)"
+
+                      <i
+                        class="material-icons icon-edit"
+                        (click)="openEdit(reservation.id)"
+                       >
+                        edit
+                      </i>
+                    </ng-container>
+                    &nbsp;
+                    <ng-container
+                      *ngIf="!reservation.checked; else elseTemplate"
                     >
-                      edit
-                    </i>
+                      <i
+                        class="material-icons icon-confirm"
+                        (click)="openEdit(reservation.id, 1)"
+                      >
+                        book
+                      </i>
+                    </ng-container>
+                    &nbsp;
+                    <ng-template #elseTemplate>
+                      <i
+                        class="material-icons icon-arrived"
+                        (click)="confirm(reservation.id)"
+                      >
+                        done_all
+                      </i>
+                    </ng-template>
+                    &nbsp;
+                    <ng-container *ngIf="reservation.arrived">
+                      <i
+                        class="material-icons icon-achieved"
+                        (click)="achieve(reservation.id)"
+                      >
+                        remove_circle
+                      </i>
+                    </ng-container>
                   </td>
                 </tr>
               </tbody>
+              <tbody *ngIf="reservations.length == 0">
+                <tr>
+                  <td colspan="3" class="no-data-available">No data!</td>
+                </tr>
+              <tbody>
             </table>
           </div>
         </div>

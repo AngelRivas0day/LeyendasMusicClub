@@ -1,16 +1,5 @@
-.image-tabla{
-    max-width: 130px !important;
-}
-i{
-    cursor: pointer;
-}
-.icon-edit{
-    transition:all .3s !important;
-    &:hover{color: green !important;
-    }
-}
-.icon-trash{
-    transition:all .3s !important;
-    &:hover{color: red !important;
-    }
+@import "../../../../assets/vars";
+
+.dataTable{
+    @include table;
 }
