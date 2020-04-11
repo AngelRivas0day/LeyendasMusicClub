@@ -15,20 +15,38 @@ import { UpdateImageComponent } from '../update-image/update-image.component';
 export class ProductsComponent implements OnInit {
 
   dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject;
   products: any[] = [];
+  component: string = 'products';
 
   constructor(
     public apiService: ApiService,
     public dialog: MatDialog
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    // this.fetchReserv();
+    const that = this;
     this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10
+    pagingType: 'full_numbers',
+    pageLength: 5,
+    serverSide: true,
+    processing: true,
+    paging: false,
+    // ordering: false,
+    orderCellsTop: false,
+    ordering: false,
+    ajax: (DataTablesParemeters: any, callback) => {
+      that.apiService.postDataTables(`${this.component}/dataTable`, DataTablesParemeters).
+        subscribe((resp:any)=>{
+          that.products = resp;
+          callback({
+            recordsTotal: resp.length,
+            data: [] 
+          });
+        });
+    },
+    columns: [{data:'id'},{data:'image'},{data:'name'},{data:'category'},{data:'stock'},{data:'actions'}]
     };
-    this.getProducts();
   }
 
   openEditProduct(id):void{
@@ -39,10 +57,6 @@ export class ProductsComponent implements OnInit {
         id: id
       }
     });
-    dialogRef.afterClosed().subscribe(()=>{
-      this.dtTrigger.complete();
-      this.getProducts();
-    });
   }
 
   openCreate(){
@@ -51,27 +65,6 @@ export class ProductsComponent implements OnInit {
       hasBackdrop: true,
       disableClose: true
     });
-    dialogRef.afterClosed().subscribe(()=>{
-      this.dtTrigger.complete();
-      this.getProducts();
-    });
-  }
-
-  ngOnDestroy() {
-    this.dtTrigger.unsubscribe();
-  }
-
-  getProducts(){
-      this.apiService.getAll('products/list').subscribe((resp:any)=>{
-        console.log(resp);
-        this.products = resp;
-      },(error)=>{
-        console.log("Hubo un error al traer los productos: ");
-        console.log(error);
-      },()=>{
-        this.dtTrigger.next();
-        console.log("se termino el evento");
-      });
   }
 
   eraseProduct(id){
@@ -80,9 +73,6 @@ export class ProductsComponent implements OnInit {
       console.log('Se elminó el producto con éxito');
     },(error)=>{ 
       console.log(error);
-    },()=>{
-      this.dtTrigger.complete();
-      setTimeout(()=>this.getProducts(), 1000);
     });
   }
 
@@ -93,10 +83,6 @@ export class ProductsComponent implements OnInit {
       data: {
         id: id
       }
-    });
-    dialogRef.afterClosed().subscribe(()=>{
-      this.dtTrigger.complete();
-      this.getProducts();
     });
   }
 }

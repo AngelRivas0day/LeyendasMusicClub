@@ -25,6 +25,21 @@ controller.listAll = (req, res) => {
     });;
 };
 
+controller.listDataTable = (req, res) => {
+  serachPattern = req.body.search.value;
+  req.getConnection((err, conn) => {
+    const query = conn.query(
+    'SELECT * FROM games WHERE name LIKE ? AND type = 0', 
+    [`%${serachPattern}%`], 
+    (err, resp) => {
+        if(err){
+            res.send("Hubo un error");
+        }
+        res.json(resp);
+    });
+  });
+};
+
 controller.listPerCategory = (req, res) => {
   req.getConnection((err, conn)=>{
     const query = conn.query('SELECT * FROM games WHERE type = 0', (err, data)=>{

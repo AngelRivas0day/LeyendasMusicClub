@@ -16,14 +16,20 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-5">
-                <div class="row">
+                <div class="row" *ngIf='product'>
                     <div class="col-sm-12 productInfo__container">
                         <h1 class="productInfo__title font-bebas">{{ product.name }}</h1>
                         <span class="productInfo__category font-roboto">{{ product.category }} - {{ product.price | currency }}</span>
                         <p class="productInfo__sizes-chart">Tamaños disponibles: </p>
                         <div class="productInfo__sizes-selector">
                             <mat-chip-list>
-                                <mat-chip (click)="setSize(size)" *ngFor="let size of sizes">{{ size.size | uppercase}}</mat-chip>
+                                <mat-chip (click)="setSize(size)" *ngFor="let size of sizes">{{ size.name | uppercase}}</mat-chip>
+                            </mat-chip-list>
+                        </div>
+                        <p class="productInfo__sizes-chart">Colores disponibles: </p>
+                        <div class="productInfo__sizes-selector">
+                            <mat-chip-list>
+                                <mat-chip (click)="setColor(color)" *ngFor="let color of colors">{{ color.name | uppercase}}</mat-chip>
                             </mat-chip-list>
                         </div>
                         <h3>Cantidad: </h3>
@@ -32,7 +38,7 @@
                             <span class="productInfo__quantity-selector">{{quantity}}</span>
                             <button (click)="plusQuantity()">+</button>
                         </div>
-                        <button (click)="addProd(product, quantity, selectedSize)" mat-stroked-button class="productInfo__order-button font-roboto">Comprar ahora</button>
+                        <button (click)="addProd(product, quantity, currentColor, currentSize)" mat-stroked-button class="productInfo__order-button font-roboto">Comprar ahora</button>
                         <p class="productInfo__desc font-roboto">
                             {{ product.description }}
                         </p>
@@ -40,9 +46,18 @@
                 </div>
             </div>
             <div class="col-xs-12 relatedProducts">
-                <h1 class="font-bebas">Productos similares</h1>
-                <div class="relatedProducts__slider">
-
+                <h1 class="font-bebas">Productos recientes</h1>
+                <div *ngIf="lastProds.length != 0" class="relatedProducts__slider row">
+                    <div *ngFor="let product of lastProds" class="col-xs-6 col-md-4 col-lg-3 products__item">
+                        <div class="item__card" (click)="goToItem(product.id)">
+                            <div class="item__card-image-container">
+                                <img [src]="'http://localhost:3000/products/get-image/'+product.image" alt="" class="item__card-image">
+                            </div>
+                            <div class="item__card-content">
+                                <h3>{{product.name}}</h3>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

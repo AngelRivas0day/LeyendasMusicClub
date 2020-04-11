@@ -86,6 +86,7 @@ export class ReservacionesComponent implements OnInit {
       this._snackBar.openFromComponent(SnackBarComponent,{
         duration: this.seconds * 1000
       });
+      this.form.reset();
     });
   }
 

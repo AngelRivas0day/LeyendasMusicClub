@@ -120,8 +120,7 @@ export class ApiService {
     );
   }
 
-  post( endpoint: string, data = null , token: any) {
-    this.setToken(token);
+  post( endpoint: string, data = null) {
     return this.http.post(`${this.base_url}/${endpoint}/`, data, this.options ).pipe(
       retry(2),
       this.catchRequestError()

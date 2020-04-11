@@ -25,6 +25,35 @@ controller.list = (req, res) => {
     });
 };
 
+controller.listNewItems = (req, res) => {
+  // res.send("Si jala el customer list");
+  req.getConnection((err, conn) => {
+      conn.query('SELECT * FROM ( SELECT * FROM products ORDER BY id DESC LIMIT 4 ) sub ORDER BY id DESC',
+      (err, prods) => {
+          if(err){
+              res.send("Hubo un error");
+          }
+          console.log(prods);
+          res.json(prods);
+      });
+  });
+};
+
+controller.listDataTable = (req, res) => {
+  serachPattern = req.body.search.value;
+  req.getConnection((err, conn) => {
+    const query = conn.query(
+    'SELECT * FROM products WHERE name LIKE ?', 
+    [`%${serachPattern}%`], 
+    (err, resp) => {
+        if(err){
+            res.send("Hubo un error");
+        }
+        res.json(resp);
+    });
+  });
+};
+
 controller.add = (req, res) => {
       // the same req, res params are passed to the upload function, in order to make it look like the og
   upload(req, res, function (err) {

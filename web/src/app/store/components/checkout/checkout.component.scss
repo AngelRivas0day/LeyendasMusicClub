@@ -1,0 +1,43 @@
+@import "../../../../assets/vars";
+
+.center-layout{
+    @include center-layout;
+    .items{
+        padding-top: 50px;
+        padding-bottom: 50px;
+        .shppingResume{
+            .shppingResume_list{
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                .sR_list-item{
+                    margin-bottom: 15px;
+                    p{
+                        color: rgba(0,0,0,.8);
+                        font-size: 18px;
+                        text-transform: uppercase;
+                        font-weight: 200;
+                        margin-bottom: 5px;
+                        span{
+                            font-weight: bold !important;
+                        }
+                    }
+                }
+            }
+        }
+        .shoppingCustomerInfo{
+             .shoppingCustomerInfo_button{
+                 @include main-button(false);
+             }
+        }
+    }
+    .no-items{
+        text-align: center;
+        h1{
+            margin-bottom: 0px;
+        }
+        button{
+            @include main-button(true);
+        }
+    }
+}

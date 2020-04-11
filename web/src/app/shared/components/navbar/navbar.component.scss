@@ -1,3 +1,5 @@
+@import "../../../../assets/vars";
+
 #nav{
     background-color: black;
     .toggleNav{
@@ -48,6 +50,12 @@
                 font-size: 15px;
                 letter-spacing: 1.5px;
                 text-transform: uppercase;
+                &:last-of-type{
+                    display: none;
+                    @media #{$break-medium}{
+                        display: flex;
+                    }
+                }
                 &:after{
                     transition: all .3s;
                     content: '';
@@ -99,5 +107,19 @@
                 top: -110vH;
             }
         }
+    }
+}
+
+.cart-icon{
+    display: block;
+    margin-right: 60px;
+    margin-top: 11px;
+    color: white;
+    transition: all .3s;
+    &:hover{
+        background-color: rgba(255,255,255,.8);
+    }
+    @media #{$break-medium}{
+        display: none;
     }
 }

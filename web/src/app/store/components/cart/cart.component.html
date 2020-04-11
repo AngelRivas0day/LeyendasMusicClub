@@ -1,29 +1,55 @@
-<div *ngIf="(products$ | async) as products">
-    <div class="cart__empty" *ngIf="products.length === 0">
+<div *ngIf="(products$ | async | groupProducts ) as products">
+    <div class="cart__empty" *ngIf="products.length === 0; else elseTemplate">
         <div class="empty__content">
             <h1 class="font-bebas">No hay productos en el carrito</h1>
             <a routerLink="/tienda" mat-stroked-button class="empty__button font-bebas">COMPRAR!</a>
         </div>
     </div>
+<ng-template #elseTemplate>    
     <div class="container">
         <div class="row cart__container" *ngIf="products.length != 0">
-            <h1 class="font-bebas">CARRITO</h1>
+            <h1 class="cart__container-title font-bebas">CARRITO</h1>
             <ul class="cart__prods">
-                <li class="cart__item" *ngFor="let product of products">
+                <li class="cart__item" *ngFor="let data of products">
                     <div class="item__image">
-                        <img class="image" [src]="product.imageUrl" alt="">
+                        <img class="image" [src]="imageUrl + data.product.image" alt="">
                     </div>
-                    <div class="item__name">
-                        <span>{{ product.name }}</span>
-                    </div>
-                    <div class="item__price">
-                        <span>{{ product.price | currency }}</span>
-                    </div>
-                    <div class="item__quantity">
-                        <span></span>
+                    <div class="item__info">
+                        <div class="info__desc">
+                            <h1 class="font-bebas">{{ data.product.name }}</h1>
+                            <p>{{ data.product.description }}</p>
+                        </div>
+                        <div class="info__quantity">
+                            <div class="productInfo__quantity-container">
+                                <button (click)="minus(data.product)">-</button>
+                                <span class="productInfo__quantity-selector">{{data.quantity}}</span>
+                                <button (click)="plus(data.product)">+</button>
+                            </div>
+                            <div class="info__price">
+                                <div class="price__one">
+                                    {{data.product.price | currency}} x {{ data.quantity}}
+                                </div>
+                                &nbsp;
+                                <div class="price__total">
+                                    {{data.product.price * data.quantity | currency}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </li>
             </ul>
+            <div class="cart__total-container">
+                <div class="cart__total">
+                    <ng-container *ngIf="(subtotal$ | async) as subtotal">
+                        <h2><strong class="font-bebas">SUBTOTAL: </strong>{{subtotal | currency}}</h2>
+                        <h1><strong class="font-bebas">SUBTOTAL: </strong>{{ subtotal + deliveryFee | currency}}</h1>
+                    </ng-container>
+                </div>
+                <div class="cart__total-actions">
+                    <button mat-raised-button><a routerLink="/tienda/carrito/checkout">CONFIRMAR</a></button>
+                </div>
+            </div>
         </div>
     </div>
+</ng-template>
 </div>

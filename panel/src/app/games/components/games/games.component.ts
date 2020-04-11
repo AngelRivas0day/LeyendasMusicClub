@@ -17,25 +17,40 @@ export class GamesComponent implements OnInit {
   baseUrl = environment.base_url + '/games/get-image/';
   dtOptions: DataTables.Settings = {};
   games: any[] = [];
-  dtTrigger = new Subject();
-
+  component:string = 'games';
   constructor(
     private apiService: ApiService,
     private dialog: MatDialog
   ) { }
 
-  ngOnInit(): void {
-    this.fetchGames();
+  fetchData() {
+    // this.fetchReserv();
+    const that = this;
+    this.dtOptions = {
+    pagingType: 'full_numbers',
+    pageLength: 5,
+    serverSide: true,
+    processing: true,
+    paging: false,
+    // ordering: false,
+    orderCellsTop: false,
+    ordering: false,
+    ajax: (DataTableParemeters: any, callback) => {
+      that.apiService.postDataTables(`${that.component}/dataTable/`, DataTableParemeters).
+      subscribe((resp:any)=>{
+        that.games = resp;
+        callback({
+          recordsTotal: resp.length,
+          data: [] 
+        });
+      });
+    },
+    columns: [{data:'id'},{data:'image'},{data:'name'},{data:'category'},{data:'actions'}]
+    };
   }
 
-  fetchGames(){
-    this.apiService.getAll('games/list').subscribe((data:any)=>{
-      console.log(data);
-      this.games = data;
-      this.dtTrigger.next();
-    },err=>{
-      console.log(err);
-    });
+  ngOnInit(){
+    this.fetchData();
   }
 
   openCreate(){
@@ -44,12 +59,8 @@ export class GamesComponent implements OnInit {
       hasBackdrop: true,
       disableClose: true
     });
-    dialogRef.beforeClosed().subscribe(()=>{
-      this.dtTrigger.unsubscribe();
-    });
     dialogRef.afterClosed().subscribe(()=>{
-        this.fetchGames();
-        this.dtTrigger.next();
+     setTimeout(()=>this.fetchData(),750);
     });
   }
 
@@ -61,18 +72,13 @@ export class GamesComponent implements OnInit {
         id: id
       }
     });
-    dialogRef.beforeClosed().subscribe(()=>{
-      this.dtTrigger.unsubscribe();
-    });
     dialogRef.afterClosed().subscribe(()=>{
-        this.fetchGames();
-        this.dtTrigger.next();
+     setTimeout(()=>this.fetchData(),750);
     });
   }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
   }
 
   erase(id: number){
@@ -82,10 +88,7 @@ export class GamesComponent implements OnInit {
     },(error)=>{ 
       console.log(error);
     },()=>{
-      this.dtTrigger.complete();
-      setTimeout(()=>{
-        this.fetchGames();
-      },1000);
+     setTimeout(()=>this.fetchData(),750);
     });
   }
 
@@ -98,8 +101,7 @@ export class GamesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(()=>{
-      this.dtTrigger.complete();
-      this.fetchGames();
+      setTimeout(()=>this.fetchData(),750);
     });
   }
 

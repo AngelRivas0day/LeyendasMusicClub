@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { StoreComponent } from './components/store/store.component';
 import { ProductComponent } from './components/product/product.component';
 import { CartComponent } from './components/cart/cart.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'carrito',
     component: CartComponent
+  },
+  {
+    path: 'carrito/checkout',
+    component: CheckoutComponent
   }
 ];
 

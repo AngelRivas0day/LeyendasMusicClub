@@ -48,22 +48,14 @@ export class ReservationsComponent implements OnInit {
     orderCellsTop: false,
     ordering: false,
     ajax: (DataTablesParemeters: any, callback) => {
-      console.log(DataTablesParemeters);
-      that.http.post('http://localhost:3000/reservations/dataTable/', DataTablesParemeters).
+      that.apiService.postDataTables(`${this.component}/dataTable`, DataTablesParemeters).
         subscribe((resp:any)=>{
-          console.log("entradas: " + resp.length);
           that.reservations = resp;
           callback({
             recordsTotal: resp.length,
             data: [] 
           });
         });
-      // that.apiService.getAll(`${that.component}/list`).subscribe((data:any)=>{
-      //   console.log(data);
-      //   that.reservations = data;
-      // },err=>{
-      //   console.log(err);
-      // });
     },
     columns: [{data:'id'},{data:'name'},{data:'phone'},{data:'date'},{data:'people'},{data:'pref_zone'},{data:'actions'}]
     };
@@ -114,7 +106,6 @@ export class ReservationsComponent implements OnInit {
       console.log(err);
     },()=>{
       setTimeout(()=>this.fetchReserv(), 700);
-      ;
     });
   }
 

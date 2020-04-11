@@ -14,8 +14,8 @@
             <table
               datatable
               [dtOptions]="dtOptions"
-              [dtTrigger]="dtTrigger"
               class="row-border hover dataTable"
+              class="w-100"
             >
               <thead>
                 <tr>
@@ -27,7 +27,7 @@
                   <th>Acciones</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody *ngIf="products.length != 0">
                 <tr *ngFor="let product of products; index as i">
                   <td>{{ product.id }}</td>
                   <td class='image-container'>
@@ -64,6 +64,11 @@
                   </td>
                 </tr>
               </tbody>
+              <tbody *ngIf="products.length == 0">
+                <tr>
+                  <td colspan="6" class="no-data-available">No data!</td>
+                </tr>
+              <tbody>
             </table>
           </div>
         </div>

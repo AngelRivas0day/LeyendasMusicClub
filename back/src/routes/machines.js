@@ -4,6 +4,7 @@ const md_auth = require('../middlewares/ensureAuth');
 const machineController = require('../controllers/machineController');
 
 router.get('/list', machineController.listAll);
+router.post('/dataTable/', machineController.listDataTable);
 router.get('/listPerCategory', machineController.listPerCategory);
 router.post('/create', md_auth.ensureAuth, machineController.create);
 router.get('/list/:id', machineController.listOne);

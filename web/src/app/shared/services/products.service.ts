@@ -269,4 +269,10 @@ export class ProductsService {
       retry(3),
     )  
   }
+
+  getLastProds(){
+    return this.http.get(`${this.baseUrl}/products/list-new`).pipe(
+      retry(3)
+    )
+  }
 }

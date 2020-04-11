@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
   ) {
     this.total$ = this.cartService.cart$
     .pipe(
-      map(products => products.length)
+      map(items => {return items.length})
     );
   }
 

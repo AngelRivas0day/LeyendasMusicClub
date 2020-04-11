@@ -17,7 +17,6 @@ export class MachinesComponent implements OnInit {
   baseUrl = environment.base_url + '/games/get-image/';
   dtOptions: DataTables.Settings = {};
   machines: any[] = [];
-  dtTrigger = new Subject();
   component: string = 'machines';
 
   constructor(
@@ -29,14 +28,30 @@ export class MachinesComponent implements OnInit {
     this.fetchData();
   }
 
-  fetchData(){
-    this.apiService.getAll(`${this.component}/list`).subscribe((data:any)=>{
-      console.log(data);
-      this.machines = data;
-      this.dtTrigger.next();
-    },err=>{
-      console.log(err);
-    });
+  fetchData() {
+    // this.fetchReserv();
+    const that = this;
+    this.dtOptions = {
+    pagingType: 'full_numbers',
+    pageLength: 5,
+    serverSide: true,
+    processing: true,
+    paging: false,
+    // ordering: false,
+    orderCellsTop: false,
+    ordering: false,
+    ajax: (DataTableParemeters: any, callback) => {
+      that.apiService.postDataTables(`${that.component}/dataTable/`, DataTableParemeters).
+      subscribe((resp:any)=>{
+        that.machines = resp;
+        callback({
+          recordsTotal: resp.length,
+          data: [] 
+        });
+      });
+    },
+    columns: [{data:'id'},{data:'image'},{data:'name'},{data:'category'},{data:'actions'}]
+    };
   }
 
   openCreate(){
@@ -45,12 +60,8 @@ export class MachinesComponent implements OnInit {
       hasBackdrop: true,
       disableClose: true
     });
-    dialogRef.beforeClosed().subscribe(()=>{
-      this.dtTrigger.unsubscribe();
-    });
     dialogRef.afterClosed().subscribe(()=>{
         this.fetchData();
-        this.dtTrigger.next();
     });
   }
 
@@ -62,18 +73,13 @@ export class MachinesComponent implements OnInit {
         id: id
       }
     });
-    dialogRef.beforeClosed().subscribe(()=>{
-      this.dtTrigger.unsubscribe();
-    });
     dialogRef.afterClosed().subscribe(()=>{
         this.fetchData();
-        this.dtTrigger.next();
     });
   }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
   }
 
   erase(id: number){
@@ -83,7 +89,6 @@ export class MachinesComponent implements OnInit {
     },(error)=>{ 
       console.log(error);
     },()=>{
-      this.dtTrigger.complete();
       setTimeout(()=>{
         this.fetchData();
       },1000);
@@ -99,7 +104,6 @@ export class MachinesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(()=>{
-      this.dtTrigger.complete();
       this.fetchData();
     });
   }

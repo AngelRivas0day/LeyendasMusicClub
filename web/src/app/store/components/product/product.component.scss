@@ -110,9 +110,34 @@
             font-size: 30px;
         }
         &__slider{
-            height: 250px;
             width: 100%;
-            background-color: gray;
+            padding-top: 20px;
+        }
+        .products__item{
+            .item__card{
+                margin: 0 auto;
+                width: 80%;
+                &-image-container{
+                    border-bottom: 3px solid black;
+                    overflow: hidden;
+                    .item__card-image{
+                        height: 200px;
+                        width: 100%;
+                        object-fit: contain;
+                        object-position: center;
+                        margin: 0 auto;
+                        transition: all .3s;
+                    }
+                    &:hover .item__card-image{
+                        transform: scale(1.1) rotate(5deg);
+                    }
+                }
+                .item__card-content{
+                    h3{
+                        font-size: 15px;
+                    }
+                }
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ const controller = {};
 controller.listAll = (req, res) => {
     // res.send("Si jala el customer list");
     req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM reservations WHERE achieved = 0', (err, resp) => {
+        conn.query('SELECT * FROM orders WHERE archived = 0', (err, resp) => {
             if(err){
                 res.send("Hubo un error");
             }
@@ -17,7 +17,7 @@ controller.listDataTable = (req, res) => {
   serachPattern = req.body.search.value;
   req.getConnection((err, conn) => {
     const query = conn.query(
-    'SELECT * FROM reservations WHERE name LIKE ? AND achieved = 0', 
+    'SELECT * FROM orders WHERE name LIKE ? AND archived = 0', 
     [`%${serachPattern}%`], 
     (err, resp) => {
         if(err){
@@ -32,7 +32,7 @@ controller.create = (req, res) => {
     const data = req.body;
     console.log(req.body)
     req.getConnection((err, connection) => {
-    const query = connection.query('INSERT INTO reservations set ?', data, (err, data) => {
+    const query = connection.query('INSERT INTO orders set ?', data, (err, data) => {
       console.log(data);
       if(err){
         res.status(500).send({
@@ -54,17 +54,17 @@ controller.create = (req, res) => {
 controller.confirm = (req, res) => {
   const { id } = req.params;
   req.getConnection((err, conn) => {
-    conn.query("UPDATE reservations set arrived = 1 WHERE id = ?", [id], (err, rows) => {
+    conn.query("UPDATE orders set checked = 1 WHERE id = ?", [id], (err, rows) => {
     console.log(rows);
     res.json(rows);
     });
   });
 };
 
-controller.achieve = (req, res) => {
+controller.archive = (req, res) => {
   const { id } = req.params;
   req.getConnection((err, conn) => {
-    conn.query("UPDATE reservations set achieved = 1 WHERE id = ?", [id], (err, rows) => {
+    conn.query("UPDATE orders set archived = 1 WHERE id = ?", [id], (err, rows) => {
     console.log(rows);
     res.json(rows);
     });
@@ -74,7 +74,7 @@ controller.achieve = (req, res) => {
 controller.listOne = (req, res) => {
   const { id } = req.params;
   req.getConnection((err, conn) => {
-    conn.query("SELECT * FROM reservations WHERE id = ?", [id], (err, rows) => {
+    conn.query("SELECT * FROM orders WHERE id = ?", [id], (err, rows) => {
     //   res.render('customers_edit', {
     //     data: rows[0]
     //   })
@@ -88,7 +88,7 @@ controller.edit = (req, res) => {
   const { id } = req.params;
   const newCustomer = req.body;
   req.getConnection((err, conn) => {
-    conn.query('UPDATE reservations set ? where id = ?', [newCustomer, id], (err, rows) => {
+    conn.query('UPDATE orders set ? where id = ?', [newCustomer, id], (err, rows) => {
       res.status(200).send({
           status: "ok",
           message: "La reservación fue actualizada con exito",
@@ -101,7 +101,7 @@ controller.edit = (req, res) => {
 controller.delete = (req, res) => {
     const { id } = req.params;
     req.getConnection((err, connection) => {
-      connection.query('DELETE FROM reservations WHERE id = ?', [id], (err, rows) => {
+      connection.query('DELETE FROM orders WHERE id = ?', [id], (err, rows) => {
         res.status(200).send({
             status: "ok",
             message: "La reservación fue eliminada con exito",

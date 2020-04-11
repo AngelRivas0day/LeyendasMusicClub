@@ -4,6 +4,7 @@ const md_auth = require('../middlewares/ensureAuth');
 const gameController = require('../controllers/gamesController');
 
 router.get('/list', gameController.listAll);
+router.post('/dataTable/', gameController.listDataTable);
 router.get('/listPerCategory', gameController.listPerCategory);
 router.post('/create', md_auth.ensureAuth, gameController.create);
 router.get('/list/:id', gameController.listOne);

@@ -2,3 +2,66 @@ $break-small: "screen and (min-width: 576px)"; //de esos px para arriba
 $break-medium: "screen and (min-width: 768px)";
 $break-large: "screen and (min-width: 992px)";
 $break-extra: "screen and (min-width: 1200px)";
+$main-color: "";
+$secondary-color: "";
+$terciary-color: "";
+
+@mixin center-layout{
+    min-height: calc(100vH - 60px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+@mixin center-layout-custom($height){
+    min-height: calc(#{$height} - 60px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+@mixin main-button($isAnchor){
+    margin-top: 12px;
+    font-size: 16px;
+    border-radius: 0px;
+    padding: 5px 25px;
+    color: black;
+    background-color: transparent;
+    border: 1px solid black;
+    text-decoration: none;
+    transition: all .3s;
+    position: relative;
+    z-index: 1;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    @if $isAnchor {
+        a{
+            color: black;
+            text-decoration: none !important;
+        }
+        &:hover a{
+            color: white;
+        }
+    } @else {
+        &:hover{
+            color: white;
+        }
+    }
+    &:after{
+        transition: all .3s;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 0px;
+        background-color: black;
+        z-index: -1;
+        bottom: 0;
+        left: 0;
+    }
+    &:hover:after{
+        height: 100%;
+    }
+}

@@ -29,6 +29,7 @@
                   <th>Fecha</th>
                   <th>Personas</th>
                   <th>Zona</th>
+                  <th>Confirmado</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -40,9 +41,10 @@
                   <td>{{ reservation.id }}</td>
                   <td>{{ reservation.name }}</td>
                   <td>{{ reservation.phone }}</td>
-                  <td>{{ reservation.date }}</td>
+                  <td>{{ reservation.date | date: 'dd-MM-yyyy' }}</td>
                   <td>{{ reservation.people }}</td>
                   <td>{{ reservation.pref_zone }}</td>
+                  <td>{{ reservation.checked ? 'Si' : 'No' }}</td>
                   <td colspan="2">
                     <ng-container *ngIf="!reservation.arrived">
                       <i
@@ -95,7 +97,7 @@
               </tbody>
               <tbody *ngIf="reservations.length == 0">
                 <tr>
-                  <td colspan="3" class="no-data-available">No data!</td>
+                  <td colspan="7" class="no-data-available">No data!</td>
                 </tr>
               <tbody>
             </table>

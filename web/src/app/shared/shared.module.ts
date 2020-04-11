@@ -5,11 +5,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { HttpClientModule } from '@angular/common/http';
+import { GroupProductsPipe } from './pipes/group-products.pipe';
 
 
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent],
+  declarations: [NavbarComponent, FooterComponent, GroupProductsPipe],
   imports: [
     CommonModule,
     RouterModule,
@@ -18,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   exports: [
     FooterComponent,
-    NavbarComponent
+    NavbarComponent,
+    GroupProductsPipe
   ]
 })
 export class SharedModule { }

@@ -4,6 +4,8 @@ const productController = require('../controllers/productController');
 const md_auth = require('../middlewares/ensureAuth');
 
 router.get('/list', productController.list);
+router.get('/list-new', productController.listNewItems);
+router.post('/dataTable/', productController.listDataTable);
 router.post('/create', md_auth.ensureAuth, productController.add);
 router.get('/list/:id', productController.edit);
 router.put('/update/:id', md_auth.ensureAuth, productController.update);
