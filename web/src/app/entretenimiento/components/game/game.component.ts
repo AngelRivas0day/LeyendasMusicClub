@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GamesService } from 'src/app/shared/services/games.service';
 import { MachinesService } from 'src/app/shared/services/machines.service';
+import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
   selector: 'app-game',
@@ -19,7 +20,8 @@ export class GameComponent implements OnInit {
     public dialogRef: MatDialogRef<GameComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     public gamesService: GamesService,
-    public machinesService: MachinesService
+    public machinesService: MachinesService,
+    private apiService: ApiService
   ) { 
     console.log(data.gameId);
     this.category = data.category;
@@ -38,11 +40,16 @@ export class GameComponent implements OnInit {
         this.itemToShow = data[0];
       },err=>{
         console.log('Hubo un error');
+        console.log(err);
       },()=>{
         this.isLoaded = true;
       });
     }else{
-      this.itemToShow = this.machinesService.getProduct(this.itemId);
+      this.apiService.getOne('machines/list', this.itemId).subscribe((data:any)=>{
+        this.itemToShow = data[0];
+      },
+      err=>console.log(err),
+      ()=>this.isLoaded = true);
     }
   }
 

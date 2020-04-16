@@ -5,14 +5,19 @@
     .products__list{
         list-style: none;
         padding: 0;
-        margin: 0;
+        margin: 0 0 10px 0;
         max-height: 120px;
         overflow-y: scroll;
         .list__item{
-            margin-bottom: 10px;
+            background-color: #dadada;
+            padding: 8px;
+            border-radius: 7px;
+            width: 100%;
+            margin-bottom: 8px;
             p{
                 margin: 0;
                 padding: 0;
+                color: black;
                 span{
                     font-weight: bold;
                 }

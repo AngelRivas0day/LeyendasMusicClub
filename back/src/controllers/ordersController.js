@@ -71,6 +71,16 @@ controller.archive = (req, res) => {
   });
 };
 
+controller.delivered = (req, res) => {
+  const { id } = req.params;
+  req.getConnection((err, conn) => {
+    conn.query("UPDATE orders set delivered = 1 WHERE id = ?", [id], (err, rows) => {
+    console.log(rows);
+    res.json(rows);
+    });
+  });
+};
+
 controller.listOne = (req, res) => {
   const { id } = req.params;
   req.getConnection((err, conn) => {

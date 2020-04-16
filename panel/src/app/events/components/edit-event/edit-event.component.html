@@ -1,21 +1,27 @@
-<form enctype="multipart/form-data" [formGroup]="form" class="edit-form" (ngSubmit)="saveChanges(event.id)">
-    <h1 mat-dialog-title>Editar datos del producto</h1>
-    <div id="product" mat-dialog-content>
-        <mat-tab-group>
-            <mat-tab label="Producto">
-                <div class="form-wrapper">
-                    <div class="form__image-container">
-                        <img [src]="'http://localhost:3000/events/get-image/'+event.imageUrl" alt="" class="form__image" />
-                    </div>
-                    <mat-form-field>
-                        <mat-label>Fecha del evento</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="date">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker touchUi #picker></mat-datepicker>
-                    </mat-form-field>
+<form id="form" [formGroup]="form" class="edit-form" (ngSubmit)="saveChanges(event.id)">
+    <h1 mat-dialog-title>Editar datos del evento</h1>
+    <div mat-dialog-content *ngIf="event">
+        <div class="row no-padding no-margin form-wrapper">
+            <div class="col-sm-12 col-md-6 form-file-wrapper">
+                <div class='form-field form-file w-100'>
+                    <mat-label>Imagen</mat-label><br>
+                    <input (change)="handleChange($event)" formControlName="imageUrl" type="file">
                 </div>
-            </mat-tab>
-        </mat-tab-group>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="form__image-container">
+                    <img [src]="'http://localhost:3000/events/get-image/'+event.image" alt="" class="form__image" />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <mat-form-field class="w-100">
+                    <mat-label>Fecha del evento</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
     </div>
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Salir</button>

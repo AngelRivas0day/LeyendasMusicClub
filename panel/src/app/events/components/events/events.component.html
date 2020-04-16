@@ -12,40 +12,11 @@
                         <i class="now-ui-icons design_bullet-list-67"></i>  Nuevo evento
                     </button>
                     <div class="cards__container">
-                        <!-- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover table">
-                            <thead class="text-primary">
-                                <tr>
-                                    <th></th>
-                                    <th>Nombre</th>
-                                    <th>Tags</th>
-                                    <th>Stock</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let event of events; index as i">
-                                    <td>
-                                        <img [src]="'http://localhost:3000/events/get-image/'+event.imageUrl" class="image-tabla">
-                                    </td>
-                                    <td>{{event.name}}</td>
-                                    <td>{{event.tags}}</td>
-                                    <td>{{event.stock}}</td>
-                                    <td>
-                                        <i class="material-icons icon-trash" color="warning" (click)="eraseProduct(event.id)">
-                                            cancel
-                                        </i>
-                                        &nbsp;
-                                        <i class="material-icons icon-edit" (click)="openEditProduct(event.id)">
-                                            edit
-                                        </i>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table> -->
                         <ng-container *ngFor="let event of events" >
                             <div class="card">
                                 <div class="card__image-container">
-                                    <img [src]="'http://localhost:3000/events/get-image/'+event.imageUrl" alt="" class="card__image">
+                                    <img [src]="'http://localhost:3000/events/get-image/'+event.image" alt="" class="card__image">
+                                    <span>Fecha del evento: {{event.date | date: 'dd-MM-yyyy'}}</span>
                                 </div>
                                 <div class="card__actions">
                                     <i class="material-icons icon-trash" color="warning" (click)="eraseProduct(event.id)">

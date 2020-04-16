@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from 'src/app/shared/services/products.service';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-product',
@@ -9,6 +10,8 @@ import { CartService } from 'src/app/shared/services/cart.service';
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+
+  imageUrl: string = environment.baseUrl + '/products/get-image/';
   quantity: number = 1;
   id:number;
   product: any;
@@ -92,7 +95,10 @@ export class ProductComponent implements OnInit {
   getProduct(id: number){
     this.prodctsService.getProduct(id).subscribe((data: any)=>{
       this.product = data[0];
-      this.currentImage = data[0].imageUrl;
+      this.currentImage = data[0].image;
+      this.currentImages = JSON.parse(data[0].images);
+      this.currentImages.push(this.currentImage);
+      console.log(data[0]);
     });
     // console.log(this.product);
     // this.currentImage = this.product.imageUrl;
@@ -124,8 +130,8 @@ export class ProductComponent implements OnInit {
     this.currentColor = value.name;
   }
 
-  changeCurrentImage(id: number){
-    this.currentImage = this.currentImages.filter(x => x.id == id)[0].url;
+  changeCurrentImage(image: string){
+    this.currentImage = image;
   }
 
   fetchData(){

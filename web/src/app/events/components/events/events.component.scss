@@ -19,12 +19,28 @@
     .events__container{
         padding: 30px 0 50px 0;
         .event__item{
-            .img{
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 15px auto;
+            height: 240px;
+            position: relative;
+            span{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                background-color: black;
+                border-radius: 7px;
+                color: white;
+                padding: 5px;
+                border-bottom-left-radius: 0px !important;
+                border-top-left-radius: 0px !important;
+                border-bottom-right-radius: 0px !important;
+            }
+            img{
                 width: 100%;
-                max-width: 800px;
-                margin: 0 auto;
-                height: 250px;
+                height: 100%;
                 background-color: gray;
+                object-fit: contain;
             }
             margin-bottom: 30px;
         }

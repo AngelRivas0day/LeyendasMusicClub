@@ -27,13 +27,39 @@ controller.listAll = (req, res) => {
 };
 
 controller.create = (req, res) => {
-    const data = req.body;
-    console.log(req.body)
-    req.getConnection((err, connection) => {
-    const query = connection.query('INSERT INTO events set ?', data, (err, data) => {
-      console.log(data);
-      res.redirect('/');
-    })
+  upload(req, res, function (err) {
+    console.log(req.body);
+    let data = req.body;
+    if (err) {
+        res.status(500).send({
+            message: 'La info no fue actulizada con exito'
+          });
+    }else{
+      if(req.file){
+        const fileName = req.file.filename;
+        data.image = fileName;
+      }else{
+        data.image = "No seteado...";
+      }
+      req.getConnection((err, conn) => {
+          const query = conn.query('INSERT INTO events SET ?', [data], (err, rows) => {
+            if(err){
+              console.log(err);
+              res.status(500).send({
+                success: false,
+                message: "El evento no fue creado",
+                data: rows
+              });
+            }else{
+              res.status(200).send({
+                success: true,
+                message: "El evento fue creado",
+                data: rows
+              });
+            }
+          });
+      });
+    }
   });
 };
 

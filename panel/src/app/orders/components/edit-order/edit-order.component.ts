@@ -15,6 +15,7 @@ export class EditOrderComponent implements OnInit {
   itemId: number;
   item: any;
   products: any[] = [];
+  isChecked: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,18 +33,21 @@ export class EditOrderComponent implements OnInit {
       pickup: new FormControl('', [Validators.required]),
       products: new FormControl('', [Validators.required]),
       subtotal: new FormControl('', [Validators.required]),
-      total: new FormControl('', [Validators.required])
+      total: new FormControl('', [Validators.required]),
+      checked: new FormControl('', [Validators.required])
     });
     this.itemId = this.data.id;
+    this.isChecked = this.data.isChecked;
    }
 
   ngOnInit(): void {
     this.fetchData();
   }
 
-  saveChanges(){
+  saveChanges(id: number){
     const token = localStorage.getItem('access_token');
-    this.apiService.put(`${this.component}/update`, this.itemId, this.form.value, token).subscribe(
+    this.form.get('checked').setValue(this.isChecked);
+    this.apiService.put(`${this.component}/update`, id, this.form.value, token).subscribe(
       (resp:any)=>console.log(resp),
       (err)=>console.log(err),
       ()=>this.dialogRef.close()

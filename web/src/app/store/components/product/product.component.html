@@ -4,12 +4,12 @@
             <div class="col-xs-12 col-sm-12 col-md-7 productSlider">
                 <div class="productSlider__container">
                     <div class="image__container">
-                        <img [src]="currentImage" class="productSlider__image" alt="">
+                        <img [src]="imageUrl + currentImage" class="productSlider__image" alt="">
                     </div>
                     <div class="productSlider__selector">
                         <ul class="selector">
-                            <li (click)="changeCurrentImage(image.id)" *ngFor="let image of currentImages" class="selector__item">
-                                <img [src]="image.url" alt="" />
+                            <li (click)="changeCurrentImage(image)" *ngFor="let image of currentImages" class="selector__item">
+                                <img [src]="imageUrl + image" alt="" />
                             </li>
                         </ul>
                     </div>
@@ -21,16 +21,27 @@
                         <h1 class="productInfo__title font-bebas">{{ product.name }}</h1>
                         <span class="productInfo__category font-roboto">{{ product.category }} - {{ product.price | currency }}</span>
                         <p class="productInfo__sizes-chart">Tamaños disponibles: </p>
-                        <div class="productInfo__sizes-selector">
-                            <mat-chip-list>
+                        <div class="productInfo__selector">
+                            <!-- <mat-chip-list>
                                 <mat-chip (click)="setSize(size)" *ngFor="let size of sizes">{{ size.name | uppercase}}</mat-chip>
-                            </mat-chip-list>
+                            </mat-chip-list> -->
+                            <mat-radio-group
+                                aria-labelledby="example-radio-group-label"
+                                class="sizes-selector">
+                                <mat-radio-button (click)="setSize(size)" class="example-radio-button" *ngFor="let size of sizes" [value]="size.name">
+                                    {{ size.name | uppercase}}
+                                </mat-radio-button>
+                            </mat-radio-group>
                         </div>
                         <p class="productInfo__sizes-chart">Colores disponibles: </p>
-                        <div class="productInfo__sizes-selector">
-                            <mat-chip-list>
-                                <mat-chip (click)="setColor(color)" *ngFor="let color of colors">{{ color.name | uppercase}}</mat-chip>
-                            </mat-chip-list>
+                        <div class="productInfo__selector">
+                            <mat-radio-group
+                                aria-labelledby="example-radio-group-label"
+                                class="color-selector">
+                                <mat-radio-button (click)="setColor(color)" class="example-radio-button" *ngFor="let color of colors" [value]="color.name">
+                                    {{ color.name | uppercase}}
+                                </mat-radio-button>
+                            </mat-radio-group>
                         </div>
                         <h3>Cantidad: </h3>
                         <div class="productInfo__quantity-container">

@@ -16,6 +16,8 @@ const adminRoutes = require('./routes/admin');
 const reservationRoutes = require('./routes/reservations');
 const machineRoutes = require('./routes/machines');
 const orderRoutes = require('./routes/order');
+const gamesCategories = require('./routes/gamesCategories');
+const juegosCategories = require('./routes/juegosCategories');
 
 // settings
 app.set('port', process.env.PORT || 3000);
@@ -52,7 +54,8 @@ app.use('/admin', adminRoutes);
 app.use('/reservations', reservationRoutes);
 app.use('/machines', machineRoutes);
 app.use('/orders', orderRoutes);
-// app.use('/user', userRoutes);
+// app.use('/gamesCategories', gamesCategories);
+// app.use('/juegosCategories', juegosCategories);
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -60,4 +63,3 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.listen(app.get('port'), () => {
     console.log("server running in port 3000");
 });
-

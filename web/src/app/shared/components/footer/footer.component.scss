@@ -21,5 +21,25 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
+        &.socialMedia__list{
+            a{
+                transition: all .3s;
+            }
+            .facebook{
+                &:hover{
+                    color: blue;
+                }
+            }
+            .instagram{
+                &:hover{
+                    color: pink;
+                }
+            }
+            .youtube{
+                &:hover{
+                    color: red;
+                }
+            }
+        }
     }
 }

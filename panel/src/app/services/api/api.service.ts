@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { BehaviorSubject, Observable, throwError, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -128,9 +129,11 @@ export class ApiService {
     );
   }
 
-  postWithImage( endpoint: string, data = null , token: any) {
+  postWithImage( endpoint: string, data: FormGroup = null , token: any) {
     this.setToken(token);
-    return this.http.post(`${this.base_url}/${endpoint}`, this.toFormData(data), this.options ).pipe(
+    var formData = this.toFormData(data);
+    // formData.append('images', data.get('images').value);
+    return this.http.post(`${this.base_url}/${endpoint}`, formData, this.options ).pipe(
       retry(2),
       this.catchRequestError()
     );

@@ -7,11 +7,25 @@
                     <input placeholder="Nombre del producto" matInput formControlName="name">
                 </mat-form-field>
             </div>
-            <div class="col-sm-12 col-md-6 form-file-wrapper">
+            <!-- <div class="col-sm-12 col-md-6 form-file-wrapper">
                 <div class='form-field form-file w-100'>
-                    <mat-label>Imagen</mat-label><br>
+                    <mat-label>Imagen principal</mat-label><br>
                     <input (change)="handleChange($event)" formControlName="image" type="file">
                 </div>
+            </div> -->
+            <div class="col-sm-12 col-md-6 form-file-wrapper">
+                <div class='form-field form-file w-100'>
+                    <mat-label>Imagenes del producto</mat-label><br>
+                    <input (change)="handleChange($event)" formControlName="images" type="file" multiple>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6">
+                <mat-form-field>
+                    <mat-label>Colores</mat-label>
+                    <mat-select formControlName="colors" multiple>
+                      <mat-option *ngFor="let color of colors" [value]="color">{{color}}</mat-option>
+                    </mat-select>
+                </mat-form-field>                  
             </div>
             <div class="col-sm-12 col-md-6">
                 <mat-form-field class="w-100">
@@ -20,6 +34,7 @@
             </div>
             <div class="col-sm-12 col-md-6">
                 <mat-form-field class="w-100">
+                    <span matPrefix>$&nbsp;</span>
                     <input matInput formControlName="price" placeholder="Precio" type="number">
                 </mat-form-field>
             </div>

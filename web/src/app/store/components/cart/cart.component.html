@@ -42,7 +42,7 @@
                 <div class="cart__total">
                     <ng-container *ngIf="(subtotal$ | async) as subtotal">
                         <h2><strong class="font-bebas">SUBTOTAL: </strong>{{subtotal | currency}}</h2>
-                        <h1><strong class="font-bebas">SUBTOTAL: </strong>{{ subtotal + deliveryFee | currency}}</h1>
+                        <h1><strong class="font-bebas">TOTAL: </strong>{{ subtotal + deliveryFee | currency}}</h1>
                     </ng-container>
                 </div>
                 <div class="cart__total-actions">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from 'src/app/shared/services/events.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-events',
@@ -9,6 +10,7 @@ import { EventsService } from 'src/app/shared/services/events.service';
 export class EventsComponent implements OnInit {
 
   events: any[];
+  baseUrl: string = environment.baseUrl + '/events/get-image/';
 
   constructor(
     public eventsService: EventsService

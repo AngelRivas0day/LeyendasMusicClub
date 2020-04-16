@@ -99,9 +99,20 @@ export class OrdersComponent implements OnInit {
     });
   }
 
+  delivered(id: number){
+    const token = localStorage.getItem('access_token');
+    this.apiService.put(`${this.component}/delivered`, id, {}, token).subscribe((data:any)=>{
+      console.log(data);
+    },err=>{
+      console.log(err);
+    },()=>{
+      setTimeout(()=>this.fetchData(), 700);
+    });
+  }
+
   achieve(id: number){
     const token = localStorage.getItem('access_token');
-    this.apiService.put(`${this.component}/achieve`, id, {}, token).subscribe((data:any)=>{
+    this.apiService.put(`${this.component}/archive`, id, {}, token).subscribe((data:any)=>{
       console.log(data);
     },err=>{
       console.log(err);

@@ -20,6 +20,8 @@
             }
             .productSlider__selector{
                 max-width: 80px;
+                // max-height: 150px;
+                // overflow-y: scroll;
                 .selector{
                     padding: 10px 0 0 0;
                     margin: 0;
@@ -30,6 +32,8 @@
                         margin-bottom: 10px;
                         img{
                             width: 80px;
+                            max-width: 80px;
+                            object-fit: contain;
                         }
                     }
                 }
@@ -102,6 +106,12 @@
         &desc{
             font-size: 16px;
         }
+        &selector{
+            mat-radio-button{
+                margin-right: 20px;
+                margin-bottom: 10px;
+            }
+        }
     }
     .relatedProducts{
         padding-top: 30px;
@@ -139,5 +149,18 @@
                 }
             }
         }
-    }
+    } 
 }
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color:rgb(66, 134, 244) !important; 
+  }
+  
+  .mat-radio-button.mat-accent .mat-radio-inner-circle{
+    color:rgb(66, 134, 244) !important;
+    background-color:rgb(66, 134, 244)  !important;
+  }
+  
+  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+      background-color:rgb(255, 37, 37,.26) !important;
+  }

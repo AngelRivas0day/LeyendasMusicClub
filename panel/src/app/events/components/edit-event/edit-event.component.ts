@@ -28,12 +28,17 @@ export class EditEventComponent implements OnInit {
     });
   }
 
+  handleChange(event: any){
+    this.selectedFile = <File>event.target.files[0];
+    this.form.value.image = this.selectedFile;
+  }
+
   ngOnInit() {
     this.fetchEvent(this.data.id);
-    // this.editProdForm.valueChanges.subscribe(()=>{
-    //   this.editProdForm.value.image = this.selectedFile;
-    //   this.values = this.editProdForm.value;
-    // });
+    this.form.valueChanges.subscribe(()=>{
+      this.form .value.image = this.selectedFile;
+      this.values = this.form .value;
+    });
   }
 
   fetchEvent(id) {
@@ -54,7 +59,7 @@ export class EditEventComponent implements OnInit {
     // const formData = new FormData();
     let token = localStorage.getItem('access_token');
     // console.log(this.editProdForm.get('image').value);
-    this.apiService.put('event/update', id, this.form.value, token).subscribe((data) => {
+    this.apiService.put('events/update', id, this.form.value, token).subscribe((data) => {
       console.log("Si jalo el update");
       console.log(data);
     },(error)=>{

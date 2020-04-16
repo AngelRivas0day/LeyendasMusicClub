@@ -1,0 +1,51 @@
+#maquinitas{
+    padding: 50px 0;
+    min-height: calc(100vH - 350px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .game__card{
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+        margin-bottom: 15px;
+        .card__image-container{
+            text-align: center;
+            &:hover .card__image-hover-content{
+                opacity: 1;
+            }
+            .card__image{
+                width: 230px !important;
+                height: 250px !important;
+                object-fit: contain;
+                height: auto;
+            }
+            .card__image-hover-content{
+                transition: all .3s;
+                opacity: 0;
+                padding: 0 10px;
+                position: absolute;
+                height: 98%;
+                width: 100%;
+                top: 0;
+                background-color: rgba(0,0,0,.6);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                box-sizing: border-box;
+                p{
+                    color: white;
+                    text-align: center;
+                }
+                button{
+                    color: white;
+                    background-color: transparent;
+                    padding: 2px 5px;
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

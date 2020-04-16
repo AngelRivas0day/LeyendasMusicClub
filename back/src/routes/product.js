@@ -13,4 +13,6 @@ router.delete('/delete/:id', md_auth.ensureAuth, productController.delete);
 router.put('/update-image/:id', md_auth.ensureAuth, productController.uploadImage);
 router.get('/get-image/:fileName', productController.getImage);
 
+router.post('/update-images/:id', productController.multipleImage);
+
 module.exports = router;
