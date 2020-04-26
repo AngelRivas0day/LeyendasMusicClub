@@ -1,0 +1,43 @@
+<div class="panel-header panel-header-sm">
+</div>
+
+<div class="main-content">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card card-chart" id="images-card">
+                <div class="card-header">
+                    <h5 class="card-category">Cofiguración general</h5>
+                    <h4 class="card-title">Carrusel principal</h4>
+                    <div ngbDropdown>
+                        <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" ngbDropdownToggle>
+                          <i class="now-ui-icons loader_gear"></i>
+                        </button>
+                        <div ngbDropdownMenu class="dropdown-menu-right">
+                          <a class="dropdown-item" (click)="createSlide()">Nuevo slide</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="images-list">
+                        <ng-container *ngFor="let carouselImage of carouselImages">
+                            <div class="image__item">
+                                <div class="list__image-container">
+                                    <img [src]="baseUrl + carouselImage.image" alt="" class="list__image">
+                                </div>
+                                <div class="list__image-actions">
+                                    <i class="material-icons icon-trash" color="warning" (click)="eraseImage(carouselImage.id)">
+                                        cancel
+                                    </i>
+                                    &nbsp;
+                                    <i class="material-icons icon-edit" (click)="editImage(carouselImage.id, carouselImage.image)">
+                                        edit
+                                    </i>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

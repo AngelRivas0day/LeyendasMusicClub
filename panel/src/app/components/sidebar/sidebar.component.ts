@@ -13,7 +13,8 @@ export const ROUTES: RouteInfo[] = [
   { path: '/reservaciones', title: 'Reservaciones', icon: 'education_agenda-bookmark', class: '' },
   { path: '/ordenes', title: 'Ordenes', icon: 'files_paper', class: '' },
   { path: '/juegos-de-mesa', title: 'Juegos de mesa', icon: 'sport_trophy', class: '' },
-  { path: '/maquinitas', title: 'Maquinitas', icon: 'tech_controller-modern', class: '' }
+  { path: '/maquinitas', title: 'Maquinitas', icon: 'tech_controller-modern', class: '' },
+  { path: '/colores', title: 'Colores', icon: 'design_palette', class: '' }
 ];
 
 @Component({

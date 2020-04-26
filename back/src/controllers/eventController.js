@@ -14,16 +14,19 @@ var upload = multer({ storage: storage }).single('image');
 const controller = {};
 
 controller.listAll = (req, res) => {
-    // res.send("Si jala el customer list");
-    req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM events', (err, events) => {
-            if(err){
-                res.send("Hubo un error");
-            }
-            console.log(events);
-            res.json(events);
+  req.getConnection((err, conn) => {
+    conn.query('SELECT * FROM events', (err, rows) => {
+      if(err){
+        res.status(500).send({
+          success: false,
+          message: "Hubo un error",
+          error: err
         });
-    });;
+      }else{
+        res.status(200).json(rows);
+      }
+    });
+  });;
 };
 
 controller.create = (req, res) => {
@@ -67,49 +70,112 @@ controller.listOne = (req, res) => {
   const { id } = req.params;
   req.getConnection((err, conn) => {
     conn.query("SELECT * FROM events WHERE id = ?", [id], (err, rows) => {
-    //   res.render('customers_edit', {
-    //     data: rows[0]
-    //   })
-    console.log(rows);
-    res.json(rows);
+      if(err){
+        res.status(500).send({
+          success: false,
+          message: "Hubo un error",
+          error: err
+        });
+      }else{
+        res.status(200).json(rows[0]);
+      }
     });
   });
 };
 
 controller.edit = (req, res) => {
   const { id } = req.params;
-  const newCustomer = req.body;
-  req.getConnection((err, conn) => {
-    conn.query('UPDATE events set ? where id = ?', [newCustomer, id], (err, rows) => {
-      res.redirect('/');
+  const path = 'src/uploads/events';
+  upload(req, res, (err)=>{
+    var data = req.body;
+    req.getConnection((err,conn)=>{
+      conn.query('SELECT * FROM events WHERE id = ?', [id], (error, response)=>{
+        const imageToDelete = response[0].image;
+        fs.unlink(`${path}/${imageToDelete}`, (err)=>{
+            if(err){
+                console.log(err);
+            }else{
+                console.log("Se borro la foto");
+            }
+        });
+      });
+      const fileName = req.file.filename;
+      data.image = fileName;
+      conn.query('UPDATE events set ? WHERE id = ?', [data, id], (err, rows) => {
+        if(err){
+          res.status(500).send({
+            success: false,
+            message: "Hubo un error",
+            error: err
+          });
+        }else{
+          res.status(200).send({
+            success:true,
+            message: "ok",
+            rows: rows
+          });
+        }
+      });
     });
   });
 };
 
 controller.delete = (req, res) => {
     const { id } = req.params;
+    const path = 'src/uploads/events';
     req.getConnection((err, connection) => {
+      connection.query('SELECT * FROM events WHERE id = ?', [id], (error, response)=>{
+        const imageToDelete = response[0].image;
+        fs.unlink(`${path}/${imageToDelete}`, (err)=>{
+            if(err){
+                console.log(err);
+            }else{
+                console.log("Se borro la foto");
+            }
+        });
+      });
       connection.query('DELETE FROM events WHERE id = ?', [id], (err, rows) => {
-        res.redirect('/');
+        if(err){
+          res.status(500).send({
+            success: false,
+            message: "Hubo un error",
+            error: err
+          });
+        }else{
+          res.status(200).send({
+            success:true,
+            message: "ok",
+            rows: rows
+          });
+        }
       });
     });
 };
-
 controller.uploadImage = (req, res) => {
   const id = req.params.id;
     upload(req, res, function (err) {
         if (err) {
-            res.status(500).send({
-                message: 'La foto no fue actulizada con exito'
-              });
+          res.status(500).send({
+            message: 'La foto no fue actulizada con exito'
+          });
         }
         // Everything went fine
         const fileName = req.file.filename;
         req.getConnection((err, conn) => {
             const query = conn.query('UPDATE events SET imageUrl = ? WHERE id = ?', [fileName, id], (err, rows) => {
-              res.status(200).send({
-                message: 'La foto fue actulizada con exito'
-              });
+              if(err){
+                res.status(500).send({
+                  success: false,
+                  message: "Hubo un error",
+                  error: err
+                });
+              }else{
+                res.status(200).send({
+                  success:true,
+                  message: "ok",
+                  rows: rows
+                });
+              }
             });
         });
     })

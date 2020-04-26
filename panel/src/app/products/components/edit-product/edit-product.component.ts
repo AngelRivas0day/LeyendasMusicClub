@@ -12,9 +12,7 @@ export class EditProductComponent implements OnInit {
 
   editProdForm: FormGroup;
   product: any;
-  selectedFile: File;
-  values:any;
-
+  colors: any[];
 
   constructor(
     public dialogRef: MatDialogRef<EditProductComponent>,
@@ -32,6 +30,7 @@ export class EditProductComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.apiService.getAll('colors/list').subscribe(resp=>this.colors = resp);
     this.getProduct(this.data.id);
   }
 
@@ -39,9 +38,10 @@ export class EditProductComponent implements OnInit {
     if (this.data.id) {
       this.apiService.getOne('products/list', id).subscribe((data: any) => {
         console.log("data: ");
-        console.log(data[0]);
-        this.product = data[0];
-        this.editProdForm.patchValue(data[0]);
+        console.log(data);
+        this.product = data;
+        this.editProdForm.patchValue(data);
+        this.colors = this.product.colors;
       },(error)=>{
         console.log("Hubo un error al traer la informacion del producto con el id: "+id);
         console.log(error);

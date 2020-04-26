@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CreateMachineComponent } from '../create-machine/create-machine.component';
 import { UpdateImageComponent } from '../update-image/update-image.component';
 import { EditMachineComponent } from '../edit-machine/edit-machine.component';
+import { CreateCategoryComponent } from 'app/components/create-category/create-category.component';
 
 @Component({
   selector: 'app-machines',
@@ -105,6 +106,19 @@ export class MachinesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(()=>{
       this.fetchData();
+    });
+  }
+
+  createCat(){
+    const dialogRef = this.dialog.open(CreateCategoryComponent,{
+      width: '700px',
+      hasBackdrop: true,
+      data: {
+        type: this.component
+      }
+    });
+    dialogRef.afterClosed().subscribe(()=>{
+      setTimeout(()=>this.fetchData(),750);
     });
   }
 

@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Actualizar carrusel</h1>
+<div mat-dialog-content>
+    <div class="">
+        <input type="file" (change)="handleChange($event)" [formControl]="image" />
+    </div>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button (click)="updateImage()">Guardar</button>
+</mat-dialog-actions>

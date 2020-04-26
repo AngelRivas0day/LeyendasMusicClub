@@ -40,29 +40,9 @@ export class ProductComponent implements OnInit {
       name: "extra grande"
     }
   ];
-  colors: any[] = [
-    {
-      id: 1,
-      name: "red"
-    },
-    {
-      id: 2,
-      name: "blue"
-    },
-    {
-      id: 3,
-      name: "black"
-    },
-    {
-      id: 4,
-      name: "white"
-    },
-    {
-      id: 5,
-      name: "brown"
-    }
-  ];
+  colors: any[] = [];
   currentColor: any;
+  currentColorIndex: number;
   currentSize: any;
 
   lastProds:any[] = [];
@@ -94,15 +74,13 @@ export class ProductComponent implements OnInit {
 
   getProduct(id: number){
     this.prodctsService.getProduct(id).subscribe((data: any)=>{
-      this.product = data[0];
-      this.currentImage = data[0].image;
-      this.currentImages = JSON.parse(data[0].images);
+      this.product = data
+      this.currentImage = data.image;
+      this.currentImages = JSON.parse(data.images);
       this.currentImages.push(this.currentImage);
-      console.log(data[0]);
+      this.colors = this.product.colors;
+      console.log(this.colors);
     });
-    // console.log(this.product);
-    // this.currentImage = this.product.imageUrl;
-    // this.currentImages = this.product.images;
   }
 
   goToItem(id: number){
@@ -119,15 +97,16 @@ export class ProductComponent implements OnInit {
     }else{
       alert('Formulario no lleno');
     }
-    // this.productClicked.emit(this.product.id);
   }
 
   setSize(value: any){
     this.currentSize = value.name;
   }
 
-  setColor(value: any){
+  setColor(value: any, index: number){
     this.currentColor = value.name;
+    this.currentColorIndex = index;
+    console.log(index);
   }
 
   changeCurrentImage(image: string){

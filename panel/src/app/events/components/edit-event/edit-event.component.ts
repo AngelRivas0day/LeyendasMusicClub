@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'app/services/services';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 
 @Component({
   selector: 'app-edit-event',
@@ -23,8 +24,8 @@ export class EditEventComponent implements OnInit {
     public formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      imageUrl: new FormControl('', [Validators.required]),
-      date: new FormControl(0, [Validators.required]),
+      image: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
     });
   }
 
@@ -45,21 +46,21 @@ export class EditEventComponent implements OnInit {
     if (this.data.id) {
       this.apiService.getOne('events/list',id).subscribe((data: any) => {
         console.log("data: ");
-        console.log(data[0]);
-        this.event = data[0];
-        this.form.patchValue(data[0]);
+        console.log(data);
+        this.event = data;
+        this.form.patchValue(data);
       },(error)=>{
         console.log("Hubo un error al traer la informacion del producto con el id: "+id);
         console.log(error);
+      },()=>{
+        this.form.get('date').setValue(new Date(this.event.date));
       });
     }
   }
 
   saveChanges(id) {
-    // const formData = new FormData();
     let token = localStorage.getItem('access_token');
-    // console.log(this.editProdForm.get('image').value);
-    this.apiService.put('events/update', id, this.form.value, token).subscribe((data) => {
+    this.apiService.updateWithImage('events/update', id, this.form.value, this.selectedFile, token).subscribe((data) => {
       console.log("Si jalo el update");
       console.log(data);
     },(error)=>{

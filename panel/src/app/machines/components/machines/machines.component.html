@@ -11,6 +11,9 @@
                     <button mat-raised-button (click)="openCreate()">
                         <i class="now-ui-icons ui-1_simple-add"></i>  Nuevo juego
                     </button>
+                    <button mat-flat-button (click)="createCat()" class="ml-3">
+                        <i class="now-ui-icons ui-1_simple-add"></i>  Nueva categoria
+                    </button>
                     <div class="table-responsive mt-4">
                         <table datatable [dtOptions]="dtOptions" class="row-border hover dataTable w-100">
                             <thead>

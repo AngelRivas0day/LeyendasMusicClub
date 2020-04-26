@@ -48,7 +48,9 @@ export class ApiService {
   private setToken( token: string ) {
     localStorage.setItem( 'access_token', token );
     this.options.headers = new HttpHeaders({
-      'token': token
+      // 'Content-Type': 'application/json; charset=utf-8',
+      'token': token,
+      // 'Content-Type': 'multipart/form-data'
     });
   }
 
@@ -129,11 +131,26 @@ export class ApiService {
     );
   }
 
-  postWithImage( endpoint: string, data: FormGroup = null , token: any) {
+  postWithImage( endpoint: string, data: any = null , token: any) {
     this.setToken(token);
     var formData = this.toFormData(data);
     // formData.append('images', data.get('images').value);
     return this.http.post(`${this.base_url}/${endpoint}`, formData, this.options ).pipe(
+      retry(2),
+      this.catchRequestError()
+    );
+  }
+
+  updateWithImage( endpoint: string, id: number,  data: any = null , file: any, token: any) {
+    this.setToken(token);
+    // console.log("Data:",data);
+    // console.log("date:",data.date);
+    // console.log("File:",data.image);
+    var formData = new FormData();
+    // formData = this.toFormData(data);
+    formData.append('date', data.date);
+    formData.append('image', data.image, data.image.name);
+    return this.http.post<any>(`${this.base_url}/${endpoint}/${id}`, formData, this.options ).pipe(
       retry(2),
       this.catchRequestError()
     );
@@ -178,6 +195,16 @@ export class ApiService {
     const payload = new FormData();
     payload.append('image', file, fileName);
     return this.http.put<any>(`${this.base_url}/${endpoint}/${id}`, payload, this.options).pipe(
+      retry(3),
+      this.catchRequestError()
+    )
+  }
+
+  postImage(endpoint: string, token: string, file: File, fileName: string){
+    this.setToken(token);
+    const payload = new FormData();
+    payload.append('image', file, fileName);
+    return this.http.post<any>(`${this.base_url}/${endpoint}/`, payload, this.options).pipe(
       retry(3),
       this.catchRequestError()
     )

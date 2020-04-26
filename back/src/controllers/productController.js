@@ -7,10 +7,11 @@ var storage = multer.diskStorage({
         cb(null, 'src/uploads/products')
     },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + '-test.jpg')
+        cb(null, file.fieldname + '-' + Date.now() + '.jpg')
     }
 });
 var upload = multer({ storage: storage }).single('image');
+var multipleUpload = multer({ storage: storage }).array('images', 25);
 
 controller.list = (req, res) => {
     // res.send("Si jala el customer list");
@@ -25,7 +26,6 @@ controller.list = (req, res) => {
     });
 };
 
-var multipleUpload = multer({ storage: storage }).array('images', 25);
 
 controller.multipleImage = (req, res) => {
   const { id } = req.params;
@@ -41,8 +41,7 @@ controller.multipleImage = (req, res) => {
       fileNames.push(image.filename);
     });
     data.images = JSON.stringify(fileNames);
-    data.colors = JSON.stringify(colors);
-
+    data.colors = JSON.stringify([colors]);
     req.getConnection((err, conn) => {
       const query = conn.query('UPDATE products SET ? WHERE id = ?', [data, id], (err, rows) => {
         if(err){
@@ -75,8 +74,8 @@ controller.listDataTable = (req, res) => {
   serachPattern = req.body.search.value;
   req.getConnection((err, conn) => {
     const query = conn.query(
-    'SELECT * FROM products WHERE name LIKE ?', 
-    [`%${serachPattern}%`], 
+    'SELECT * FROM products WHERE name LIKE ?',
+    [`%${serachPattern}%`],
     (err, resp) => {
         if(err){
             res.send("Hubo un error");
@@ -87,45 +86,33 @@ controller.listDataTable = (req, res) => {
 };
 
 controller.add = (req, res) => {
-      // the same req, res params are passed to the upload function, in order to make it look like the og
     multipleUpload(req, res, function (err) {
-    console.log("Files: ");
-    console.log(req.file);
-    console.log(req.files);
     var data = req.body;
-    let colors = req.body.colors;
-    let images = req.body.images;
+    let images = req.files;
     let fileNames = [];
     Array.from(images).forEach(image => {
       console.log(image);
       fileNames.push(image.filename);
     });
+    data.image = fileNames[0];
     data.images = JSON.stringify(fileNames);
-    data.colors = JSON.stringify(colors);
-
-    // if (err) {
-    //     res.status(500).send({
-    //         message: 'La info no fue actulizada con exito'
-    //       });
-    // }else{
-    //   if(req.file){
-    //     const fileName = req.file.filename;
-    //     data.image = fileName;
-    //   }else{
-    //     data.image = "No seteado...";
-    //   }
-    //   req.getConnection((err, conn) => {
-    //       const query = conn.query('INSERT INTO products SET ?', [data], (err, rows) => {
-    //         if(err){
-    //           console.log(err);
-    //         }else{
-    //           res.status(200).send({
-    //             message: 'La into fue creada con exito'
-    //           });
-    //         }
-    //       });
-    //   });
-    // }
+    if (err) {
+        res.status(500).send({
+            message: 'La info no fue actulizada con exito'
+          });
+    }else{
+      req.getConnection((err, conn) => {
+          const query = conn.query('INSERT INTO products SET ?', [data], (err, rows) => {
+            if(err){
+              console.log(err);
+            }else{
+              res.status(200).send({
+                message: 'La into fue creada con exito'
+              });
+            }
+          });
+      });
+    }
   });
 };
 
@@ -133,11 +120,17 @@ controller.edit = (req, res) => {
   const { id } = req.params;
   req.getConnection((err, conn) => {
     conn.query("SELECT * FROM products WHERE id = ?", [id], (err, rows) => {
-    //   res.render('customers_edit', {
-    //     data: rows[0]
-    //   })
-    console.log(rows);
-    res.json(rows);
+      if(err){
+        res.status(500).status({
+          success: false,
+          message: "Hubo un error",
+          error: err
+        });
+      }else{
+        let colors = rows[0].colors;
+        rows[0].colors = JSON.parse(colors);
+        res.status(200).json(rows[0]);
+      }
     });
   });
 };
@@ -179,6 +172,8 @@ controller.delete = (req, res) => {
 controller.uploadImage = (req, res) => {
   const id = req.params.id;
     upload(req, res, function (err) {
+      let colors = req.body.colors;
+      let noColors = colors.length;
         if (err) {
             res.status(500).send({
                 message: 'La foto no fue actulizada con exito'

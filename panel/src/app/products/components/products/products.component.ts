@@ -39,6 +39,7 @@ export class ProductsComponent implements OnInit {
       that.apiService.postDataTables(`${this.component}/dataTable`, DataTablesParemeters).
         subscribe((resp:any)=>{
           that.products = resp;
+          console.log(that.products);
           callback({
             recordsTotal: resp.length,
             data: [] 
@@ -57,6 +58,9 @@ export class ProductsComponent implements OnInit {
         id: id
       }
     });
+    dialogRef.afterClosed().subscribe(()=>{
+      setTimeout(()=>this.rerender(),750);
+    });
   }
 
   openCreate(){
@@ -64,6 +68,15 @@ export class ProductsComponent implements OnInit {
       width: '800px',
       hasBackdrop: true,
       disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(()=>{
+      setTimeout(()=>this.rerender(),750);
+    });
+  }
+
+  rerender(){
+    this.apiService.getAll(`${this.component}/list`).subscribe((resp:any)=>{
+      this.products = resp;
     });
   }
 
@@ -73,6 +86,8 @@ export class ProductsComponent implements OnInit {
       console.log('Se elminó el producto con éxito');
     },(error)=>{ 
       console.log(error);
+    },()=>{
+      setTimeout(()=>this.rerender(),750);
     });
   }
 
@@ -83,6 +98,9 @@ export class ProductsComponent implements OnInit {
       data: {
         id: id
       }
+    });
+    dialogRef.afterClosed().subscribe(()=>{
+      setTimeout(()=>this.rerender(),750);
     });
   }
 }

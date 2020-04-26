@@ -1,0 +1,50 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Colores de los productos</h5>
+                </div>
+                <div class="card-body">
+                    <button mat-raised-button (click)="openCreate()">
+                        <i class="now-ui-icons ui-1_simple-add"></i>  Nuevo color
+                    </button>
+                    <div class="table-responsive mt-4">
+                        <table datatable [dtOptions]="dtOptions" class="row-border hover dataTable w-100">
+                            <thead>
+                              <tr>
+                                <th>ID</th>
+                                <th>Color</th>
+                                <th>Nombre del color</th>
+                                <th>Hexadecimal</th>
+                                <th>Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let color of colors">
+                                    <td>{{ color.id }}</td>
+                                    <td>
+                                        <div class="color-sample" [ngStyle]="{'background': color.hex}"></div>
+                                    </td>
+                                    <td>{{ color.name }}</td>
+                                    <td>{{ color.hex }}</td>
+                                    <td>
+                                        <i class="material-icons icon-trash" color="warning" (click)="erase(color.id)">
+                                            cancel
+                                        </i>
+                                        &nbsp;
+                                        <i class="material-icons icon-edit" (click)="openEdit(color.id)">
+                                            edit
+                                        </i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

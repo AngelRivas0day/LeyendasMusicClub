@@ -6,7 +6,7 @@ const controller = {};
 controller.listAll = (req, res) => {
     // res.send("Si jala el customer list");
     req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM gameCategories', (err, gameCategories) => {
+        conn.query('SELECT * FROM gameCategories WHERE type = 1', (err, gameCategories) => {
             if(err){
                 res.send("Hubo un error");
             }
@@ -16,40 +16,40 @@ controller.listAll = (req, res) => {
     });;
 };
 
+controller.listDataTable = (req, res) => {
+  serachPattern = req.body.search.value;
+  req.getConnection((err, conn) => {
+    const query = conn.query(
+    'SELECT * FROM gameCategories WHERE name LIKE ? AND type = 1', 
+    [`%${serachPattern}%`], 
+    (err, resp) => {
+        if(err){
+            res.send("Hubo un error");
+        }
+        res.json(resp);
+    });
+  });
+};
+
 controller.create = (req, res) => {
-  upload(req, res, function (err) {
-    console.log(req.body);
-    let data = req.body;
-    if (err) {
+  const data = req.body;
+  req.getConnection((err, conn) => {
+    const query = conn.query('INSERT INTO gameCategories SET ?', [data], (err, rows) => {
+      if(err){
+        console.log(err);
         res.status(500).send({
-            message: 'La info no fue actulizada con exito'
-          });
-    }else{
-      if(req.file){
-        const fileName = req.file.filename;
-        data.image = fileName;
+          success: false,
+          message: "El evento no fue creado",
+          data: rows
+        });
       }else{
-        data.image = "No seteado...";
+        res.status(200).send({
+          success: true,
+          message: "El evento fue creado",
+          data: rows
+        });
       }
-      req.getConnection((err, conn) => {
-          const query = conn.query('INSERT INTO gameCategories SET ?', [data], (err, rows) => {
-            if(err){
-              console.log(err);
-              res.status(500).send({
-                success: false,
-                message: "El evento no fue creado",
-                data: rows
-              });
-            }else{
-              res.status(200).send({
-                success: true,
-                message: "El evento fue creado",
-                data: rows
-              });
-            }
-          });
-      });
-    }
+    });
   });
 };
 
@@ -57,11 +57,16 @@ controller.listOne = (req, res) => {
   const { id } = req.params;
   req.getConnection((err, conn) => {
     conn.query("SELECT * FROM gameCategories WHERE id = ?", [id], (err, rows) => {
-    //   res.render('customers_edit', {
-    //     data: rows[0]
-    //   })
-    console.log(rows);
     res.json(rows);
+    if(err){
+      res.status(500).send({
+        success: false,
+        message: 'Hubo un error',
+        error: err
+      });
+    }else{
+      res.json(rows);
+    }
     });
   });
 };
@@ -71,7 +76,19 @@ controller.edit = (req, res) => {
   const newCustomer = req.body;
   req.getConnection((err, conn) => {
     conn.query('UPDATE gameCategories set ? where id = ?', [newCustomer, id], (err, rows) => {
-      res.redirect('/');
+      if(err){
+        res.status(500).send({
+          success: false,
+          message: 'Hubo un error',
+          error: err
+        });
+      }else{
+        res.status(500).send({
+          success: true,
+          message: 'The game cat was updated succesfully',
+          data: rows
+        });
+      }
     });
   });
 };
@@ -80,7 +97,19 @@ controller.delete = (req, res) => {
     const { id } = req.params;
     req.getConnection((err, connection) => {
       connection.query('DELETE FROM gameCategories WHERE id = ?', [id], (err, rows) => {
-        res.redirect('/');
+        if(err){
+          res.status(500).send({
+            success: false,
+            message: 'Hubo un error',
+            error: err
+          });
+        }else{
+          res.status(500).send({
+            success: true,
+            message: 'The game cat was deleted succesfully',
+            data: rows
+          });
+        }
       });
     });
 };

@@ -14,24 +14,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 export class JuegosComponent implements OnInit {
   baseUrl = environment.baseUrl + '/games/get-image/';
   games: any[] = [];
-  categories: any[] = [
-    {
-      id: 1,
-      name: 'co-op'
-    },
-    {
-      id: 2,
-      name: '1vs1'
-    },
-    {
-      id: 3,
-      name: 'mistery'
-    },
-    {
-      id: 4,
-      name: 'free for all'
-    }
-  ];
+  categories: any[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -39,12 +22,14 @@ export class JuegosComponent implements OnInit {
   ) { }
 
   fetchData(){
-    this.apiService.getAll('machines/list').subscribe((data:any)=>{
+    this.apiService.getAll('games/list').subscribe((data:any)=>{
       this.games = data;
+      console.log(data);
     });
-    // this.apiService.getAll('gamesCat/list').subscribe((data:any)=>{
-    //   this.categories = data;
-    // },err=>console.log(err));
+    this.apiService.getAll('gamesCategories/list').subscribe((data:any)=>{
+      this.categories = data;
+      console.log(data);
+    },err=>console.log(err));
   }
 
   ngOnInit(): void {

@@ -1,0 +1,57 @@
+@import "../../../../assets/vars";
+
+#images-card{
+    .images-list{
+        .image__item{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 15px;
+            @media #{$break-medium}{
+                flex-direction: row;
+                .list__image-actions{
+                    height: auto;
+                    min-height: inherit;
+                }
+            }
+           .list__image-container{
+                height: auto;
+                width: 100%;
+                position: relative;
+                @media #{$break-medium}{
+                    width: 80%;
+                }
+                .list__image{
+                    width: 100%;
+                    height: 120px;
+                    object-fit: cover;
+                }
+            } 
+            .list__image-actions{
+                display: flex;
+                flex: 1;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                height: 80px;
+                min-height: 80px;
+                max-width: 30%;
+                i{
+                    cursor: pointer;
+                    transition: all .3s;
+                    &.icon-edit{
+                        &:hover{
+                            color: green;
+                        }
+                    }
+                    &.icon-trash{
+                        &:hover{
+                            color: red;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

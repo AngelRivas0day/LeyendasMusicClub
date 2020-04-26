@@ -8,6 +8,9 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { LoginComponent } from './login/login.component';
+import { CreateCategoryComponent } from './create-category/create-category.component';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
+import { MaterialModule } from 'app/material/material.module';
 
 @NgModule({
   imports: [
@@ -15,19 +18,26 @@ import { LoginComponent } from './login/login.component';
     RouterModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialModule
   ],
   declarations: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
     LoginComponent,
+    CreateCategoryComponent,
+    EditCategoryComponent,
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    LoginComponent,
+    LoginComponent
+  ],
+  entryComponents: [
+    CreateCategoryComponent,
+    EditCategoryComponent,
   ]
 })
 export class ComponentsModule { }

@@ -11,14 +11,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class CreateProductComponent implements OnInit {
 
   form: FormGroup;
-  selectedFiles: File[];
+  selectedFiles: Array<File>;
   values:any;
   // colors: any[];
   categories: any[];
   collections: any[];
-  colors: any[] = [
-    'rojo', 'blanco', 'negro', 'cafe', 'azul marino'
-  ];
+  colors: any[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<CreateProductComponent>,
@@ -41,20 +39,34 @@ export class CreateProductComponent implements OnInit {
 
   ngOnInit(): void{
     this.form.valueChanges.subscribe((data)=> {
-      this.form.value.images = <File[]>this.selectedFiles;
+      this.form.value.images = <Array<File>>this.selectedFiles;
       this.values = this.form.value;
+      let colors = this.form.value.colors;
+      this.form.value.colors = JSON.stringify(colors);
+      console.log(this.form.value.colors);
     });
+    this.apiService.getAll('colors/list').subscribe((resp:any)=>{
+      this.colors = resp;
+    })
   }
 
   create(){
     const token = localStorage.getItem('access_token');
     this.form.get('noColors').setValue(this.form.value.colors.length);
     console.log(this.form.value);
-    // let formData = new FormData();
-    // Array.from(this.form.value.images).forEach((item: File)=>console.log(item));
-    // formData.append('images', this.form.value.images, this.form.value.images.name);
-    // console.log(formData.get('images'));
-    this.apiService.postWithImage('products/create', this.form.value, token).subscribe((data:any)=>{
+    let formData = new FormData();
+    const files: Array<File> = this.selectedFiles;
+    console.log("Files", files);
+    formData = this.apiService.toFormData(this.form.value);
+    Array.from(files).forEach((file: File)=>{
+      console.log("File", file);
+      formData.append("images", file, file.name);
+    });
+    // this.form.get('colors').setValue()
+    let colors = this.form.value.colors;
+    this.form.value.colors = JSON.stringify(colors);
+    console.log(this.form.value);
+    this.apiService.post('products/create', formData, token).subscribe((data:any)=>{
       console.log(data);
     },(error)=>{
       console.log("Hubo un error al crear el producto");
@@ -65,7 +77,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   handleChange(event){
-    this.selectedFiles = <File[]>event.target.files;
+    this.selectedFiles = <Array<File>>event.target.files;
     this.form.value.images = this.selectedFiles;
     console.log(this.form.value);
     console.log(this.selectedFiles);

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductsService } from 'src/app/shared/services/products.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { ApiService } from 'src/app/shared/services/api.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-store',
@@ -12,26 +14,9 @@ export class StoreComponent implements OnInit {
 
   products: any[];
 
-  slides: any[] = [
-    {
-      id: 1,
-      src: 'https://source.unsplash.com/800x500?random',
-      title: 'title',
-      alt: 'alt text'
-    },
-    {
-      id: 2,
-      src: 'https://source.unsplash.com/random',
-      title: 'title',
-      alt: 'alt text'
-    },
-    {
-      id: 3,
-      src: 'https://source.unsplash.com/800x500?shirts',
-      title: 'title',
-      alt: 'alt text'
-    }
-  ];
+  slides: any[] = [];
+
+  baseUrl: string = environment.baseUrl + '/carousel/get-image/';
 
   customOptions: OwlOptions = {
     loop: true,
@@ -51,11 +36,13 @@ export class StoreComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public prodctsService: ProductsService
+    public prodctsService: ProductsService,
+    private apiService: ApiService
   ) { }
 
   ngOnInit(): void {
     this.getProducts();
+    this.fetchSlides();
   }
 
   goToItem(id: number){
@@ -67,6 +54,12 @@ export class StoreComponent implements OnInit {
     this.prodctsService.getProducts().subscribe((data: any)=>{
       console.log(data);
       this.products = data;
+    });
+  }
+
+  fetchSlides(){
+    this.apiService.getAll('carousel/list').subscribe((resp:any)=>{
+      this.slides = resp;
     });
   }
 

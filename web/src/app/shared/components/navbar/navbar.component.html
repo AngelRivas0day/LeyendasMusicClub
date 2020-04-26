@@ -1,8 +1,8 @@
 <nav id="nav">
     <div class="container main-navbar">
         <div class="navbar-logo">
-            <img src="" alt="">
-            <span>Logo</span>
+            <img src="../assets/images/logos/logo.png" alt="">  
+            <!-- <span>Logo</span> -->
         </div>
         <a (click)="closeNav()" class="cart-icon" routerLink="/tienda/carrito">
             <mat-icon [matBadge]="total$ | async" matBadgeColor="warn" aria-hidden="false" aria-label="Example thumbs up SVG icon">shopping_cart</mat-icon>

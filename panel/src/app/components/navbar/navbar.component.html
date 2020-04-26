@@ -8,7 +8,7 @@
                     <span class="navbar-toggler-bar bar3"></span>
                 </button>
             </div>
-            <a class="navbar-brand" href="#pablo">{{getTitle()}}</a>
+            <a class="navbar-brand" routerLink="/">Panel de adminstración</a>
         </div>
         <button class="navbar-toggler" type="button" (click)="collapse()"
           [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
@@ -28,14 +28,14 @@
             </div>
           </form> -->
           <ul class="navbar-nav">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="#pablo">
                 <i class="now-ui-icons media-2_sound-wave"></i>
                 <p>
                   <span class="d-lg-none d-md-block">Stats</span>
                 </p>
               </a>
-            </li>
+            </li> -->
             <li class="nav-item" ngbDropdown>
               <a class="nav-link" id="dropdownBasic1" ngbDropdownToggle>
                 <i class="now-ui-icons location_world"></i>
@@ -45,18 +45,16 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic1">
                 <a class="dropdown-item" (click)="logout()">Logout</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="#pablo">
                 <i class="now-ui-icons users_single-02"></i>
                 <p>
                   <span class="d-lg-none d-md-block">Account</span>
                 </p>
               </a>
-            </li>
+            </li> -->
           </ul>
         </div>
     </div>

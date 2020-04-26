@@ -13,24 +13,7 @@ export class MaquinasComponent implements OnInit {
 
   baseUrl = environment.baseUrl + '/machines/get-image/';
   games: any[] = [];
-  categories: any[] = [
-    {
-      id: 1,
-      name: 'co-op'
-    },
-    {
-      id: 2,
-      name: '1vs1'
-    },
-    {
-      id: 3,
-      name: 'mistery'
-    },
-    {
-      id: 4,
-      name: 'free for all'
-    }
-  ];
+  categories: any[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -41,9 +24,9 @@ export class MaquinasComponent implements OnInit {
     this.apiService.getAll('machines/list').subscribe((data:any)=>{
       this.games = data;
     });
-    // this.apiService.getAll('gamesCat/list').subscribe((data:any)=>{
-    //   this.categories = data;
-    // },err=>console.log(err));
+    this.apiService.getAll('machinesCategories/list').subscribe((data:any)=>{
+      this.categories = data;
+    },err=>console.log(err));
   }
 
   ngOnInit(): void {

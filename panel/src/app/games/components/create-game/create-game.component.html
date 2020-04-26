@@ -24,8 +24,8 @@
                 <mat-form-field class='w-100'>
                     <mat-label>Categoria del juego</mat-label>
                     <mat-select formControlName="category" name="category">
-                        <mat-option *ngFor="let category of categories" [value]="category">
-                            {{category}}
+                        <mat-option *ngFor="let category of categories" [value]="category.type">
+                            {{category.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

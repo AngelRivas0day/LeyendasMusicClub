@@ -14,7 +14,7 @@ export class CreateMachineComponent implements OnInit {
   selectedFile: File;
   values:any;
   component: string = 'machines';
-  categories: any[] = ['co-op','mistery','1vs1'];
+  categories: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,6 +39,10 @@ export class CreateMachineComponent implements OnInit {
     this.form.valueChanges.subscribe(()=>{
       this.form.value.image = this.selectedFile;
       this.values = this.form.value;
+    });
+    this.apiService.getAll('machinesCategories/list').subscribe((resp:any)=>{
+      console.log(resp);
+      this.categories = resp;
     });
   }
 

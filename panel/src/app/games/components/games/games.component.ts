@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditGameComponent } from '../edit-game/edit-game.component';
 import { CreateGameComponent } from '../create-game/create-game.component';
 import { UpdateImageComponent } from '../update-image/update-image.component';
+import { CreateCategoryComponent } from 'app/components/create-category/create-category.component';
 
 @Component({
   selector: 'app-games',
@@ -45,9 +46,15 @@ export class GamesComponent implements OnInit {
         });
       });
     },
-    columns: [{data:'id'},{data:'image'},{data:'name'},{data:'category'},{data:'actions'}]
-    };
-  }
+    columns: [
+      {data:'id'},
+      {data:'hex'},
+      {data:'name'},
+      {data:'hex'},
+      {data:'actions'}
+    ]
+  };
+}
 
   ngOnInit(){
     this.fetchData();
@@ -98,6 +105,19 @@ export class GamesComponent implements OnInit {
       hasBackdrop: true,
       data: {
         id: id
+      }
+    });
+    dialogRef.afterClosed().subscribe(()=>{
+      setTimeout(()=>this.fetchData(),750);
+    });
+  }
+
+  createCat(){
+    const dialogRef = this.dialog.open(CreateCategoryComponent,{
+      width: '700px',
+      hasBackdrop: true,
+      data: {
+        type: this.component
       }
     });
     dialogRef.afterClosed().subscribe(()=>{

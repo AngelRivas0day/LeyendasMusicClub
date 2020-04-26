@@ -22,12 +22,7 @@
                         <span class="productInfo__category font-roboto">{{ product.category }} - {{ product.price | currency }}</span>
                         <p class="productInfo__sizes-chart">Tamaños disponibles: </p>
                         <div class="productInfo__selector">
-                            <!-- <mat-chip-list>
-                                <mat-chip (click)="setSize(size)" *ngFor="let size of sizes">{{ size.name | uppercase}}</mat-chip>
-                            </mat-chip-list> -->
-                            <mat-radio-group
-                                aria-labelledby="example-radio-group-label"
-                                class="sizes-selector">
+                            <mat-radio-group aria-labelledby="example-radio-group-label" class="sizes-selector">
                                 <mat-radio-button (click)="setSize(size)" class="example-radio-button" *ngFor="let size of sizes" [value]="size.name">
                                     {{ size.name | uppercase}}
                                 </mat-radio-button>
@@ -35,13 +30,18 @@
                         </div>
                         <p class="productInfo__sizes-chart">Colores disponibles: </p>
                         <div class="productInfo__selector">
-                            <mat-radio-group
-                                aria-labelledby="example-radio-group-label"
-                                class="color-selector">
-                                <mat-radio-button (click)="setColor(color)" class="example-radio-button" *ngFor="let color of colors" [value]="color.name">
+                            <!-- <mat-radio-group aria-labelledby="example-radio-group-label" class="color-selector">
+                                <mat-radio-button (click)="setColor(color)" class="example-radio-button" *ngFor="let color of colors" [value]="color">
                                     {{ color.name | uppercase}}
                                 </mat-radio-button>
-                            </mat-radio-group>
+                            </mat-radio-group> -->
+                            <ul class="color-selector">
+                                <ng-container *ngFor="let color of colors; index as i">
+                                    <li class="color-item">
+                                        <div [ngStyle]="{'background': color.hex}" (click)="setColor(color, i)" [ngClass]="currentColorIndex == i ? 'colorActive' : 'colorUnactive'" class="color-sample"></div>
+                                    </li>
+                                </ng-container>
+                            </ul>
                         </div>
                         <h3>Cantidad: </h3>
                         <div class="productInfo__quantity-container">

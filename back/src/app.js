@@ -16,8 +16,10 @@ const adminRoutes = require('./routes/admin');
 const reservationRoutes = require('./routes/reservations');
 const machineRoutes = require('./routes/machines');
 const orderRoutes = require('./routes/order');
-const gamesCategories = require('./routes/gamesCategories');
-const juegosCategories = require('./routes/juegosCategories');
+const gamesCategoriesRoutes = require('./routes/gamesCategories');
+const juegosCategoriesRoutes = require('./routes/juegosCategories');
+const colorRoutes = require('./routes/color');
+const carouselRoutes = require('./routes/carousel');
 
 // settings
 app.set('port', process.env.PORT || 3000);
@@ -37,14 +39,15 @@ app.use(myConnection(mysql, {
 app.use(express.urlencoded({
 	extended: false
 }));
+app.use(express.json());
 app.use(session({
 	secret: 'secret',
 	resave: true,
 	saveUninitialized: true
 }))
-app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.urlencoded({extended : false}));
 app.use(bodyParser.json());
-
+// app.use(express.bodyParser());
 
 // routes
 app.use('/products', productRoutes);
@@ -54,8 +57,10 @@ app.use('/admin', adminRoutes);
 app.use('/reservations', reservationRoutes);
 app.use('/machines', machineRoutes);
 app.use('/orders', orderRoutes);
-// app.use('/gamesCategories', gamesCategories);
-// app.use('/juegosCategories', juegosCategories);
+app.use('/gamesCategories', gamesCategoriesRoutes);
+app.use('/machinesCategories', juegosCategoriesRoutes);
+app.use('/colors', colorRoutes);
+app.use('/carousel', carouselRoutes);
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
