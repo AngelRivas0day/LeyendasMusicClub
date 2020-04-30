@@ -93,7 +93,7 @@ export class ProductsComponent implements OnInit {
 
   openUpdateImage(id: number){
     const dialogRef = this.dialog.open(UpdateImageComponent,{
-      width: '400px',
+      width: '600px',
       hasBackdrop: true,
       data: {
         id: id

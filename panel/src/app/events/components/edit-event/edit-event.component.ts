@@ -60,7 +60,7 @@ export class EditEventComponent implements OnInit {
 
   saveChanges(id) {
     let token = localStorage.getItem('access_token');
-    this.apiService.updateWithImage('events/update', id, this.form.value, this.selectedFile, token).subscribe((data) => {
+    this.apiService.updateWithImage('events/update', id, this.form.value, token).subscribe((data) => {
       console.log("Si jalo el update");
       console.log(data);
     },(error)=>{

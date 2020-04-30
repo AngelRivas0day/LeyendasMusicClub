@@ -47,7 +47,7 @@ export class CreateProductComponent implements OnInit {
     });
     this.apiService.getAll('colors/list').subscribe((resp:any)=>{
       this.colors = resp;
-    })
+    });
   }
 
   create(){
@@ -79,8 +79,6 @@ export class CreateProductComponent implements OnInit {
   handleChange(event){
     this.selectedFiles = <Array<File>>event.target.files;
     this.form.value.images = this.selectedFiles;
-    console.log(this.form.value);
-    console.log(this.selectedFiles);
   }
 
   onNoClick(){

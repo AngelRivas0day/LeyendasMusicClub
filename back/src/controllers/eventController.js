@@ -89,18 +89,20 @@ controller.edit = (req, res) => {
   upload(req, res, (err)=>{
     var data = req.body;
     req.getConnection((err,conn)=>{
-      conn.query('SELECT * FROM events WHERE id = ?', [id], (error, response)=>{
-        const imageToDelete = response[0].image;
-        fs.unlink(`${path}/${imageToDelete}`, (err)=>{
-            if(err){
-                console.log(err);
-            }else{
-                console.log("Se borro la foto");
-            }
+      if(req.file){
+        conn.query('SELECT * FROM events WHERE id = ?', [id], (error, response)=>{
+          const imageToDelete = response[0].image;
+          fs.unlink(`${path}/${imageToDelete}`, (err)=>{
+              if(err){
+                  console.log(err);
+              }else{
+                  console.log("Se borro la foto");
+              }
+          });
         });
-      });
-      const fileName = req.file.filename;
-      data.image = fileName;
+        const fileName = req.file.filename;
+        data.image = fileName;
+      }
       conn.query('UPDATE events set ? WHERE id = ?', [data, id], (err, rows) => {
         if(err){
           res.status(500).send({
