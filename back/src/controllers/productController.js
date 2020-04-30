@@ -100,23 +100,17 @@ controller.add = (req, res) => {
   multipleUpload(req, res, function (err) {
     var data = req.body;
     let images = req.files;
-    let fileNames = [];
+    let fileNames = {};
     var imageIndex = 0;
     // console.log("body:", data);
     // console.log("Images:", images.length);
     let colors = JSON.parse(data.colors);
     // console.log("Colors",colors);
-    // Array.from(colors).forEach((color, i)=>{
-    //   fileNames[color.name] = [images[imageIndex].filename,images[imageIndex+1].filename,images[imageIndex+2].filename];
-    //   imageIndex = imageIndex + 3;
-    //   console.log(imageIndex);
-    // });
-    // console.log(fileNames);
-
-    Array.from(images).forEach((image) => {
-      fileNames.push(image.filename);
+    Array.from(colors).forEach((color, i)=>{
+      fileNames[color.name] = [images[imageIndex].filename,images[imageIndex+1].filename,images[imageIndex+2].filename];
+      imageIndex = imageIndex + 3;
     });
-    data.image = fileNames[0];
+    data.image = images[0].filename;
     data.images = JSON.stringify(fileNames);
     if (err) {
       res.status(500).send({
@@ -160,7 +154,9 @@ controller.edit = (req, res) => {
         });
       } else {
         let colors = rows[0].colors;
+        let images = rows[0].images;
         rows[0].colors = JSON.parse(colors);
+        rows[0].images = JSON.parse(images);
         res.status(200).json(rows[0]);
       }
     });

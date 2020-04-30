@@ -17,6 +17,7 @@ export class ProductComponent implements OnInit {
   product: any;
   currentImage: any;
   currentImages: any[];
+  allImages: any[];
   completedForm: boolean = false;
   sizes: any[] = [
     {
@@ -76,10 +77,10 @@ export class ProductComponent implements OnInit {
     this.prodctsService.getProduct(id).subscribe((data: any)=>{
       this.product = data
       this.currentImage = data.image;
-      this.currentImages = JSON.parse(data.images);
-      this.currentImages.push(this.currentImage);
+      this.allImages = data.images;
+      this.currentImages = this.allImages[Object.keys(this.allImages)[0]];
+      console.log(this.currentImages);
       this.colors = this.product.colors;
-      console.log(this.colors);
     });
   }
 
@@ -107,6 +108,8 @@ export class ProductComponent implements OnInit {
     this.currentColor = value.name;
     this.currentColorIndex = index;
     console.log(index);
+    this.currentImages = (this.allImages[value.name]);
+    this.currentImage = this.currentImages[0];
   }
 
   changeCurrentImage(image: string){

@@ -31,7 +31,7 @@ export class EditColorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apiService.getOne(`${this.colorId}/list`, this.colorId).subscribe((data:any)=>{
+    this.apiService.getOne(`${this.component}/list`, this.colorId).subscribe((data:any)=>{
       this.color = data[0];
       this.form.patchValue(data[0]);
       this.selectedColor = this.color.hex;
@@ -43,7 +43,7 @@ export class EditColorComponent implements OnInit {
   onSubmit(){
     this.form.get('hex').setValue(this.selectedColor);
     const token = localStorage.getItem('access_token');
-    this.apiService.post(`${this.component}/update`, this.form.value, token).subscribe(
+    this.apiService.put(`${this.component}/update`, this.colorId, this.form.value, token).subscribe(
       (resp:any)=>console.log(resp),
       (err)=>console.log(err),
       ()=>this.dialogRef.close()

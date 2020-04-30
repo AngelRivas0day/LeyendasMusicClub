@@ -57,6 +57,12 @@ export class ColorsComponent implements OnInit {
     this.fetchData();
   }
 
+  rerender(){
+    this.apiService.getAll(`${this.component}/list`).subscribe((resp:any)=>{
+      this.colors = resp;
+    });
+  }
+
   openCreate(){
     const dialogRef = this.dialog.open(CreateColorComponent,{
       width: '800px',
@@ -64,7 +70,7 @@ export class ColorsComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(()=>{
-     setTimeout(()=>this.fetchData(),750);
+     setTimeout(()=>this.rerender(),750);
     });
   }
 
@@ -79,7 +85,7 @@ export class ColorsComponent implements OnInit {
     },(error)=>{ 
       console.log(error);
     },()=>{
-     setTimeout(()=>this.fetchData(),750);
+     setTimeout(()=>this.rerender(),750);
     });
   }
 
@@ -92,7 +98,7 @@ export class ColorsComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(()=>{
-      setTimeout(()=>this.fetchData(),750);
+      setTimeout(()=>this.rerender(),750);
     });
   }
 }

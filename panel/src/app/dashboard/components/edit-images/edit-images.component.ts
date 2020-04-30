@@ -34,7 +34,7 @@ export class EditImagesComponent implements OnInit {
   updateImage(){
     const token = localStorage.getItem('access_token');
     if(this.data.edit){
-      this.apiService.updateImage('carousel/update-image',this.data.id, token, this.selectedFile, this.fileName).subscribe((data:any)=>{
+      this.apiService.updateImage('carousel/update-image',this.data.id, token, this.selectedFile).subscribe((data:any)=>{
         console.log(data);
       }, err =>{
         console.log(err);

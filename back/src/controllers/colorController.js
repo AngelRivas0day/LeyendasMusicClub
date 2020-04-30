@@ -67,9 +67,9 @@ controller.listOne = (req, res) => {
 
 controller.edit = (req, res) => {
   const { id } = req.params;
-  const newCustomer = req.body;
+  const data = req.body;
   req.getConnection((err, conn) => {
-    conn.query('UPDATE colors set ? where id = ?', [newCustomer, id], (err, rows) => {
+    conn.query('UPDATE colors set ? where id = ?', [data, id], (err, rows) => {
         if(err){
             res.status(500).send({
                 success: false,
