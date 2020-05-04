@@ -208,16 +208,21 @@ controller.delete = (req, res) => {
 };
 
 controller.uploadImage = (req, res) => {
-  const id = req.params.id;
-  let data = req.body;
   multipleUpload(req, res, function (err) {
-    let colors = req.body.colors;
+    const id = req.params.id;
+    var data = req.body;
     let images = req.files;
-    let fileNames = [];
-    Array.from(images).forEach((image) => {
-      fileNames.push(image.filename);
+    let fileNames = {};
+    var imageIndex = 0;
+    console.log("body:", data);
+    console.log("Images:", images.length);
+    let colors = JSON.parse(data.colors);
+    console.log("Colors",colors);
+    Array.from(colors).forEach((color, i)=>{
+      fileNames[color.name] = [images[imageIndex].filename,images[imageIndex+1].filename,images[imageIndex+2].filename];
+      imageIndex = imageIndex + 3;
     });
-    data.image = fileNames[0];
+    data.image = images[0].filename;
     data.images = JSON.stringify(fileNames);
     if (err) {
       res.status(500).send({

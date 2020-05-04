@@ -141,6 +141,14 @@ export class ApiService {
     );
   }
 
+  postMultipleImage(endpoint: string, id: number,  data: any = null , token: any){
+    this.setToken(token);
+    return this.http.post(`${this.base_url}/${endpoint}/${id}`, data, this.options ).pipe(
+      retry(2),
+      this.catchRequestError()
+    );
+  }
+
   updateWithImage( endpoint: string, id: number,  data: any = null, token: any) {
     this.setToken(token);
     // console.log("Data:",data);
