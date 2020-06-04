@@ -7,6 +7,8 @@ import { environment } from '../../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
 
+  base_url: string = environment.baseUrl;
+
   public setHeaders(token){
     return new HttpHeaders({ // some hard coded headers but they work hella fine in here
       'Content-Type':'application/json; charset=utf-8',
@@ -26,7 +28,6 @@ export class ApiService {
     });
   }
 
-  base_url = 'http://localhost:3000';
 
   private options = { headers: null, };
 

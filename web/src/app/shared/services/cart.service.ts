@@ -35,4 +35,9 @@ export class CartService {
     this.cart.next(this.products);
   }
 
+  clearCart(){
+    this.products = [];
+    this.cart.next(this.products);
+  }
+
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsService } from 'src/app/shared/services/events.service';
 import { environment } from '../../../../environments/environment';
+import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
   selector: 'app-events',
@@ -13,7 +13,7 @@ export class EventsComponent implements OnInit {
   baseUrl: string = environment.baseUrl + '/events/get-image/';
 
   constructor(
-    public eventsService: EventsService
+    public apiService: ApiService
   ) { }
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class EventsComponent implements OnInit {
   }
 
   fetchEvents(){
-    this.eventsService.getEvents().subscribe((data:any)=>{
+    this.apiService.getAll('events/list').subscribe((data:any)=>{
       this.events = data;
       console.log(data);
     });

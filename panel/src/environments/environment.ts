@@ -5,5 +5,7 @@
 
 export const environment = {
   production: false,
-  base_url: 'http://localhost:3000'
+  base_url: 'https://leyendas-api.herokuapp.com',
+  imageUploadUrl: 'https://api.cloudinary.com/v1_1/drs3muxpe/image/upload',
+  imageStorageUrl: 'https://res.cloudinary.com/drs3muxpe/image/upload'
 };

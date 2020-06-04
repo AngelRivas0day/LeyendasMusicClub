@@ -24,7 +24,7 @@ export class EditProductComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       description: new FormControl('',[Validators.required]),
       category: new FormControl('',[Validators.required]),
-      stock: new FormControl(0, [Validators.required]),
+      existence: new FormControl(0, [Validators.required]),
       price: new FormControl(0, [Validators.required]),
     });
   }
@@ -42,6 +42,7 @@ export class EditProductComponent implements OnInit {
         this.product = data;
         this.editProdForm.patchValue(data);
         this.colors = this.product.colors;
+        this.editProdForm.get('existence').patchValue(this.product.existence.toString());
       },(error)=>{
         console.log("Hubo un error al traer la informacion del producto con el id: "+id);
         console.log(error);

@@ -10,6 +10,9 @@ import { DataTablesModule } from 'angular-datatables';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { UpdateImageComponent } from './components/update-image/update-image.component';
 
+import { CloudinaryModule } from '@cloudinary/angular-5.x';
+import * as  Cloudinary from 'cloudinary-core';
+
 
 
 @NgModule({
@@ -19,7 +22,8 @@ import { UpdateImageComponent } from './components/update-image/update-image.com
     ProductsRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    DataTablesModule
+    DataTablesModule,
+    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'drs3muxpe'}),
   ],
   entryComponents: [
     EditProductComponent,

@@ -7,6 +7,8 @@ import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { environment } from '../../../../environments/environment';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { InfoComponent } from '../info/info.component';
 
 @Component({
   selector: 'app-checkout',
@@ -20,13 +22,38 @@ export class CheckoutComponent implements OnInit {
   form: FormGroup;
   subtotal: number;
   total: number;
+  payMethods: any[] = [
+    {
+      id: 1,
+      name: 'Pago en tienda'
+    },
+    {
+      id: 2,
+      name: 'Transferencia bancaria'
+    },
+    {
+      id: 3,
+      name: 'Pago en OXXO'
+    }
+  ];
+  deliverMethods: any[] = [
+    {
+      id: 1,
+      name: 'Recoger en tienda'
+    },
+    {
+      id: 2,
+      name: 'Paqueteria tradicional'
+    }
+  ];
 
   constructor(
     public activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router,
     private cartService: CartService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    public dialog: MatDialog
   ) { 
     this.form = this.formBuilder.group({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -35,7 +62,7 @@ export class CheckoutComponent implements OnInit {
       address: new FormControl('', [Validators.required, Validators.minLength(5)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       paymentMethod: new FormControl('', [Validators.required]),
-      pickup: new FormControl('', [Validators.required]),
+      pickupMethod: new FormControl('', [Validators.required]),
       products: new FormControl('', [Validators.required]),
       subtotal: new FormControl('', [Validators.required]),
       total: new FormControl('', [Validators.required])
@@ -64,6 +91,13 @@ export class CheckoutComponent implements OnInit {
     console.log(this.form.value);
     this.apiService.post('orders/create', this.form.value).subscribe((data:any)=>{
       console.log(data);
+    },err=>{
+      console.log(err);
+    },()=>{
+      this.cartService.clearCart();
+      const dialogRef = this.dialog.open(InfoComponent, {
+        width: '250px'
+      });
     });
   }
 

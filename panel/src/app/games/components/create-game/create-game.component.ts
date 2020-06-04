@@ -30,7 +30,7 @@ export class CreateGameComponent implements OnInit {
       timePerGame: new FormControl('', [Validators.required]),
       tutorial: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
-      type: new FormControl(0)
+      type: new FormControl(1)
     });
   }
 

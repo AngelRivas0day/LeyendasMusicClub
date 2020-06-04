@@ -14,6 +14,7 @@ export class UpdateImageComponent implements OnInit {
   values:any;
   fileName: any;
   component: string = 'machines';
+  payload: any;
 
   constructor(
     public dialogRef: MatDialogRef<UpdateImageComponent>,
@@ -34,7 +35,11 @@ export class UpdateImageComponent implements OnInit {
 
   updateImage(){
     const token = localStorage.getItem('access_token');
-    this.apiService.updateImage(`${this.component}/update-image`,this.data.id, token, this.selectedFile).subscribe((data:any)=>{
+    this.payload = {
+      image: this.selectedFile,
+      name: this.fileName
+    };
+    this.apiService.updateImage(`${this.component}/update-image`,this.data.id, token, this.payload).subscribe((data:any)=>{
       console.log(data);
     }, err =>{
       console.log(err);

@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditProductComponent } from '../edit-product/edit-product.component';
 import { CreateProductComponent } from '../create-product/create-product.component';
 import { UpdateImageComponent } from '../update-image/update-image.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-products',
@@ -17,6 +18,7 @@ export class ProductsComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   products: any[] = [];
   component: string = 'products';
+  baseUrl: string = environment.imageStorageUrl + '/v1591125833/images/';
 
   constructor(
     public apiService: ApiService,

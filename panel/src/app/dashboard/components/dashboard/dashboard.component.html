@@ -22,7 +22,7 @@
                         <ng-container *ngFor="let carouselImage of carouselImages">
                             <div class="image__item">
                                 <div class="list__image-container">
-                                    <img [src]="baseUrl + carouselImage.image" alt="" class="list__image">
+                                    <img [src]="carouselImage.image" alt="" class="list__image">
                                 </div>
                                 <div class="list__image-actions">
                                     <i class="material-icons icon-trash" color="warning" (click)="eraseImage(carouselImage.id)">

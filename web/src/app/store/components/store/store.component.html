@@ -8,7 +8,7 @@
                 <owl-carousel-o class="slider-container" [options]="customOptions">
                     <ng-container *ngFor="let slide of slides">
                         <ng-template class="slide-inner" carouselSlide [id]="slide.id">
-                            <img [src]="baseUrl + slide.image" />
+                            <img [src]="slide.image" />
                         </ng-template>
                     </ng-container> 
                 </owl-carousel-o>
@@ -18,7 +18,7 @@
             <div *ngFor="let product of products" class="col-xs-6 col-md-4 col-lg-3 products__item">
                 <div class="item__card" (click)="goToItem(product.id)">
                     <div class="item__card-image-container">
-                        <img [src]="'http://localhost:3000/products/get-image/'+product.image" alt="" class="item__card-image">
+                        <img [src]="product.image" alt="" class="item__card-image">
                     </div>
                     <div class="item__card-content">
                         <h3>{{product.name}}</h3>

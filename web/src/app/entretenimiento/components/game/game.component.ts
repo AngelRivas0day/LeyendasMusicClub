@@ -1,7 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GamesService } from 'src/app/shared/services/games.service';
-import { MachinesService } from 'src/app/shared/services/machines.service';
 import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
@@ -19,8 +17,6 @@ export class GameComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<GameComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    public gamesService: GamesService,
-    public machinesService: MachinesService,
     private apiService: ApiService
   ) { 
     console.log(data.gameId);
@@ -35,7 +31,7 @@ export class GameComponent implements OnInit {
   fetchGame(){
     console.log('cat: ' + this.category);
     if(this.category == "boardgame"){
-      this.gamesService.getGame(this.itemId).subscribe((data:any)=>{
+      this.apiService.getOne('games/list',this.itemId).subscribe((data:any)=>{
         console.log(data);
         this.itemToShow = data[0];
       },err=>{

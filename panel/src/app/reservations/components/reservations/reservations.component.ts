@@ -100,7 +100,7 @@ export class ReservationsComponent implements OnInit {
 
   achieve(id: number){
     const token = localStorage.getItem('access_token');
-    this.apiService.put(`${this.component}/achieve`, id, {}, token).subscribe((data:any)=>{
+    this.apiService.put(`${this.component}/archived`, id, {}, token).subscribe((data:any)=>{
       console.log(data);
     },err=>{
       console.log(err);

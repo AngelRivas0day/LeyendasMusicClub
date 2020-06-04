@@ -12,7 +12,7 @@
             <ul class="cart__prods">
                 <li class="cart__item" *ngFor="let data of products">
                     <div class="item__image">
-                        <img class="image" [src]="imageUrl + data.product.image" alt="">
+                        <img class="image" [src]="data.product.image" alt="">
                     </div>
                     <div class="item__info">
                         <div class="info__desc">
@@ -42,7 +42,17 @@
                 <div class="cart__total">
                     <ng-container *ngIf="(subtotal$ | async) as subtotal">
                         <h2><strong class="font-bebas">SUBTOTAL: </strong>{{subtotal | currency}}</h2>
-                        <h1><strong class="font-bebas">TOTAL: </strong>{{ subtotal + deliveryFee | currency}}</h1>
+                        <h1>
+                            <strong class="font-bebas">TOTAL: </strong>{{ subtotal + deliveryFee | currency}}<br>
+                            <small>
+                                (con el costro promedio de envio)
+                                <span 
+                                matTooltip="Este precio sera calculado cuado hagas tu pedido y variara en función de tu ubicación. Un esesor se contactará contigo para confirmar tu pedido."
+                                aria-label="Button that displays a tooltip when focused or hovered over" class="material-icons">
+                                    error_outline
+                                </span>
+                            </small>
+                        </h1>
                     </ng-container>
                 </div>
                 <div class="cart__total-actions">

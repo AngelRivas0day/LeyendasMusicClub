@@ -40,6 +40,7 @@ export class EditReservationComponent implements OnInit {
     this.itemId = this.data.id;
     console.log("Id del modal: " + this.itemId);
     this.fetchData(this.data.id);
+    console.log('isCheked', this.isChecked);
   }
 
   saveChanges(id: number){

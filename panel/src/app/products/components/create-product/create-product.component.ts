@@ -33,9 +33,8 @@ export class CreateProductComponent implements OnInit {
       // image: new FormControl(null),
       images: this.formBuilder.array([]),
       colors: new FormControl('', [Validators.required]),
-      noColors: new FormControl(''),
       category: new FormControl('',[Validators.required]),
-      stock: new FormControl(0, [Validators.required]),
+      existence: new FormControl('', [Validators.required]),
       price: new FormControl(0, [Validators.required]),
     });
   }
@@ -70,7 +69,6 @@ export class CreateProductComponent implements OnInit {
   create(){
     console.log(this.form.value);
     const token = localStorage.getItem('access_token');
-    this.form.get('noColors').setValue(this.noColors);
     console.log(this.form.value);
     let formData = new FormData();
     const files: Array<File> = this.selectedFiles;

@@ -16,45 +16,17 @@
         background-repeat: no-repeat;
         transition: all .3s;
         &.juegos{
-            background-color: aqua;
-            background-image: 
-            /* top, transparent red */
-            linear-gradient(
-            rgba(0, 0, 0, 0.45), 
-            rgba(0, 0, 0, 0.65)
-            ),
-            /* your image */
-            url('src/assets/images/backgrounds/rumman-amin-yNP1lz924-4-unsplash-min.jpg');
+            background-image: url('src/assets/images/backgrounds/rumman-amin-yNP1lz924-4-unsplash-min.jpg');
+            filter: grayscale(100%);
             &:hover{
-                background-image: 
-            /* top, transparent red */
-            linear-gradient(
-            rgba(0, 0, 0, 0.25), 
-            rgba(0, 0, 0, 0.25)
-            ),
-            /* your image */
-            url('src/assets/images/backgrounds/rumman-amin-yNP1lz924-4-unsplash-min.jpg');
+                filter: grayscale(20%);
             }
         }
         &.maquinas{
-            background-color: red;
-            background-image: 
-            /* top, transparent red */
-            linear-gradient(
-            rgba(0, 0, 0, 0.45), 
-            rgba(0, 0, 0, 0.45)
-            ),
-            /* your image */
-            url('src/assets/images/backgrounds/wls_mlbn-dkXn0RbgdU4-unsplash-min.jpg');
+            background-image: url('src/assets/images/backgrounds/wls_mlbn-dkXn0RbgdU4-unsplash-min.jpg');
+            filter: grayscale(100%);
             &:hover{
-                background-image: 
-            /* top, transparent red */
-            linear-gradient(
-            rgba(0, 0, 0, 0.25), 
-            rgba(0, 0, 0, 0.25)
-            ),
-            /* your image */
-            url('src/assets/images/backgrounds/wls_mlbn-dkXn0RbgdU4-unsplash-min.jpg');
+                filter: grayscale(20%);
             }
         }
         h1{

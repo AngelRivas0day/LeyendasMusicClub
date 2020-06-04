@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GamesService } from 'src/app/shared/services/games.service';
 import { MatDialog } from '@angular/material/dialog';
 import { GameComponent } from '../game/game.component';
 import { HttpClient } from '@angular/common/http';

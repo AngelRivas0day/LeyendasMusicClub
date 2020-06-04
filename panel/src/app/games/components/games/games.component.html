@@ -29,14 +29,14 @@
                                     <tr *ngFor="let game of games">
                                         <td>{{ game.id }}</td>
                                         <td class='image-container'>
-                                            <img [src]="baseUrl + game.image" class='image-tabla' alt="">
+                                            <img [src]="game.image" class='image-tabla' alt="">
                                             <div class="imageEdit__container">
                                                 <i class="now-ui-icons media-1_album icon-edit" (click)="openUpdateImage(game.id)">
                                                 </i>
                                             </div>
                                         </td>
                                         <td>{{ game.name }}</td>
-                                        <td>{{ game.category }}</td>
+                                        <td>{{ game.category == 1 ? 'Juego de mesa' : 'Maquinita' }}</td>
                                         <td>
                                             <i class="material-icons icon-trash" color="warning" (click)="erase(game.id)">
                                                 cancel

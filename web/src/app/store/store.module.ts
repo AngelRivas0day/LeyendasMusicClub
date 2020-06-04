@@ -11,10 +11,11 @@ import { SharedModule } from '../shared/shared.module';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { InfoComponent } from './components/info/info.component';
 
 
 @NgModule({
-  declarations: [StoreComponent, ProductComponent, CartComponent, CheckoutComponent],
+  declarations: [StoreComponent, ProductComponent, CartComponent, CheckoutComponent, InfoComponent],
   imports: [
     CommonModule,
     StoreRoutingModule,
@@ -23,6 +24,9 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     SharedModule,
     ReactiveFormsModule,
     CarouselModule
+  ],
+  entryComponents: [
+    InfoComponent
   ]
 })
 export class StoreModule { }

@@ -1,4 +1,4 @@
-@import "../../../../assets//vars";
+@import "../../../../assets/vars";
 
 .cart__empty{
     @include center-layout;
@@ -180,7 +180,7 @@
             h1{
                 width: 100%;
                 font-size: 22px;
-                text-align: right;    
+                text-align: right;
                 padding: 0;
                 margin-bottom: 10px;
                 @media #{$break-medium}{
@@ -189,12 +189,18 @@
                 @media #{$break-large}{
                     font-size: 35px;
                 }
+                small{
+                    font-size: 12px !important;
+                    span{
+                        font-size: 15px;
+                    }
+                }
             }
             h2{
                 color: rgba(0,0,0,.5);
                 width: 100%;
                 font-size: 18px;
-                text-align: right;    
+                text-align: right;
                 padding: 0;
                 margin-bottom: 10px;
                 @media #{$break-medium}{

@@ -15,7 +15,7 @@
                         <ng-container *ngFor="let event of events" >
                             <div class="card">
                                 <div class="card__image-container">
-                                    <img [src]="'http://localhost:3000/events/get-image/'+event.image" alt="" class="card__image">
+                                    <img [src]="event.image" alt="" class="card__image">
                                     <span>Fecha del evento: {{event.date | date: 'dd-MM-yyyy'}}</span>
                                 </div>
                                 <div class="card__actions">

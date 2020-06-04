@@ -8,6 +8,8 @@ import { FormGroup } from '@angular/forms';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
 
+  base_url = environment.base_url;
+
   public setHeaders(token){
     return new HttpHeaders({ // some hard coded headers but they work hella fine in here
       'Content-Type':'application/json; charset=utf-8',
@@ -27,7 +29,6 @@ export class ApiService {
     });
   }
 
-  base_url = 'http://localhost:3000';
 
   private options = { headers: null, };
 
@@ -87,6 +88,7 @@ export class ApiService {
       console.error( 'An error occurred:', error.error.message );
     } else {
       console.error( `Backend returned code ${error.status}, body was: ${error.message}` );
+      console.log(error);
     }
     // return throwError( error.message );
   }
@@ -200,10 +202,10 @@ export class ApiService {
 
   updateImage(endpoint: string, id: number, token: string, data: any){
     this.setToken(token);
-    // let payload = new FormData();
-    // payload.append('image', file, file.filename);
-    // payload = this.toFormData(data);
-    return this.http.put<any>(`${this.base_url}/${endpoint}/${id}`, data, this.options).pipe(
+    let payload = new FormData();
+    payload.append('image', data.image, data.name);
+    payload = this.toFormData(data);
+    return this.http.put<any>(`${this.base_url}/${endpoint}/${id}`, payload, this.options).pipe(
       retry(3),
       this.catchRequestError()
     )

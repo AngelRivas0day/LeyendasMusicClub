@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProductsService } from 'src/app/shared/services/products.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { environment } from '../../../../environments/environment';
@@ -36,7 +35,6 @@ export class StoreComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public prodctsService: ProductsService,
     private apiService: ApiService
   ) { }
 
@@ -50,8 +48,7 @@ export class StoreComponent implements OnInit {
   }
 
   getProducts(): void{
-    // this.products = this.prodctsService.getProducts();
-    this.prodctsService.getProducts().subscribe((data: any)=>{
+    this.apiService.getAll('products/list').subscribe((data: any)=>{
       console.log(data);
       this.products = data;
     });
@@ -59,6 +56,7 @@ export class StoreComponent implements OnInit {
 
   fetchSlides(){
     this.apiService.getAll('carousel/list').subscribe((resp:any)=>{
+      console.log(resp);
       this.slides = resp;
     });
   }

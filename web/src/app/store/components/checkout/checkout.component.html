@@ -46,19 +46,27 @@
                         </mat-form-field>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <mat-form-field class="w-100">
+                        <mat-form-field class='w-100'>
                             <mat-label>Método de pago preferente</mat-label>
-                            <input matInput placeholder="Ej: ejemplo@ejemplo.com" formControlName="paymentMethod">
+                            <mat-select formControlName="paymentMethod">
+                              <mat-option *ngFor="let payMethod of payMethods" [value]="payMethod.name">
+                                {{payMethod.name}}
+                              </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <mat-form-field class="w-100">
+                        <mat-form-field class='w-100'>
                             <mat-label>Método de entrega</mat-label>
-                            <input matInput placeholder="Ej: ejemplo@ejemplo.com" formControlName="pickup">
+                            <mat-select formControlName="pickupMethod">
+                              <mat-option *ngFor="let deliverMethod of deliverMethods" [value]="deliverMethod.name">
+                                {{deliverMethod.name}}
+                              </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-xs-12 col-sm-12">
-                        <button [disabled]="!form.valid" class="shoppingCustomerInfo_button" type="submit" mat-raised-button>PEDIR!</button>
+                        <button [disabled]="!form.valid" class="shoppingCustomerInfo_button" type="submit" mat-raised-button>HACER PEDIDO!</button>
                     </div>
                 </form>
             </div>

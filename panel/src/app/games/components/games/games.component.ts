@@ -52,12 +52,17 @@ export class GamesComponent implements OnInit {
       {data:'name'},
       {data:'hex'},
       {data:'actions'}
-    ]
-  };
-}
+    ]};  
+  }
 
   ngOnInit(){
     this.fetchData();
+  }
+
+  rerender(){
+    this.apiService.getAll(`${this.component}/list`).subscribe((resp:any)=>{
+      this.games = resp;
+    });
   }
 
   openCreate(){
@@ -80,7 +85,7 @@ export class GamesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(()=>{
-     setTimeout(()=>this.fetchData(),750);
+     setTimeout(()=>this.rerender(),750);
     });
   }
 
@@ -95,7 +100,7 @@ export class GamesComponent implements OnInit {
     },(error)=>{ 
       console.log(error);
     },()=>{
-     setTimeout(()=>this.fetchData(),750);
+     setTimeout(()=>this.rerender(),750);
     });
   }
 
@@ -108,7 +113,7 @@ export class GamesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(()=>{
-      setTimeout(()=>this.fetchData(),750);
+      setTimeout(()=>this.rerender(),750);
     });
   }
 
@@ -121,7 +126,7 @@ export class GamesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(()=>{
-      setTimeout(()=>this.fetchData(),750);
+      setTimeout(()=>this.rerender(),750);
     });
   }
 

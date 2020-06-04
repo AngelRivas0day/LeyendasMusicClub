@@ -8,7 +8,7 @@
                 <div *ngFor="let event of events" class="col-xs-12">
                     <div class="event__item">
                         <!-- <img src="" alt="" /> -->
-                        <img [src]="baseUrl + event.image" alt="">
+                        <img [src]="event.image" alt="">
                         <span>Fecha del evento: {{event.date | date:'dd-MM-yyyy'}}</span>
                     </div>
                 </div>

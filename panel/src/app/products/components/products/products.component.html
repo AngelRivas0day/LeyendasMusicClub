@@ -23,7 +23,7 @@
                   <th>Imagen</th>
                   <th>Producto</th>
                   <th>Categoria</th>
-                  <th>Stock</th>
+                  <th>Existencia</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -32,10 +32,7 @@
                   <td>{{ product.id }}</td>
                   <td class='image-container'>
                     <img
-                      [src]="
-                        'http://localhost:3000/products/get-image/' +
-                        product.image
-                      "
+                      [src]="product.image"
                       class="image-tabla"
                     />
                     <div class="imageEdit__container">
@@ -45,7 +42,7 @@
                   </td>
                   <td>{{ product.name }}</td>
                   <td>{{ product.category }}</td>
-                  <td>{{ product.stock }}</td>
+                  <td>{{ product.existence == 1 ? 'Existente' : 'No existente' }}</td>
                   <td>
                     <i
                       class="material-icons icon-trash"

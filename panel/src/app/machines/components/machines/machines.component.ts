@@ -55,6 +55,13 @@ export class MachinesComponent implements OnInit {
     };
   }
 
+  rerender(){
+    this.apiService.getAll(`${this.component}/list`).subscribe((resp:any)=>{
+      this.machines = resp;
+    });
+  }
+
+
   openCreate(){
     const dialogRef = this.dialog.open(CreateMachineComponent,{
       width: '800px',
@@ -62,7 +69,7 @@ export class MachinesComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(()=>{
-        this.fetchData();
+      setTimeout(()=>this.rerender(),750);
     });
   }
 
@@ -75,7 +82,7 @@ export class MachinesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(()=>{
-        this.fetchData();
+      setTimeout(()=>this.rerender(),750);
     });
   }
 
@@ -90,9 +97,7 @@ export class MachinesComponent implements OnInit {
     },(error)=>{ 
       console.log(error);
     },()=>{
-      setTimeout(()=>{
-        this.fetchData();
-      },1000);
+      setTimeout(()=>this.rerender(),750);
     });
   }
 
@@ -105,7 +110,7 @@ export class MachinesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(()=>{
-      this.fetchData();
+      setTimeout(()=>this.rerender(),750);
     });
   }
 
@@ -118,7 +123,7 @@ export class MachinesComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(()=>{
-      setTimeout(()=>this.fetchData(),750);
+      setTimeout(()=>this.rerender(),750);
     });
   }
 

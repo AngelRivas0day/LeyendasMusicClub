@@ -24,9 +24,12 @@
                 </mat-chip-list>
             </div>
             <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <mat-label>Stock</mat-label>
-                    <input matInput formControlName="stock" placeholder="Stock" type="number">
+                <mat-form-field class='w-100'>
+                    <mat-label>Existencia</mat-label>
+                    <mat-select formControlName="existence" placeholder="Selecciona uno">
+                        <mat-option value="1">Existente</mat-option>
+                        <mat-option value="0">No existente</mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm-12 col-md-6">

@@ -16,6 +16,7 @@ export class EditImagesComponent implements OnInit {
   image = new FormControl(null);
   edit: any;
   create: any;
+  payload: any;
 
   constructor(
     private apiService: ApiService,
@@ -34,7 +35,11 @@ export class EditImagesComponent implements OnInit {
   updateImage(){
     const token = localStorage.getItem('access_token');
     if(this.data.edit){
-      this.apiService.updateImage('carousel/update-image',this.data.id, token, this.selectedFile).subscribe((data:any)=>{
+      this.payload = {
+        image: this.selectedFile,
+        name: this.fileName
+      };
+      this.apiService.updateImage('carousel/update-image',this.data.id, token, this.payload).subscribe((data:any)=>{
         console.log(data);
       }, err =>{
         console.log(err);

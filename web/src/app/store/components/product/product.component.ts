@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductsService } from 'src/app/shared/services/products.service';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { environment } from 'src/environments/environment';
+import { ApiService } from 'src/app/shared/services/api.service';
 
 @Component({
   selector: 'app-product',
@@ -50,9 +50,9 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    public prodctsService: ProductsService,
     private cartService: CartService,
     private router: Router,
+    private apiService: ApiService
   ) { 
 
   }
@@ -74,13 +74,14 @@ export class ProductComponent implements OnInit {
   }
 
   getProduct(id: number){
-    this.prodctsService.getProduct(id).subscribe((data: any)=>{
-      this.product = data
+    this.apiService.getOne('products/list', id).subscribe((data: any)=>{
+      this.product = data 
       this.currentImage = data.image;
       this.allImages = data.images;
       this.currentImages = this.allImages[Object.keys(this.allImages)[0]];
       console.log(this.currentImages);
       this.colors = this.product.colors;
+      console.log(this.colors);
     });
   }
 
@@ -117,7 +118,7 @@ export class ProductComponent implements OnInit {
   }
 
   fetchData(){
-    this.prodctsService.getLastProds().subscribe(
+    this.apiService.getAll('products/list-new').subscribe(
       (data:any)=>this.lastProds = data,
       (err)=>console.log(err)
     )

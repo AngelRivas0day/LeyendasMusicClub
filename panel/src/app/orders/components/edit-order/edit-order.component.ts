@@ -30,7 +30,7 @@ export class EditOrderComponent implements OnInit {
       address: new FormControl('', [Validators.required, Validators.minLength(5)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       paymentMethod: new FormControl('', [Validators.required]),
-      pickup: new FormControl('', [Validators.required]),
+      pickupMethod: new FormControl('', [Validators.required]),
       products: new FormControl('', [Validators.required]),
       subtotal: new FormControl('', [Validators.required]),
       total: new FormControl('', [Validators.required]),
@@ -60,7 +60,6 @@ export class EditOrderComponent implements OnInit {
       this.item = resp[0];
       this.form.patchValue(this.item);
       this.products = JSON.parse(this.item.products);
-      console.log(this.products);
     },
     (err)=>console.log(err));
   }

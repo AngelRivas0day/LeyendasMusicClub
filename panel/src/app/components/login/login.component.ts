@@ -25,10 +25,10 @@ export class LoginComponent implements OnDestroy {
       this.api.auth.subscribe(( active ) => { this.active = active; })
     );
     this.loginForm = this.formBuilder.group({
-      email: new FormControl('admin@admin.com', Validators.compose([
+      email: new FormControl('', Validators.compose([
         Validators.required
       ])),
-      password: new FormControl('12345', Validators.compose([
+      password: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(2)
       ]))
