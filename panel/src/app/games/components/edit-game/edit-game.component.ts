@@ -12,6 +12,7 @@ export class EditGameComponent implements OnInit {
 
   form: FormGroup;
   game: any;
+  categories: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,7 +32,7 @@ export class EditGameComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchGame();
+    this.fetchCategories();
   }
 
   saveChanges(id){
@@ -49,10 +50,23 @@ export class EditGameComponent implements OnInit {
     const token = localStorage.getItem('access_token');
     this.apiService.getOne('games/list', this.data.id).subscribe((data: any)=>{
       this.game = data[0];
+      console.log(this.game);
     },(err)=>{
       console.log(err);
     },()=>{
       this.form.patchValue(this.game);
+    });
+  }
+
+  fetchCategories(){
+    this.apiService.getAll('gamesCategories/list').subscribe((resp:any)=>{
+      console.log(resp);
+      this.categories = resp;
+      // this.form.get('category').patchValue(this.game.category.value);
+    },(err)=>{
+      console.log("Hubo un error: ", err);
+    },()=>{
+      this.fetchGame();
     });
   }
 

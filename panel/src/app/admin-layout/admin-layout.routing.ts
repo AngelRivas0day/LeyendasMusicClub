@@ -1,8 +1,4 @@
 import { Routes } from '@angular/router';
-import { UserProfileComponent } from '../user-profile/user-profile.component';
-import { IconsComponent } from '../icons/icons.component';
-import { NotificationsComponent } from '../notifications/notifications.component';
-
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      loadChildren: ()=>import('../dashboard/dashboard.module').then(m=>m.DashboardModule) },

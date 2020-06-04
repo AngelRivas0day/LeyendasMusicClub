@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { environment } from '../../../../environments/environment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { InfoComponent } from '../info/info.component';
+import states from '../../../../assets/states.json';
 
 @Component({
   selector: 'app-checkout',
@@ -46,6 +47,9 @@ export class CheckoutComponent implements OnInit {
       name: 'Paqueteria tradicional'
     }
   ];
+  states: any[];
+  currentState: any[];
+  currentCities: any[];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -60,6 +64,8 @@ export class CheckoutComponent implements OnInit {
       lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
       phone: new FormControl('', [Validators.required, Validators.minLength(10)]),
       address: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      state: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       paymentMethod: new FormControl('', [Validators.required]),
       pickupMethod: new FormControl('', [Validators.required]),
@@ -67,6 +73,7 @@ export class CheckoutComponent implements OnInit {
       subtotal: new FormControl('', [Validators.required]),
       total: new FormControl('', [Validators.required])
     });
+    this.states = Object.keys(states);
   }
 
   ngOnInit(): void {
@@ -96,9 +103,14 @@ export class CheckoutComponent implements OnInit {
     },()=>{
       this.cartService.clearCart();
       const dialogRef = this.dialog.open(InfoComponent, {
-        width: '250px'
+        width: '450px'
       });
     });
+  }
+
+  changeHandler(e){
+    console.log(e.source.value);
+    this.currentCities = states[e.source.value];
   }
 
 }

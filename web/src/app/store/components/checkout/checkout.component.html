@@ -35,6 +35,22 @@
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-6">
                         <mat-form-field class="w-100">
+                            <mat-label>Selecciona un estado</mat-label>
+                            <mat-select (selectionChange)="changeHandler($event)" formControlName="state">
+                                <mat-option *ngFor="let state of states" [value]='state'>{{state}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Selecciona una ciudad</mat-label>
+                            <mat-select formControlName="city">
+                                <mat-option *ngFor="let city of currentCities" [value]='city'>{{city}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <mat-form-field class="w-100">
                             <mat-label>Teléfono</mat-label>
                             <input matInput placeholder="Ej: 33 3333 3333" formControlName="phone">
                         </mat-form-field>

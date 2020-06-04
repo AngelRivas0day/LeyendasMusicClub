@@ -13,6 +13,7 @@ export class EditMachineComponent implements OnInit {
   form: FormGroup;
   game: any;
   component: string = 'machines';
+  categories: any[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,7 +33,7 @@ export class EditMachineComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchData();
+    this.fetchCategories();
   }
 
   saveChanges(id){
@@ -54,6 +55,18 @@ export class EditMachineComponent implements OnInit {
       console.log(err);
     },()=>{
       this.form.patchValue(this.game);
+    });
+  }
+
+  fetchCategories(){
+    this.apiService.getAll('machinesCategories/list').subscribe((resp:any)=>{
+      console.log(resp);
+      this.categories = resp;
+      // this.form.get('category').patchValue(this.game.category.value);
+    },(err)=>{
+      console.log("Hubo un error: ", err);
+    },()=>{
+      this.fetchData();
     });
   }
 

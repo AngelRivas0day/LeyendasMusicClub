@@ -28,31 +28,43 @@
             <div class="col-sm-12 col-md-6">
                 <mat-form-field class="w-100">
                     <mat-label>Telefono</mat-label>
-                    <input matInput formControlName="phone" placeholder="Ej: 33 1882 6414">
+                    <input matInput formControlName="phone" placeholder="Ej: 33 1882 6414" readonly>
                 </mat-form-field>
             </div>
             <div class="col-sm-12">
                 <mat-form-field class="w-100">
                     <mat-label>Direccion</mat-label>
-                    <input matInput formControlName="address" placeholder="Ej: Av. Avenida ####" type="text">
+                    <input matInput formControlName="address" placeholder="Ej: Av. Avenida ####" type="text" readonly>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-xs-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <mat-label>Estado</mat-label>
+                    <input matInput formControlName="state" type="text" readonly>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-xs-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <mat-label>Ciudad</mat-label>
+                    <input matInput formControlName="city" type="text" readonly>
                 </mat-form-field>
             </div>
             <div class="col-sm-12 col-md-6">
                 <mat-form-field class="w-100">
                     <mat-label>Email</mat-label>
-                    <input matInput formControlName="email" placeholder="Ej: ejemlo@ejemplo.com" type="text">
+                    <input matInput formControlName="email" placeholder="Ej: ejemlo@ejemplo.com" type="text" readonly>
                 </mat-form-field>
             </div>
             <div class="col-sm-12 col-md-6">
                 <mat-form-field class="w-100">
                     <mat-label>Metodo de pago</mat-label>
-                    <input matInput formControlName="paymentMethod" placeholder="Ej: oxxo" type="text">
+                    <input matInput formControlName="paymentMethod" placeholder="Ej: oxxo" type="text" readonly>
                 </mat-form-field>
             </div>
             <div class="col-sm-12 col-md-6">
                 <mat-form-field class="w-100">
                     <mat-label>Metodo de entrega</mat-label>
-                    <input matInput formControlName="pickupMethod" placeholder="Ej: En tienda" type="text">
+                    <input matInput formControlName="pickupMethod" placeholder="Ej: En tienda" type="text" readonly>
                 </mat-form-field>
             </div>
             <div class="col-sm-12">
@@ -62,7 +74,7 @@
                             <p><span>Producto: </span>{{product.name}}</p>
                             <p><span>Color: </span>{{product.color}}</p>
                             <p><span>Talla: </span>{{product.size}}</p>
-                            <p><span>Precio: </span>{{product.price}}</p>
+                            <p><span>Precio: </span>{{product.price | currency}}</p>
                         </div>
                     </li>
                 </ul>

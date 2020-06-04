@@ -30,11 +30,6 @@
                         </div>
                         <p class="productInfo__sizes-chart">Colores disponibles: </p>
                         <div class="productInfo__selector">
-                            <!-- <mat-radio-group aria-labelledby="example-radio-group-label" class="color-selector">
-                                <mat-radio-button (click)="setColor(color)" class="example-radio-button" *ngFor="let color of colors" [value]="color">
-                                    {{ color.name | uppercase}}
-                                </mat-radio-button>
-                            </mat-radio-group> -->
                             <ul class="color-selector">
                                 <ng-container *ngFor="let color of colors; index as i">
                                     <li class="color-item">
@@ -49,10 +44,10 @@
                             <span class="productInfo__quantity-selector">{{quantity}}</span>
                             <button (click)="plusQuantity()">+</button>
                         </div>
-                        <button (click)="addProd(product, quantity, currentColor, currentSize)" mat-stroked-button class="productInfo__order-button font-roboto">Agregar al carrito</button>
                         <p class="productInfo__desc font-roboto">
                             {{ product.description }}
                         </p>
+                        <button (click)="addProd(product, quantity, currentColor, currentSize)" mat-stroked-button class="productInfo__order-button font-roboto">Agregar al carrito</button>
                     </div>
                 </div>
             </div>

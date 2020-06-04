@@ -28,6 +28,8 @@ export class EditOrderComponent implements OnInit {
       lastName: new FormControl('', [Validators.required, Validators.minLength(3)]),
       phone: new FormControl('', [Validators.required, Validators.minLength(10)]),
       address: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      state: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       paymentMethod: new FormControl('', [Validators.required]),
       pickupMethod: new FormControl('', [Validators.required]),
