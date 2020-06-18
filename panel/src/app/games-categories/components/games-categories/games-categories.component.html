@@ -1,0 +1,56 @@
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Categorias</h5>
+        </div>
+        <div class="card-body">
+          <button mat-raised-button (click)="createCat()">
+            <i class="now-ui-icons ui-1_simple-add"></i> Nueva categoria
+          </button>
+          <div class="table-responsive mt-4">
+            <table
+              datatable
+              [dtOptions]="dtOptions"
+              class="row-border hover dataTable w-100"
+            >
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Categoria</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="items.length != 0">
+                <tr
+                  *ngFor="let item of items"
+                >
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.name | uppercase }}</td>
+                  <th>{{ item.type == 0 ? 'Maquinita' : 'Juego de Mesa' }}</th>
+                  <td>
+                    <i class="material-icons icon-trash" color="warning" (click)="erase(item.id)">
+                        cancel
+                    </i>
+                    &nbsp;
+                    <i class="material-icons icon-edit" (click)="openEdit(item.id)">
+                        edit
+                    </i>
+                </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="items.length == 0">
+                <tr>
+                  <td colspan="7" class="no-data-available">No data!</td>
+                </tr>
+              <tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

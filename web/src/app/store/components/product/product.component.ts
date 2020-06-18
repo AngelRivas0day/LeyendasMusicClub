@@ -39,6 +39,14 @@ export class ProductComponent implements OnInit {
     {
       id: 5,
       name: "extra grande"
+    },
+    {
+      id: 6,
+      name: "XXL"
+    },
+    {
+      id: 7,
+      name: "XXXL"
     }
   ];
   colors: any[] = [];

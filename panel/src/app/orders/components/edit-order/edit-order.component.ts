@@ -58,7 +58,7 @@ export class EditOrderComponent implements OnInit {
 
   fetchData(){
     this.apiService.getOne(`${this.component}/list`, this.itemId).subscribe((resp:any)=>{
-      console.log(resp[0]);
+      console.log(resp);
       this.item = resp[0];
       this.form.patchValue(this.item);
       this.products = JSON.parse(this.item.products);

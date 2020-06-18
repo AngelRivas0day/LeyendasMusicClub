@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'app/services/services';
-import { Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateMachineComponent } from '../create-machine/create-machine.component';

@@ -17,7 +17,6 @@ export class UpdateImageComponent implements OnInit {
   form: FormGroup;
   imgArray: any[] = [];
   itemsId:number = 0;
-  noColors: number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<UpdateImageComponent>,
@@ -27,8 +26,7 @@ export class UpdateImageComponent implements OnInit {
   ) { 
     this.form = this.formBuilder.group({
       images: this.formBuilder.array([]),
-      colors: new FormControl('', [Validators.required]),
-      noColors: new FormControl('')
+      colors: new FormControl('', [Validators.required])
     });
   }
 
@@ -50,21 +48,10 @@ export class UpdateImageComponent implements OnInit {
       };
       this.addItem(item);
       this.itemsId += 1;
-      this.noColors = this.noColors + 1;
     }else{
       this.removeItem();
       this.itemsId -= 1;
-      this.noColors = this.noColors - 1;
     }
-    // console.log(event);
-    // let colorName = event.value[0].name;
-    // let colorId = event.value[0].id;
-    // let item =  {
-    //   id: colorName,
-    //   name: colorName
-    // };
-    // console.log(colorName);
-    // this.addItem(item);
   }
 
   get imagesArray(){
@@ -82,14 +69,14 @@ export class UpdateImageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiService.getAll('colors/list').subscribe((resp:any)=>{
-      this.colors = resp;
+    this.apiService.getOne('products/list', this.data.id).subscribe((resp:any)=>{
+      console.log("Products: ", resp.colors);
+      this.colors = resp.colors;
     });
   }
 
   onSubmit(){
     const token = localStorage.getItem('access_token');
-    this.form.get('noColors').setValue(this.noColors);
     let colors = this.form.value.colors;
     this.form.value.colors = JSON.stringify(colors);
     let formData = new FormData();

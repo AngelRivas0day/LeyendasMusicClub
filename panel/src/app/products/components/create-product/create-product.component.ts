@@ -33,9 +33,10 @@ export class CreateProductComponent implements OnInit {
       // image: new FormControl(null),
       images: this.formBuilder.array([]),
       colors: new FormControl('', [Validators.required]),
-      category: new FormControl('',[Validators.required]),
+      category_id: new FormControl('',[Validators.required]),
       existence: new FormControl('', [Validators.required]),
-      price: new FormControl(0, [Validators.required]),
+      price: new FormControl('', [Validators.required]),
+      price_extra: new FormControl('', [Validators.required])
     });
   }
 
@@ -64,6 +65,9 @@ export class CreateProductComponent implements OnInit {
     this.apiService.getAll('colors/list').subscribe((resp:any)=>{
       this.colors = resp;
     });
+    this.apiService.getAll('products/categories/list').subscribe((resp:any)=>{
+      this.categories = resp;
+    });
   }
 
   create(){
@@ -78,7 +82,6 @@ export class CreateProductComponent implements OnInit {
       console.log("File", file);
       formData.append("images", file, file.name);
     });
-    // this.form.get('colors').setValue()
     let colors = this.form.value.colors;
     this.form.value.colors = JSON.stringify(colors);
     console.log(this.form.value);
@@ -115,15 +118,6 @@ export class CreateProductComponent implements OnInit {
       this.itemsId -= 1;
       this.noColors = this.noColors - 1;
     }
-    // console.log(event);
-    // let colorName = event.value[0].name;
-    // let colorId = event.value[0].id;
-    // let item =  {
-    //   id: colorName,
-    //   name: colorName
-    // };
-    // console.log(colorName);
-    // this.addItem(item);
   }
 
   onNoClick(){

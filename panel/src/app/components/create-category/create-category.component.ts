@@ -44,6 +44,9 @@ export class CreateCategoryComponent implements OnInit {
       this.type = 1;
     }else if(this.component == 'machines'){
       this.type = 0;
+    }else{
+      console.log("comidin");
+      this.component = 'games';
     }
   }
 

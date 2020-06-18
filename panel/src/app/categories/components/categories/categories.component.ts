@@ -2,21 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'app/services/services';
 import { environment } from '../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
-import { EditOrderComponent } from '../edit-order/edit-order.component';
-import { CreateOrderComponent } from '../create-order/create-order.component';
+import { EditCategoryComponent } from '../edit-category/edit-category.component';
+import { CreateCategoryComponent } from '../create-category/create-category.component';
 
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
+  selector: 'app-categories',
+  templateUrl: './categories.component.html',
+  styleUrls: ['./categories.component.scss']
 })
-export class OrdersComponent implements OnInit {
+export class CategoriesComponent implements OnInit {
 
   baseUrl = environment.base_url + '/games/get-image/';
   dtOptions: DataTables.Settings = {};
   items: any[] = [];
-  currentDate = new Date();
-  component: string = 'orders';
+  component: string = 'products/categories';
 
   constructor(
     private apiService: ApiService,
@@ -46,13 +45,6 @@ export class OrdersComponent implements OnInit {
     columns: [
       {data:'id'},
       {data:'name'},
-      {data:'lastName'},
-      {data:'phone'},
-      {data:'email'},
-      {data:'paymentMethod'},
-      {data:'checked'},
-      {data:'created_at'},
-      {data:'delivered'},
       {data:'actions'}
     ]
     };
@@ -68,8 +60,8 @@ export class OrdersComponent implements OnInit {
   }
 
   openCreate(){
-    const dialogRef = this.dialog.open(CreateOrderComponent,{
-      width: '800px',
+    const dialogRef = this.dialog.open(CreateCategoryComponent,{
+      width: '400px',
       hasBackdrop: true,
       disableClose: true
     });
@@ -80,47 +72,10 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-  }
-
-  confirm(id: number){
-    const token = localStorage.getItem('access_token');
-    this.apiService.put(`${this.component}/confirm`, id, {}, token).subscribe((data:any)=>{
-      console.log(data);
-    },err=>{
-      console.log(err);
-    },()=>{
-      setTimeout(()=>this.fetchData(), 700);
-    });
-  }
-
-  delivered(id: number){
-    const token = localStorage.getItem('access_token');
-    this.apiService.put(`${this.component}/delivered`, id, {}, token).subscribe((data:any)=>{
-      console.log(data);
-    },err=>{
-      console.log(err);
-    },()=>{
-      setTimeout(()=>this.fetchData(), 700);
-    });
-  }
-
-  achieve(id: number){
-    const token = localStorage.getItem('access_token');
-    this.apiService.put(`${this.component}/archive`, id, {}, token).subscribe((data:any)=>{
-      console.log(data);
-    },err=>{
-      console.log(err);
-    },()=>{
-      setTimeout(()=>this.fetchData(), 700);
-    });
-  }
-
   erase(id: number){
     const token = localStorage.getItem('access_token');
     this.apiService.delete(`${this.component}/delete`, id, token).subscribe((resp:any)=>{
-      console.log('Se elminó la reservacion con éxito');
+      console.log('Se elminó la categoria con éxito. ', resp);
     },(error)=>{ 
       console.log(error);
     },()=>{
@@ -128,14 +83,12 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  openEdit(id: number, checked?: number){
-    const dialogRef = this.dialog.open(EditOrderComponent,{
-      width: '80vW',
-      maxHeight: '90vH',
+  openEdit(id: number){
+    const dialogRef = this.dialog.open(EditCategoryComponent,{
+      width: '400px',
       hasBackdrop: true,
       data: {
-        id: id,
-        isChecked: checked
+        id: id
       }
     });
     dialogRef.afterClosed().subscribe(()=>{

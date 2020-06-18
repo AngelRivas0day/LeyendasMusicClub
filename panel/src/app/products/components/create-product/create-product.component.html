@@ -33,13 +33,22 @@
             <div class="col-sm-12 col-md-6">
                 <mat-form-field class="w-100">
                     <span matPrefix>$&nbsp;</span>
-                    <input matInput formControlName="price" placeholder="Precio" type="number">
+                    <input matInput formControlName="price" placeholder="Precio de tallas normales" type="number">
                 </mat-form-field>
             </div>
             <div class="col-sm-12 col-md-6">
                 <mat-form-field class="w-100">
-                    <input matInput formControlName="category" placeholder="Categoria" type="text">
+                    <span matPrefix>$&nbsp;</span>
+                    <input matInput formControlName="price_extra" placeholder="Precio de tallas grandes" type="number">
                 </mat-form-field>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <mat-form-field class="w-100">
+                    <mat-label>Categoria</mat-label>
+                    <mat-select formControlName="category_id">
+                      <mat-option #option *ngFor="let category of categories" [value]="category.id">{{category.name | uppercase}}</mat-option>
+                    </mat-select>
+                </mat-form-field>   
             </div>
             <div class="col-sm-12 col-md-6">
                 <mat-form-field class="w-100">

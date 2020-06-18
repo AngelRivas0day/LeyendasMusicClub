@@ -13,6 +13,7 @@ export class EditProductComponent implements OnInit {
   editProdForm: FormGroup;
   product: any;
   colors: any[];
+  categories: any[];
 
   constructor(
     public dialogRef: MatDialogRef<EditProductComponent>,
@@ -23,14 +24,16 @@ export class EditProductComponent implements OnInit {
     this.editProdForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       description: new FormControl('',[Validators.required]),
-      category: new FormControl('',[Validators.required]),
+      category_id: new FormControl('',[Validators.required]),
       existence: new FormControl(0, [Validators.required]),
       price: new FormControl(0, [Validators.required]),
+      price_extra: new FormControl(0, [Validators.required])
     });
   }
 
   ngOnInit() {
     this.apiService.getAll('colors/list').subscribe(resp=>this.colors = resp);
+    this.apiService.getAll('products/categories/list').subscribe(resp=>this.categories = resp);
     this.getProduct(this.data.id);
   }
 

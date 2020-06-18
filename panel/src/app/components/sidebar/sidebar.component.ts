@@ -9,12 +9,14 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
   { path: '/dashboard', title: 'Dashboard',  icon: 'design_app', class: '' },
   { path: '/productos', title: 'Productos', icon: 'shopping_basket', class: '' },
+  { path: '/colores', title: 'Colores', icon: 'design_palette', class: '' },
+  { path: '/categorias-productos', title: 'Cat. Productos', icon: 'shopping_basket', class: '' },
   { path: '/eventos', title: 'Eventos', icon: 'design_bullet-list-67', class: '' },
   { path: '/reservaciones', title: 'Reservaciones', icon: 'education_agenda-bookmark', class: '' },
   { path: '/ordenes', title: 'Ordenes', icon: 'files_paper', class: '' },
   { path: '/juegos-de-mesa', title: 'Juegos de mesa', icon: 'sport_trophy', class: '' },
   { path: '/maquinitas', title: 'Maquinitas', icon: 'tech_controller-modern', class: '' },
-  { path: '/colores', title: 'Colores', icon: 'design_palette', class: '' }
+  { path: '/categorias-juegos', title: 'Cat. Juegos', icon: 'tech_controller-modern', class: '' }
 ];
 
 @Component({

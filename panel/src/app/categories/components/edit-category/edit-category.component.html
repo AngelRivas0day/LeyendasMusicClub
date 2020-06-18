@@ -1,21 +1,11 @@
 <form id="form" [formGroup]="form" class="edit-form" (ngSubmit)="onSubmit()">
-    <h1 mat-dialog-title>Editar datos del producto</h1>
+    <h1 mat-dialog-title>Categoria</h1>
     <div mat-dialog-content>
         <div class="row no-padding no-margin">
-            <div class="col-sm-12 col-md-6">
+            <div class="col-sm-12 col-xs-12">
                 <mat-form-field class="w-100">
                     <mat-label>Nombrel de la categoria</mat-label>
                     <input placeholder="Ej: co-op" matInput formControlName="name">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class='w-100'>
-                    <mat-label>Para que tipo de juegos es</mat-label>
-                    <mat-select formControlName="type" name="type">
-                        <mat-option *ngFor="let type of types" [value]="type.number">
-                            {{type.name}}
-                        </mat-option>
-                    </mat-select>
                 </mat-form-field>
             </div>
         </div>
