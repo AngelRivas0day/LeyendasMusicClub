@@ -10,9 +10,8 @@
             height: 30px;
             position: absolute;
             z-index: 999;
-            top: 10px;
+            top: 13px;
             right: 20px !important;
-            background-color: white;
         }
     }
     .main-navbar{
@@ -22,9 +21,10 @@
         height: 50px;
         .navbar-logo{
             color: white;
+            height: 35px;
             img{
-                width: 80px;
-                height: 80px;
+                width: 170px;
+                height: 100%;
                 object-fit: contain;
             }
             span{
@@ -125,3 +125,57 @@
         display: none;
     }
 }
+
+.menu-wrapper {
+    width: $bar-width;
+      height: $bar-height + $bar-spacing*2;
+      cursor: pointer;
+  }
+  
+  .hamburger-menu,
+  .hamburger-menu:after,
+  .hamburger-menu:before {
+    width: $bar-width;
+      height: $bar-height;
+  }
+  
+  .hamburger-menu {
+      position: relative;
+      transform: translateY($bar-spacing);
+      background: $bars-color;
+      transition: all 0ms 300ms;
+  
+    &.animate {
+      background: rgba(255, 255, 255, 0);
+    }
+  }
+  
+  .hamburger-menu:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: $bar-spacing;
+      background: $bars-color;
+      transition: bottom 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .hamburger-menu:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: $bar-spacing;
+      background: $bars-color;
+      transition: top 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .hamburger-menu.animate:after {
+      top: 0;
+      transform: rotate(45deg);
+      transition: top 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1);;
+  }
+  
+  .hamburger-menu.animate:before {
+      bottom: 0;
+      transform: rotate(-45deg);
+      transition: bottom 300ms cubic-bezier(0.23, 1, 0.32, 1), transform 300ms 300ms cubic-bezier(0.23, 1, 0.32, 1);;
+  }

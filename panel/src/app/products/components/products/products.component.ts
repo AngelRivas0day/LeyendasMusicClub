@@ -18,8 +18,7 @@ export class ProductsComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   products: any[] = [];
   component: string = 'products';
-  baseUrl: string = environment.imageStorageUrl + '/v1591125833/images/';
-
+  
   constructor(
     public apiService: ApiService,
     public dialog: MatDialog

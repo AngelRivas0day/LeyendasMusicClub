@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 export class NavbarComponent implements OnInit {
 
   @ViewChild("navbar", {read: ElementRef}) navbar: ElementRef;
+  @ViewChild("navToggle", {read: ElementRef}) navToggle: ElementRef;
 
   total$: Observable<number>;
 
@@ -34,15 +35,18 @@ export class NavbarComponent implements OnInit {
     if(this.navbar.nativeElement.classList.contains("closed")){
       this.navbar.nativeElement.classList.remove("closed");
       this.navbar.nativeElement.classList.add("open");
+      this.navToggle.nativeElement.classList.add("animate");
     }else if(this.navbar.nativeElement.classList.contains("open")){
       this.navbar.nativeElement.classList.remove("open");
       this.navbar.nativeElement.classList.add("closed");
+      this.navToggle.nativeElement.classList.remove("animate");
     }
   }
 
   closeNav(): void{
     this.navbar.nativeElement.classList.remove("open");
     this.navbar.nativeElement.classList.add("closed");
+    this.navToggle.nativeElement.classList.remove("animate");
   }
 
   navOptions: any[] = [
@@ -51,6 +55,7 @@ export class NavbarComponent implements OnInit {
     { name: "eventos", path: "/eventos"},
     { name: "entretenimiento", path: "/entretenimiento"},
     { name: "Menú bar", path: "/menu-bar"},
-    { name: "Reservaciones", path: "/reservaciones"}
+    { name: "Reservaciones", path: "/reservaciones"},
+    { name: "Ubicaciones", path: "/ubicaciones"}
   ]
 }

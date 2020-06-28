@@ -1,16 +1,22 @@
 <div id="checkout" class="center-layout">
     <div class="container">
         <div class="row items">
-            <div *ngIf=" ( products$ | async | groupProducts) as products " class="col-xs-12 col-sm-12 col-md-6">
+            <div *ngIf=" ( products$ | async ) as products " class="col-xs-12 col-sm-12 col-md-6">
                 <h1 class="font-bebas">RESUMEN DE COMPRA</h1>
                 <div class="shppingResume">
                     <ul class="shppingResume_list" *ngFor="let item of products">
                         <li class="sR_list-item">
-                            <p class="font-roboto"><span>producto:</span> {{item.product.name}}</p>
-                            <p class="font-roboto"><span>Cantidad:</span> {{item.quantity}}</p>
+                            <p class="font-roboto"><span>producto:</span> {{item.name}}</p>
+                            <p class="font-roboto"><span>Color:</span> {{item.color}}</p>
+                            <p class="font-roboto"><span>Precio:</span> {{item.price | currency}}</p>
+                            <p class="font-roboto"><span>Tama&ntilde;o:</span> {{item.size}}</p>
                         </li>
                     </ul>
-                </div>  
+                    <div class="shppingResume_total">
+                        <h1 class='font-roboto'>Costo de envio: <span>{{ deliveryFee | currency}}</span></h1>
+                        <h1 class='font-roboto'>TOTAL: <span> {{ total | currency}}</span></h1>
+                    </div>
+                </div> 
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 shoppingCustomerInfo">
                 <h1 class="font-bebas">INFORMACIÓN DEL COMPRADOR</h1>

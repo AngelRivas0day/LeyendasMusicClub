@@ -1,9 +1,11 @@
+@import "../../../../assets/vars";
+
 #footer{
     background: black;
-    background-image: url("../../../../assets/images/logos/logo.jpg");
-    background-size: 200px 200px;
-    background-repeat: no-repeat;
-    background-position: bottom right;
+    // background-image: url("../../../../assets/images/logos/logo_horizontal.png");
+    // background-size: 200px 200px;
+    // background-repeat: no-repeat;
+    // background-position: bottom right;
     padding: 50px 0;
     ul,h3{
         padding: 0;
@@ -28,6 +30,8 @@
         &.socialMedia__list{
             a{
                 transition: all .3s;
+                cursor: pointer;
+                text-transform: capitalize;
             }
             .facebook{
                 &:hover{
@@ -42,6 +46,70 @@
             .youtube{
                 &:hover{
                     color: red;
+                }
+            }
+        }
+    }
+    img{
+        width: 65%;
+        display: block;
+        height: auto;
+        margin: 0 auto;
+    }
+}
+.footer__social{
+    transition: all .3s;
+    border-top: 5px solid rgb(173,173,173);
+    background-color: rgb(234,234,234);
+    padding: 27px 0;
+    ul{
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        list-style: none;
+        @media #{$break-medium}{
+            flex-direction: row;
+        }
+        li{
+            flex: 1;
+            margin: 5px 0;
+            cursor: pointer;
+            width: 200px;
+            @media #{$break-medium}{
+                margin: 0 5px;
+                max-width: 200px;
+            }
+            .social-media__item{
+                transition: all .3s;
+                border-radius: 35px;
+                border: 2px solid rgb(173,173,173);
+                box-sizing: border-box;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: row;
+                &:hover{
+                    border-color: white;
+                }
+                &:hover span, &:hover i{
+                    color: white;
+                }
+                i{
+                    transition: all .3s;
+                    margin-right: 10px;
+                    color: rgb(173,173,173);
+                    font-size: 24px;
+                }
+                span{
+                    transition: all .3s;
+                    text-transform: uppercase;
+                    color: rgb(173,173,173);
+                    font-size: 24px;
                 }
             }
         }

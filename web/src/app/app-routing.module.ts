@@ -37,6 +37,10 @@ const routes: Routes = [
       {
         path: 'reservaciones',
         loadChildren: () => import('./reservaciones/reservaciones.module').then(m=>m.ReservacionesModule)
+      },
+      {
+        path: 'ubicaciones',
+        loadChildren: ()=>import('./locations/locations.module').then(m=>m.LocationsModule)
       }
     ]
   }

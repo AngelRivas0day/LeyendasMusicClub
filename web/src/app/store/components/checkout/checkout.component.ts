@@ -10,6 +10,7 @@ import { environment } from '../../../../environments/environment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { InfoComponent } from '../info/info.component';
 import states from '../../../../assets/states.json';
+import { StripeService, Elements, Elements as SttripeElements, ElementsOptions } from 'ngx-stripe';
 
 declare var paypal;
 
@@ -22,11 +23,13 @@ export class CheckoutComponent implements OnInit {
 
   @ViewChild ('paypal', {static: true}) paypalElement: ElementRef;
 
+
+
   deliveryFee: number = environment.deliveryFee;
   products$: Observable<any>;
   form: FormGroup;
-  subtotal: number;
   total: number;
+  subtotal: number;
   items: any[];
   payMethods: any[] = [
     {
@@ -79,29 +82,27 @@ export class CheckoutComponent implements OnInit {
       total: new FormControl('', [Validators.required])
     });
     this.states = Object.keys(states);
+    this.cartService.subtotal$.subscribe((value:any)=>{
+      this.subtotal = value;
+      this.total = this.subtotal + this.deliveryFee;
+    });
   }
 
   ngOnInit(): void {
     this.products$ = this.cartService.cart$;
-    if(!this.products$){
-      this.router.navigateByUrl('/');
-    }
     this.cartService.subtotal$.subscribe(subtotal=>{
       this.subtotal = parseInt(subtotal);
+    }, (err)=>{
+      console.log(err);
     });
-    this.total = this.subtotal + this.deliveryFee;
-
     this.products$.subscribe((data:any)=>{
       this.form.get('products').setValue(JSON.stringify(data));
-      console.log('Los productos: ',data);
       this.items = data;
     },(err)=>{
       console.log(err)
     });
-
     this.form.get('total').setValue(this.total);
     this.form.get('subtotal').setValue(this.subtotal);
-
     // this.onPaypalInit();
   }
 

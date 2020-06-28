@@ -12,10 +12,12 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { InfoComponent } from './components/info/info.component';
-
+import { NgPipesModule } from 'ngx-pipes';
+import { ProductSnackBarComponent } from './components/product-snack-bar/product-snack-bar.component';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
-  declarations: [StoreComponent, ProductComponent, CartComponent, CheckoutComponent, InfoComponent],
+  declarations: [StoreComponent, ProductComponent, CartComponent, CheckoutComponent, InfoComponent, ProductSnackBarComponent],
   imports: [
     CommonModule,
     StoreRoutingModule,
@@ -23,7 +25,9 @@ import { InfoComponent } from './components/info/info.component';
     MaterialModule,
     SharedModule,
     ReactiveFormsModule,
-    CarouselModule
+    CarouselModule,
+    NgPipesModule,
+    NgxStripeModule.forChild('public_key')
   ],
   entryComponents: [
     InfoComponent

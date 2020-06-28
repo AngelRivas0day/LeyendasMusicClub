@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { GameComponent } from '../game/game.component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 import { ApiService } from 'src/app/shared/services/api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-juegos',
@@ -11,24 +10,31 @@ import { ApiService } from 'src/app/shared/services/api.service';
   styleUrls: ['./juegos.component.scss']
 })
 export class JuegosComponent implements OnInit {
-  baseUrl = environment.baseUrl + '/games/get-image/';
+
+  component: string;
   games: any[] = [];
-  categories: any[] = [];
 
   constructor(
     public dialog: MatDialog,
-    public apiService: ApiService
-  ) { }
+    public apiService: ApiService,
+    private route: ActivatedRoute
+  ) { 
+    this.route.paramMap.subscribe((params:any) => {
+      if(params){
+        if(params.params.category == 'maquinitas'){
+          this.component = 'machines';
+        }else if(params.params.category == 'juegos-de-mesa'){
+          this.component = 'games';
+        }
+      }
+    });
+  }
 
   fetchData(){
-    this.apiService.getAll('games/list').subscribe((data:any)=>{
+    this.apiService.getAll(`${this.component}/list`).subscribe((data:any)=>{
       this.games = data;
       console.log(data);
     });
-    this.apiService.getAll('gamesCategories/list').subscribe((data:any)=>{
-      this.categories = data;
-      console.log(data);
-    },err=>console.log(err));
   }
 
   ngOnInit(): void {

@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   baseUrl: 'https://leyendas-api.herokuapp.com',
   imageStorageUrl: '',
-  deliveryFee: 250
+  deliveryFee: 180
 };
 
 /*

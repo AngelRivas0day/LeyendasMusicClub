@@ -3,35 +3,38 @@
     .slider-container{
         img{
             height: 300px;
-            max-height: 300px;
+            // max-height: 300px;
             width: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
     }
     .products__container{
         padding-top: 50px;
-        .products__item{
-            .item__card{
-                margin: 0 auto;
-                width: 80%;
-                &-image-container{
-                    border-bottom: 3px solid black;
-                    overflow: hidden;
-                    .item__card-image{
-                        height: 200px;
-                        width: 100%;
-                        object-fit: contain;
-                        object-position: center;
-                        margin: 0 auto;
-                        transition: all .3s;
+        .products__category{
+            margin-bottom: 30px;
+            .products__item{
+                .item__card{
+                    margin: 0 auto;
+                    width: 80%;
+                    &-image-container{
+                        border-bottom: 3px solid black;
+                        overflow: hidden;
+                        .item__card-image{
+                            height: auto;
+                            width: 100%;
+                            object-fit: contain;
+                            object-position: center;
+                            margin: 0 auto;
+                            transition: all .3s;
+                        }
+                        &:hover .item__card-image{
+                            transform: scale(1.1) rotate(5deg);
+                        }
                     }
-                    &:hover .item__card-image{
-                        transform: scale(1.1) rotate(5deg);
-                    }
-                }
-                .item__card-content{
-                    h3{
-                        font-size: 15px;
+                    .item__card-content{
+                        h3{
+                            font-size: 15px;
+                        }
                     }
                 }
             }

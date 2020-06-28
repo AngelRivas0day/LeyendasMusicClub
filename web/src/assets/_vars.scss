@@ -5,6 +5,10 @@ $break-extra: "screen and (min-width: 1200px)";
 $main-color: "";
 $secondary-color: "";
 $terciary-color: "";
+$bar-width: 25px;
+$bar-height: 3px;
+$bar-spacing: 10px;
+$bars-color: red;
 
 @mixin center-layout{
     min-height: calc(100vH - 60px);

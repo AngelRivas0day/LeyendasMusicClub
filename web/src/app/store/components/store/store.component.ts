@@ -7,11 +7,11 @@ import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-store',
   templateUrl: './store.component.html',
-  styleUrls: ['./store.component.scss']
+  styleUrls: ['./store.component.scss'],
 })
 export class StoreComponent implements OnInit {
 
-  products: any[];
+  products: any[] = [];
 
   slides: any[] = [];
 
@@ -35,7 +35,7 @@ export class StoreComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
   ) { }
 
   ngOnInit(): void {
@@ -51,6 +51,9 @@ export class StoreComponent implements OnInit {
     this.apiService.getAll('products/list').subscribe((data: any)=>{
       console.log(data);
       this.products = data;
+    },
+    (err)=>{
+      console.log(err);
     });
   }
 

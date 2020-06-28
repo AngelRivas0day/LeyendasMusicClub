@@ -6,11 +6,12 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { GroupProductsPipe } from './pipes/group-products.pipe';
+import { GroupPerCategoryPipe } from './pipes/group-per-category.pipe';
 
 
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, GroupProductsPipe],
+  declarations: [NavbarComponent, FooterComponent, GroupProductsPipe, GroupPerCategoryPipe],
   imports: [
     CommonModule,
     RouterModule,
@@ -20,7 +21,8 @@ import { GroupProductsPipe } from './pipes/group-products.pipe';
   exports: [
     FooterComponent,
     NavbarComponent,
-    GroupProductsPipe
+    GroupProductsPipe,
+    GroupPerCategoryPipe
   ]
 })
 export class SharedModule { }

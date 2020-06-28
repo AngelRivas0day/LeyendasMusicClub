@@ -1,3 +1,5 @@
+@import  "../../../../assets/vars";
+
 #mainEntretenimiento{
     height: calc(100vH - 50px);
     width: 100%;
@@ -15,6 +17,7 @@
         background-size: cover;
         background-repeat: no-repeat;
         transition: all .3s;
+        cursor: pointer;
         &.juegos{
             background-image: url('src/assets/images/backgrounds/rumman-amin-yNP1lz924-4-unsplash-min.jpg');
             filter: grayscale(100%);
@@ -32,10 +35,14 @@
         h1{
             text-transform: uppercase;
             letter-spacing: 4px;
-            font-size: 40px;
-            a{
-                text-decoration: none;
-                color: white;
+            font-size: 20px;
+            color: white;
+            text-align: center;
+            @media #{$break-medium}{
+                font-size: 30px;
+            }
+            @media #{$break-large}{
+                font-size: 40px;
             }
         }
     }

@@ -36,7 +36,7 @@
                                             </div>
                                         </td>
                                         <td>{{ game.name }}</td>
-                                        <td>{{ game.category == 1 ? 'Juego de mesa' : 'Maquinita' }}</td>
+                                        <td>{{ game.category == 0 ? 'Juego de mesa' : 'Maquinita' }}</td>
                                         <td>
                                             <i class="material-icons icon-trash" color="warning" (click)="erase(game.id)">
                                                 cancel

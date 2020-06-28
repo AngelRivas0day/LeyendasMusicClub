@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/shared/services/cart.service';
-import { environment } from 'src/environments/environment';
 import { ApiService } from 'src/app/shared/services/api.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { ProductSnackBarComponent } from '../product-snack-bar/product-snack-bar.component';
 
 @Component({
   selector: 'app-product',
@@ -11,7 +12,6 @@ import { ApiService } from 'src/app/shared/services/api.service';
 })
 export class ProductComponent implements OnInit {
 
-  imageUrl: string = environment.baseUrl + '/products/get-image/';
   quantity: number = 1;
   id:number;
   product: any;
@@ -60,7 +60,8 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private snackBar: MatSnackBar
   ) { 
 
   }
@@ -69,6 +70,13 @@ export class ProductComponent implements OnInit {
     this.id = this.route.snapshot.params.id;
     this.getProduct(this.id);
     this.fetchData();
+    this.openSnackBar();
+  }
+
+  openSnackBar() {
+    this.snackBar.openFromComponent(ProductSnackBarComponent, {
+      duration: 10 * 1000,
+    });
   }
 
   plusQuantity(): void{
@@ -83,13 +91,11 @@ export class ProductComponent implements OnInit {
 
   getProduct(id: number){
     this.apiService.getOne('products/list', id).subscribe((data: any)=>{
-      this.product = data 
+      this.product = data;
       this.currentImage = data.image;
       this.allImages = data.images;
       this.currentImages = this.allImages[Object.keys(this.allImages)[0]];
-      console.log(this.currentImages);
       this.colors = this.product.colors;
-      console.log(this.colors);
     });
   }
 
@@ -102,21 +108,32 @@ export class ProductComponent implements OnInit {
     if(this.currentColor && this.currentSize){
       product['color'] = color;
       product['size'] = size;
-      console.log(product);
-      this.cartService.addCart(product, quantity);
+      let newProduct = {
+        id: product['id'],
+        name: product['name'],
+        image: product['image'],
+        color: product['color'],
+        size: product['size'],
+        description: product['description']
+      };
+      if(this.currentSize.id == 6 || this.currentSize.id == 7){
+        newProduct['price'] = product['price_extra'];
+      }else{
+        newProduct['price'] = product['price'];
+      }
+      this.cartService.addCart(newProduct, quantity);
     }else{
       alert('Formulario no lleno');
     }
   }
 
   setSize(value: any){
-    this.currentSize = value.name;
+    this.currentSize = value;
   }
 
   setColor(value: any, index: number){
     this.currentColor = value.name;
     this.currentColorIndex = index;
-    console.log(index);
     this.currentImages = (this.allImages[value.name]);
     this.currentImage = this.currentImages[0];
   }
