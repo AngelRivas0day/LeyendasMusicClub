@@ -19,6 +19,17 @@
                 </div> 
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 shoppingCustomerInfo">
+                <mat-horizontal-stepper>
+                    <mat-step label="label1">
+                        <form action="">
+                            <ng-template #name></ng-template>
+                            
+                        </form>
+                    </mat-step>
+                    <mat-step label="label2">
+                        
+                    </mat-step>
+                </mat-horizontal-stepper>
                 <h1 class="font-bebas">INFORMACIÓN DEL COMPRADOR</h1>
                 <form novalidate [formGroup]="stripeTest" (ngSubmit)="stripeSubmit()">
                     <mat-form-field class="w-100">
