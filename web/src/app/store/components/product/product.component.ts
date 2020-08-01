@@ -11,7 +11,7 @@ import { ProductSnackBarComponent } from '../product-snack-bar/product-snack-bar
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
-
+  isLoaded: boolean = false;
   quantity: number = 1;
   id:number;
   product: any;
@@ -47,6 +47,30 @@ export class ProductComponent implements OnInit {
     {
       id: 7,
       name: "XXXL"
+    }
+  ];
+  normalSizes: any[] = [
+    {
+      id: 2,
+      name: "chica"
+    },
+    {
+      id: 3,
+      name: "mediana"
+    },
+    {
+      id: 4,
+      name: "grande"
+    },
+    {
+      id: 5,
+      name: "XL"
+    }
+  ];
+  defaultSizes: any[] = [
+    {
+      id: 1,
+      name: 'unitalla'
     }
   ];
   colors: any[] = [];
@@ -96,6 +120,10 @@ export class ProductComponent implements OnInit {
       this.allImages = data.images;
       this.currentImages = this.allImages[Object.keys(this.allImages)[0]];
       this.colors = this.product.colors;
+    },(err)=>{
+      console.log(err);
+    },()=>{
+      this.isLoaded = true;
     });
   }
 

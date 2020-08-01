@@ -15,6 +15,8 @@ import { InfoComponent } from './components/info/info.component';
 import { NgPipesModule } from 'ngx-pipes';
 import { ProductSnackBarComponent } from './components/product-snack-bar/product-snack-bar.component';
 import { NgxStripeModule } from 'ngx-stripe';
+import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [StoreComponent, ProductComponent, CartComponent, CheckoutComponent, InfoComponent, ProductSnackBarComponent],
@@ -27,7 +29,10 @@ import { NgxStripeModule } from 'ngx-stripe';
     ReactiveFormsModule,
     CarouselModule,
     NgPipesModule,
-    NgxStripeModule.forChild('public_key')
+    NgxStripeModule.forRoot(environment.piblicKeyTest),
+    LazyLoadImageModule.forRoot({
+      preset: intersectionObserverPreset // <-- tell LazyLoadImage that you want to use IntersectionObserver
+    })
   ],
   entryComponents: [
     InfoComponent

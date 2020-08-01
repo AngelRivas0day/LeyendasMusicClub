@@ -11,6 +11,8 @@ import { environment } from '../../../../environments/environment';
 })
 export class StoreComponent implements OnInit {
 
+  isLoaded: boolean = false;
+
   products: any[] = [];
 
   slides: any[] = [];
@@ -30,7 +32,9 @@ export class StoreComponent implements OnInit {
         items: 1
       }
     },
-    nav: false
+    nav: false,
+    autoplay: true,
+    autoplaySpeed: 950
   }
 
   constructor(
@@ -54,6 +58,10 @@ export class StoreComponent implements OnInit {
     },
     (err)=>{
       console.log(err);
+    },()=>{
+      setTimeout(()=>{
+        this.isLoaded = true;
+      },1500);
     });
   }
 

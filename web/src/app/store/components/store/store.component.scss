@@ -1,3 +1,8 @@
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; } 
+}
+
 #store{
     padding: 50px 0;
     .slider-container{
@@ -6,6 +11,9 @@
             // max-height: 300px;
             width: 100%;
             object-fit: contain;
+            &.img-lazyloaded{
+                animation: fadein .5s;
+            }
         }
     }
     .products__container{
@@ -16,6 +24,7 @@
                 .item__card{
                     margin: 0 auto;
                     width: 80%;
+                    margin-bottom: 20px;
                     &-image-container{
                         border-bottom: 3px solid black;
                         overflow: hidden;
@@ -34,6 +43,13 @@
                     .item__card-content{
                         h3{
                             font-size: 15px;
+                            line-height: 20px;
+                            margin: 0;
+                            padding: 0;
+                        }
+                        span{
+                            font-size: 11px;
+                            color: rgba(120,120,120,1);
                         }
                     }
                 }

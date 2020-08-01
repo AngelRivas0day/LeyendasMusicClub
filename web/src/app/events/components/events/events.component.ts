@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/shared/services/api.service';
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
-
+  isLoaded: boolean = false;
   events: any[];
   baseUrl: string = environment.baseUrl + '/events/get-image/';
 
@@ -24,6 +24,10 @@ export class EventsComponent implements OnInit {
     this.apiService.getAll('events/list').subscribe((data:any)=>{
       this.events = data;
       console.log(data);
+    },(err)=>{
+      console.log(err);
+    },()=>{
+      this.isLoaded = true;
     });
   }
 }

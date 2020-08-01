@@ -21,7 +21,7 @@
         .event__item{
             width: 100%;
             max-width: 800px;
-            margin: 0 auto 15px auto;
+            margin: 0 auto;
             height: 240px;
             position: relative;
             span{
@@ -43,7 +43,12 @@
                 object-fit: contain;
                 background-color: rgba(0,0,0,.4);
             }
-            margin-bottom: 30px;
+        }
+        .event__description{
+            width: 100%;
+            max-width: 800px;
+            margin: 10px auto 25px auto;
+            position: relative;
         }
     }
 }

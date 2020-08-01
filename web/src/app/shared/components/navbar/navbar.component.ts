@@ -51,7 +51,7 @@ export class NavbarComponent implements OnInit {
 
   navOptions: any[] = [
     { name: "tienda", path: "/tienda"},
-    { name: "about", path: "/about"},
+    // { name: "about", path: "/about"},
     { name: "eventos", path: "/eventos"},
     { name: "entretenimiento", path: "/entretenimiento"},
     { name: "Menú bar", path: "/menu-bar"},

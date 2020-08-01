@@ -18,7 +18,7 @@ export class ApiService {
 
   public setHeadersWithNoToken(){
     return new HttpHeaders({ // some hard coded headers but they work hella fine in here
-      'Content-Type':'application/json; charset=utf-8',
+      'Content-Type':'application/json',
     });
   }
 
@@ -122,7 +122,8 @@ export class ApiService {
   }
 
   post( endpoint: string, data = null) {
-    return this.http.post(`${this.base_url}/${endpoint}/`, data, this.options ).pipe(
+    const headers = this.setHeadersWithNoToken();
+    return this.http.post(`${this.base_url}/${endpoint}`, data, {headers} ).pipe(
       retry(2),
       this.catchRequestError()
     );

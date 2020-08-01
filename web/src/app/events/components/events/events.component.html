@@ -1,4 +1,9 @@
 <div id="events">
+    <ng-container *ngIf="!isLoaded">
+        <div class="overlay">
+            <mat-spinner></mat-spinner>
+        </div>
+    </ng-container>   
     <div class="banner">
         <h1 class="font-bebas">EVENTOS</h1>
     </div>
@@ -10,6 +15,9 @@
                         <!-- <img src="" alt="" /> -->
                         <img [src]="event.image" alt="">
                         <span>Fecha del evento: {{event.date | date:'dd-MM-yyyy'}}</span>
+                    </div>
+                    <div class="event__description">
+                        <p class="font-roboto text-center">{{event.description}}</p>
                     </div>
                 </div>
             </div>

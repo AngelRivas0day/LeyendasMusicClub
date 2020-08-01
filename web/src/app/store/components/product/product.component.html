@@ -1,4 +1,9 @@
 <div id="product">
+    <ng-container *ngIf="!isLoaded">
+        <div class="overlay">
+            <mat-spinner></mat-spinner>
+        </div>
+    </ng-container>   
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-7 productSlider">
@@ -19,21 +24,52 @@
                 <div class="row" *ngIf='product'>
                     <div class="col-sm-12 productInfo__container">
                         <h1 class="productInfo__title font-bebas">{{ product.name }}</h1>
-                        <span class="productInfo__category font-roboto">{{ product.category_name | uppercase }} - {{ ((currentSize?.id == 6 || currentSize?.id == 7) ? product.price_extra : product.price) | currency }}</span>
+                        <span class="productInfo__category font-roboto">{{ product.category_name | uppercase }} - {{ ((currentSize?.id == 6 || currentSize?.id == 7) ? product.price_extra : product.price) | currency }}</span>      
                         <p class="productInfo__sizes-chart">Tamaños disponibles: </p>
-                        <div class="productInfo__selector">
-                            <mat-radio-group aria-labelledby="example-radio-group-label" class="sizes-selector">
-                                <mat-radio-button (click)="setSize(size)" class="example-radio-button" *ngFor="let size of sizes" [value]="size.name">
-                                    {{ size.name | uppercase}}
-                                </mat-radio-button>
-                            </mat-radio-group>
-                        </div>
+                        <ng-container [ngSwitch]="product.category_name">
+                            <div *ngSwitchCase="'Playeras'">
+                                <div class="productInfo__selector">
+                                    <mat-radio-group aria-labelledby="example-radio-group-label" class="sizes-selector">
+                                        <mat-radio-button (click)="setSize(size)" class="example-radio-button" *ngFor="let size of sizes" [value]="size.name">
+                                            {{ size.name | uppercase}}
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'sudaderas'">
+                                <div class="productInfo__selector">
+                                    <mat-radio-group aria-labelledby="example-radio-group-label" class="sizes-selector">
+                                        <mat-radio-button (click)="setSize(size)" class="example-radio-button" *ngFor="let size of normalSizes" [value]="size.name">
+                                            {{ size.name | uppercase}}
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'Polo'">
+                                <div class="productInfo__selector">
+                                    <mat-radio-group aria-labelledby="example-radio-group-label" class="sizes-selector">
+                                        <mat-radio-button (click)="setSize(size)" class="example-radio-button" *ngFor="let size of normalSizes" [value]="size.name">
+                                            {{ size.name | uppercase}}
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div *ngSwitchDefault>
+                                <div class="productInfo__selector">
+                                    <mat-radio-group aria-labelledby="example-radio-group-label" class="sizes-selector">
+                                        <mat-radio-button (click)="setSize(size)" class="example-radio-button" *ngFor="let size of defaultSizes" [value]="size.name">
+                                            {{ size.name | uppercase}}
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </ng-container>
                         <p class="productInfo__sizes-chart">Colores disponibles: </p>
                         <div class="productInfo__selector">
                             <ul class="color-selector">
                                 <ng-container *ngFor="let color of colors; index as i">
-                                    <li class="color-item">
-                                        <div [ngStyle]="{'background': color.hex}" (click)="setColor(color, i)" [ngClass]="currentColorIndex == i ? 'colorActive' : 'colorUnactive'" class="color-sample"></div>
+                                    <li class="color-item" [ngClass]="currentColorIndex == i ? 'colorActive' : 'colorUnactive'">
+                                        <div [ngStyle]="{'background-color': color.hex}" (click)="setColor(color, i)" class="color-sample"></div>
                                     </li>
                                 </ng-container>
                             </ul>
@@ -57,10 +93,11 @@
                     <div *ngFor="let product of lastProds" class="col-xs-6 col-md-4 col-lg-3 products__item">
                         <div class="item__card" (click)="goToItem(product.id)">
                             <div class="item__card-image-container">
-                                <img [src]="product.image" alt="" class="item__card-image">
+                                <img [defaultImage]="product.lazyImage" [lazyLoad]="product.image" alt="" class="item__card-image">
                             </div>
                             <div class="item__card-content">
-                                <h3>{{product.name}}</h3>
+                                <h3 class='font-roboto'>{{product.name}}</h3>
+                                <span class='font-roboto'>{{product.price | currency}}</span>
                             </div>
                         </div>
                     </div>

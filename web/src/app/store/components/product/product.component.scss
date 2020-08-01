@@ -1,5 +1,8 @@
 @import "../../../../assets/vars";
-
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; } 
+}
 #product{
     padding: 50px 0;
     .productSlider{
@@ -77,7 +80,7 @@
         }
         &sizes-chart{
             font-size: 15px;
-            margin: 10px 0 !important;
+            margin: 10px 0 5px 0 !important;
             padding: 0;
         }
         &quantity-container{
@@ -140,22 +143,32 @@
                 justify-content: flex-start;
                 align-items: center;
                 .color-item{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     margin-right: 10px;
                     border-radius: 100%;
-                    width: 20px;
-                    height: 20px;
+                    width: 19px;
+                    height: 19px;
+                    border: 3px solid rgba(255,255,255,.0);
                     .color-sample{
-                        width: 20px;
-                        height: 20px;
+                        width: 15px;
+                        height: 15px;
                         border-radius: 100%;
                         box-sizing: border-box;
                         border: 1px solid black;
-                        &.colorActive{
-                            border: 5px solid black;
-                        }
-                        &:hover{
-                            border: 5px solid black;
-                        }
+                        // &.colorActive{
+                        //     border: 5px solid black;
+                        // }
+                        // &:hover{
+                        //     border: 3px solid black;
+                        // }
+                    }
+                    &.colorActive{
+                        border-color: black !important;
+                    }
+                    &:hover{
+                        border-color: black !important;
                     }
                 }
             }
@@ -185,6 +198,9 @@
                         object-position: center;
                         margin: 0 auto;
                         transition: all .3s;
+                        &.img-lazyloaded{
+                            animation: fadein .5s;
+                        }
                     }
                     &:hover .item__card-image{
                         transform: scale(1.1) rotate(5deg);
@@ -193,6 +209,13 @@
                 .item__card-content{
                     h3{
                         font-size: 15px;
+                        line-height: 20px;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    span{
+                        font-size: 11px;
+                        color: rgba(120,120,120,1);
                     }
                 }
             }

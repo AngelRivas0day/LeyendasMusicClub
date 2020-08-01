@@ -1,4 +1,9 @@
 <div id="store">
+    <ng-container *ngIf="!isLoaded">
+        <div class="overlay">
+            <mat-spinner></mat-spinner>
+        </div>
+    </ng-container>    
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
@@ -14,19 +19,20 @@
                 </owl-carousel-o>
             </div>
         </div>
-        <div class="row products__container" *ngIf="products.length">
+        <div class="row products__container" *ngIf="products.length && isLoaded">
             <!-- <h1>{{products | groupBy: 'category_name' | json}}</h1> -->
-            <div class='col-xs-12 col-sm-12 products__category' *ngFor="let item of products | groupBy: 'category_name' | pairs">
+            <div class='col-xs-12 col-sm-12 products__category' *ngFor="let item of products | groupBy: 'category_name' | groupBy: 'name' | pairs">
                 <h1 class="font-bebas">{{item[0]}}</h1>
                 <div class="row">
                     <div *ngFor="let product of item[1]" class="col-xs-6 col-md-4 col-lg-3 products__item">
                         <!-- <h1>{{ product[0] }}</h1> -->
                         <div class="item__card" (click)="goToItem(product.id)">
                             <div class="item__card-image-container">
-                                <img [src]="product.image" alt="" class="item__card-image">
+                                <img [defaultImage]="product.lazyImage" [lazyLoad]="product.image" alt="" class="item__card-image">
                             </div>
                             <div class="item__card-content">
-                                <h3>{{product.name}}</h3>
+                                <h3 class='font-roboto'>{{product.name}}</h3>
+                                <span class='font-roboto'>{{product.price | currency}}</span>
                             </div>
                         </div>
                     </div>

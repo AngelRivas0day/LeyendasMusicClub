@@ -1,30 +1,30 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { environment } from '../../../../environments/environment';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import { InfoComponent } from '../info/info.component';
 import states from '../../../../assets/states.json';
-import { StripeService, Elements, Elements as SttripeElements, ElementsOptions } from 'ngx-stripe';
-
-declare var paypal;
+import { StripeService, Elements, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
+
 export class CheckoutComponent implements OnInit {
 
-  @ViewChild ('paypal', {static: true}) paypalElement: ElementRef;
-
-
-
+  // @ViewChild ('paypal', {static: true}) paypalElement: ElementRef;
+  elements: Elements;
+  card: StripeElement;
+  stripeTest: FormGroup;
+  elementOptions: ElementsOptions = {
+    locale: 'es'
+  };
   deliveryFee: number = environment.deliveryFee;
   products$: Observable<any>;
   form: FormGroup;
@@ -48,11 +48,13 @@ export class CheckoutComponent implements OnInit {
   deliverMethods: any[] = [
     {
       id: 1,
-      name: 'Recoger en tienda'
+      name: 'Recoger en tienda',
+      value: 'tienda'
     },
     {
       id: 2,
-      name: 'Paqueteria tradicional'
+      name: 'Paqueteria tradicional',
+      value: 'envio'
     }
   ];
   states: any[];
@@ -65,7 +67,8 @@ export class CheckoutComponent implements OnInit {
     private router: Router,
     private cartService: CartService,
     private apiService: ApiService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private stripeService: StripeService
   ) { 
     this.form = this.formBuilder.group({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -104,6 +107,31 @@ export class CheckoutComponent implements OnInit {
     this.form.get('total').setValue(this.total);
     this.form.get('subtotal').setValue(this.subtotal);
     // this.onPaypalInit();
+
+
+
+    this.stripeTest = this.formBuilder.group({
+      name: new FormControl ('', [Validators.required]),
+      products: new FormControl('', [Validators.required]),
+      stripeToken: new FormControl('')
+    });
+    this.stripeService.elements(this.elementOptions).subscribe((elements)=>{
+      this.elements = elements;
+      if(!this.card){
+        this.card = this.elements.create('card', {
+          style: {
+            base: {
+              iconColor: '#333333',
+              color: '#dadada',
+              lineHeight: '40px',
+              fontWeight: 400,
+              fontSize: '30px'
+            }
+          }
+        });
+        this.card.mount('#card-element');
+      }
+    });
   }
 
   onSubmit(){
@@ -125,46 +153,38 @@ export class CheckoutComponent implements OnInit {
     this.currentCities = states[e.source.value];
   }
 
-
-  onPaypalInit(){
-    let $this = this;
-    paypal.Buttons({
-      style: {
-        color: 'silver',
-        label: 'pay'
-      },
-      createOrder: (data, actions)=>{
-        return actions.order.create({
-          purchase_units: [{
-            description: 'Leyendas Video Bar - Tienda',
-            amount: {
-              currency_code: 'MXN',
-              value: this.subtotal
-            }
-          }]
-        })
-      },
-      onApprove: function(data, actions) {
-        return actions.order.capture().then(function(details) {
-            // Show a success message to the buyer
-            $this.fillPayment(details);
-        });
-      }
-    })
-    .render(this.paypalElement.nativeElement );
+  changeDeliveryHandler(event){
+    if(event.source.value == "tienda"){
+      this.deliveryFee = 0;
+      this.total = this.subtotal;
+    }else{
+      this.deliveryFee = environment.deliveryFee;
+      this.total = this.deliveryFee + this.subtotal;
+    }
   }
 
-  fillPayment(data: any){
-    console.log(data);
-    let name = data.payer.name;
-    let address = data.purchase_units[0].shipping.address;
-    this.form.patchValue({
-      name: name.given_name,
-      lastName: name.surname,
-      address: address.address_line_1,
-      paymentMethod: 'PayPal',
-      pickupMethod: 'Paqueteria tradicional'
-    })
+  stripeSubmit(){
+    const name = this.stripeTest.get('name').value;
+    this.stripeTest.get('products').setValue(JSON.stringify(this.items));
+    this.stripeService.createToken(this.card, {name}).subscribe((result:any)=>{
+      if(result){
+        this.stripeTest.get('stripeToken').setValue(result.token.id);
+        console.log(this.stripeTest.value);
+        let formData = new FormData();
+        formData = this.apiService.toFormData(this.stripeTest.value);
+        this.apiService.post('products/order', this.stripeTest.value).subscribe((resp:any)=>{
+          console.log(resp);
+        },(err)=>{
+          this.stripeErrorHanlder(err);
+        });
+      }else if(result.error){
+        console.log("Hubo un error", result.error.message);
+      }
+    });
+  }
+
+  stripeErrorHanlder(error: string){
+    console.error("Hubo un error: ", error);
   }
 
 }

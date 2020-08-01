@@ -9,7 +9,7 @@ import { MaterialModule } from '../material/material.module';
 import { GameComponent } from './components/game/game.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgPipesModule } from 'ngx-pipes';
-
+import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
 
 @NgModule({
   declarations: [MainComponent, JuegosComponent, GameComponent],
@@ -19,7 +19,10 @@ import { NgPipesModule } from 'ngx-pipes';
     RouterModule,
     MaterialModule,
     HttpClientModule,
-    NgPipesModule
+    NgPipesModule,
+    LazyLoadImageModule.forRoot({
+      preset: intersectionObserverPreset // <-- tell LazyLoadImage that you want to use IntersectionObserver
+    })
   ],
   entryComponents: [
     GameComponent

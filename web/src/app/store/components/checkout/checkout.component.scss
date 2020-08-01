@@ -53,3 +53,7 @@
         }
     }
 }
+
+::ng-deep .InputElement{
+    border-bottom: 1px solid black !important;
+}

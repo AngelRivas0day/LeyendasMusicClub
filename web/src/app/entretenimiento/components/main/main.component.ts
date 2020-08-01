@@ -9,7 +9,12 @@ export class MainComponent implements OnInit {
 
   constructor() { }
 
+  isLoaded: boolean = false;
+
   ngOnInit(): void {
+    setTimeout(()=>{
+      this.isLoaded = true;
+    },4500);
   }
 
 }
