@@ -24,8 +24,9 @@ export class EditEventComponent implements OnInit {
     public formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      image: new FormControl('', [Validators.required]),
-      date: new FormControl('', [Validators.required]),
+      image: new FormControl(''),
+      date: new FormControl(''),
+      description: new FormControl('')
     });
   }
 

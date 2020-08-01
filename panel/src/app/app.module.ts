@@ -4,16 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
-
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-
 import { AppComponent } from './app.component';
-
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
-
 import { UserIdleModule } from 'angular-user-idle';
-
+import { HashLocationStrategy, LocationStrategy  } from '@angular/common';
 
 @NgModule({
   imports: [
@@ -30,7 +26,9 @@ import { UserIdleModule } from 'angular-user-idle';
     AppComponent,
     AdminLayoutComponent,
   ],
-  providers: [],
+  providers: [
+    {provide : LocationStrategy , useClass: HashLocationStrategy}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -23,7 +23,8 @@ export class CreateEventComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       image: new FormControl('', [Validators.required]),
-      date: new FormControl('', [Validators.required])
+      date: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required])
     })
    }
 

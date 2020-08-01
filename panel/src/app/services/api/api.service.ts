@@ -159,7 +159,10 @@ export class ApiService {
     var formData = new FormData();
     // formData = this.toFormData(data);
     formData.append('date', data.date);
-    formData.append('image', data.image, data.image.name);
+    formData.append('description', data.description);
+    if(data.image != undefined){
+      formData.append('image', data.image, data.image.name);
+    }
     return this.http.put<any>(`${this.base_url}/${endpoint}/${id}`, formData, this.options ).pipe(
       retry(2),
       this.catchRequestError()
