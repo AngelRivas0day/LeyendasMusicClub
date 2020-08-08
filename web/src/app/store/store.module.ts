@@ -17,9 +17,10 @@ import { ProductSnackBarComponent } from './components/product-snack-bar/product
 import { NgxStripeModule } from 'ngx-stripe';
 import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
 import { environment } from 'src/environments/environment';
+import { NotifierModule } from "angular-notifier";
 
 @NgModule({
-  declarations: [StoreComponent, ProductComponent, CartComponent, CheckoutComponent, InfoComponent, ProductSnackBarComponent],
+  declarations: [StoreComponent, ProductComponent, CartComponent, CheckoutComponent, InfoComponent, ProductSnackBarComponent ],
   imports: [
     CommonModule,
     StoreRoutingModule,
@@ -29,9 +30,52 @@ import { environment } from 'src/environments/environment';
     ReactiveFormsModule,
     CarouselModule,
     NgPipesModule,
-    NgxStripeModule.forRoot(environment.piblicKeyTest),
+    NgxStripeModule.forRoot(environment.publicKeyLive),
     LazyLoadImageModule.forRoot({
       preset: intersectionObserverPreset // <-- tell LazyLoadImage that you want to use IntersectionObserver
+    }),
+    NotifierModule.withConfig({
+      position: {
+ 
+        horizontal: {
+       
+          /**
+           * Defines the horizontal position on the screen
+           * @type {'left' | 'middle' | 'right'}
+           */
+          position: 'left',
+       
+          /**
+           * Defines the horizontal distance to the screen edge (in px)
+           * @type {number} 
+           */
+          distance: 12
+       
+        },
+       
+        vertical: {
+       
+          /**
+           * Defines the vertical position on the screen
+           * @type {'top' | 'bottom'}
+           */
+          position: 'top',
+       
+          /**
+           * Defines the vertical distance to the screen edge (in px)
+           * @type {number} 
+           */
+          distance: 12,
+       
+          /**
+           * Defines the vertical gap, existing between multiple notifications (in px)
+           * @type {number} 
+           */
+          gap: 10
+       
+        }
+       
+      }
     })
   ],
   entryComponents: [

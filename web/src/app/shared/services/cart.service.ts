@@ -10,7 +10,6 @@ export class CartService {
   private cart = new BehaviorSubject<any[]>([]);
   subtotal$ = new BehaviorSubject<any>([]);
   private price: number = 0;
-  isInCart: boolean = false;
 
   cart$ = this.cart.asObservable();
 
@@ -37,6 +36,8 @@ export class CartService {
 
   clearCart(){
     this.products = [];
+    this.price = 0;
+    this.subtotal$.next(this.price);
     this.cart.next(this.products);
   }
 

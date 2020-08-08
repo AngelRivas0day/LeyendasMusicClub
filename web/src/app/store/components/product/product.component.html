@@ -83,7 +83,7 @@
                         <p class="productInfo__desc font-roboto">
                             {{ product.description }}
                         </p>
-                        <button (click)="addProd(product, quantity, currentColor, currentSize.name)" mat-stroked-button class="productInfo__order-button font-roboto">Agregar al carrito</button>
+                        <button (click)="addProd(product, quantity, currentColor, currentSize?.name)" mat-stroked-button class="productInfo__order-button font-roboto">Agregar al carrito</button>
                     </div>
                 </div>
             </div>
@@ -106,3 +106,4 @@
         </div>
     </div>
 </div>
+<notifier-container></notifier-container>

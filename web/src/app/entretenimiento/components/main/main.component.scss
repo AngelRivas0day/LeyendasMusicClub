@@ -19,14 +19,14 @@
         transition: all .3s;
         cursor: pointer;
         &.juegos{
-            background-image: url('src/assets/images/backgrounds/rumman-amin-yNP1lz924-4-unsplash-min.jpg');
+            // background-image: url('src/assets/images/backgrounds/rumman-amin-yNP1lz924-4-unsplash-min.jpg');
             filter: grayscale(100%);
             &:hover{
                 filter: grayscale(20%);
             }
         }
         &.maquinas{
-            background-image: url('src/assets/images/backgrounds/wls_mlbn-dkXn0RbgdU4-unsplash-min.jpg');
+            // background-image: url('src/assets/images/backgrounds/wls_mlbn-dkXn0RbgdU4-unsplash-min.jpg');
             filter: grayscale(100%);
             &:hover{
                 filter: grayscale(20%);

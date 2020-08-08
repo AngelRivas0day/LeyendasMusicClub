@@ -4,6 +4,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
 import { ApiService } from 'src/app/shared/services/api.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ProductSnackBarComponent } from '../product-snack-bar/product-snack-bar.component';
+import { NotifierService } from "angular-notifier";
 
 @Component({
   selector: 'app-product',
@@ -79,16 +80,18 @@ export class ProductComponent implements OnInit {
   currentSize: any;
 
   lastProds:any[] = [];
+  private readonly notifier: NotifierService;
 
   constructor(
     private route: ActivatedRoute,
     private cartService: CartService,
     private router: Router,
     private apiService: ApiService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private notifierService: NotifierService
   ) { 
-
-  }
+    this.notifier = notifierService;
+  }0
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
@@ -99,7 +102,7 @@ export class ProductComponent implements OnInit {
 
   openSnackBar() {
     this.snackBar.openFromComponent(ProductSnackBarComponent, {
-      duration: 10 * 1000,
+      duration: 4 * 1000,
     });
   }
 
@@ -150,8 +153,9 @@ export class ProductComponent implements OnInit {
         newProduct['price'] = product['price'];
       }
       this.cartService.addCart(newProduct, quantity);
+      this.notifier.notify("success", "Producto agregado al carrito!");
     }else{
-      alert('Formulario no lleno');
+      this.notifier.notify("warning", "Completa el formulario para agregar al carrito");
     }
   }
 

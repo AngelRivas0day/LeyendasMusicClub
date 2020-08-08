@@ -9,11 +9,18 @@ import {MatDialog} from '@angular/material/dialog';
 import { InfoComponent } from '../info/info.component';
 import states from '../../../../assets/states.json';
 import { StripeService, Elements, Element as StripeElement, ElementsOptions } from 'ngx-stripe';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  styleUrls: ['./checkout.component.scss'],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: { displayDefaultIndicatorType: false }
+    }
+  ]
 })
 
 export class CheckoutComponent implements OnInit {
@@ -38,12 +45,12 @@ export class CheckoutComponent implements OnInit {
     },
     {
       id: 2,
-      name: 'Transferencia bancaria'
-    },
-    {
-      id: 3,
-      name: 'Pago en OXXO'
+      name: 'Pago con tarjeta'
     }
+    // {
+    //   id: 3,
+    //   name: 'Pago en OXXO'
+    // }
   ];
   deliverMethods: any[] = [
     {
@@ -60,6 +67,7 @@ export class CheckoutComponent implements OnInit {
   states: any[];
   currentState: any[];
   currentCities: any[];
+  isLinear = true;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -82,7 +90,10 @@ export class CheckoutComponent implements OnInit {
       pickupMethod: new FormControl('', [Validators.required]),
       products: new FormControl('', [Validators.required]),
       subtotal: new FormControl('', [Validators.required]),
-      total: new FormControl('', [Validators.required])
+      total: new FormControl('', [Validators.required]),
+
+      uuid: new FormControl('123', [Validators.required]),
+      paymentState: new FormControl('pendiente', [Validators.required])
     });
     this.states = Object.keys(states);
     this.cartService.subtotal$.subscribe((value:any)=>{
@@ -106,46 +117,27 @@ export class CheckoutComponent implements OnInit {
     });
     this.form.get('total').setValue(this.total);
     this.form.get('subtotal').setValue(this.subtotal);
-    // this.onPaypalInit();
-
-
 
     this.stripeTest = this.formBuilder.group({
-      name: new FormControl ('', [Validators.required]),
       products: new FormControl('', [Validators.required]),
-      stripeToken: new FormControl('')
-    });
-    this.stripeService.elements(this.elementOptions).subscribe((elements)=>{
-      this.elements = elements;
-      if(!this.card){
-        this.card = this.elements.create('card', {
-          style: {
-            base: {
-              iconColor: '#333333',
-              color: '#dadada',
-              lineHeight: '40px',
-              fontWeight: 400,
-              fontSize: '30px'
-            }
-          }
-        });
-        this.card.mount('#card-element');
-      }
+      stripeToken: new FormControl(''),
+      total: new FormControl('', [Validators.required])
     });
   }
 
-  onSubmit(){
-    console.log(this.form.value);
-    this.apiService.post('orders/create', this.form.value).subscribe((data:any)=>{
-      console.log(data);
-    },err=>{
-      console.log(err);
-    },()=>{
-      this.cartService.clearCart();
-      const dialogRef = this.dialog.open(InfoComponent, {
-        width: '450px'
-      });
-    });
+  onSubmit(stepper){
+    this.stripeTest.get('products').setValue(JSON.stringify(this.items));
+
+    if(this.form.value.paymentMethod == "Pago con tarjeta"){
+      stepper.next();
+      this.mountCard();
+    }else{
+      stepper.next();
+    }
+    // set unique id
+    let key = this.form.value.name + '_comp_';
+    this.form.get('uuid').setValue(this.randstr(key.toLowerCase()));
+    this.stripeTest.get('total').setValue(this.total);
   }
 
   changeHandler(e){
@@ -163,17 +155,17 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  stripeSubmit(){
-    const name = this.stripeTest.get('name').value;
-    this.stripeTest.get('products').setValue(JSON.stringify(this.items));
+  stripeSubmit(stepper){
+    const name = this.form.get('name').value; // getting the name of the customer
     this.stripeService.createToken(this.card, {name}).subscribe((result:any)=>{
       if(result){
         this.stripeTest.get('stripeToken').setValue(result.token.id);
-        console.log(this.stripeTest.value);
         let formData = new FormData();
         formData = this.apiService.toFormData(this.stripeTest.value);
         this.apiService.post('products/order', this.stripeTest.value).subscribe((resp:any)=>{
-          console.log(resp);
+          stepper.next();
+          this.form.get('paymentState').setValue('pagado');
+          this.saveOrder();
         },(err)=>{
           this.stripeErrorHanlder(err);
         });
@@ -187,4 +179,44 @@ export class CheckoutComponent implements OnInit {
     console.error("Hubo un error: ", error);
   }
 
+  mountCard(){
+    this.stripeService.elements(this.elementOptions).subscribe((elements)=>{
+      this.elements = elements;
+      if(!this.card){
+        this.card = this.elements.create('card', {
+          style: {
+            base: {
+              iconColor: '#333333',
+              color: '#333333',
+              lineHeight: '40px',
+              fontWeight: 200,
+              fontSize: '24px'
+            }
+          }
+        });
+        this.card.mount('#card-element');
+      }
+    });
+  }
+
+  saveOrder(){
+    this.apiService.post('orders/create', this.form.value).subscribe((data:any)=>{
+      console.log(data);
+    },err=>{
+      console.log(err);
+    });
+  }
+
+  onNext(stepper){
+    stepper.next();
+    this.saveOrder();
+  }
+
+  randstr(prefix){
+    return Math.random().toString(36).replace('0.',prefix || '');
+  }
+
+  clearCart(){
+    this.cartService.clearCart();
+  }
 }
