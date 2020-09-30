@@ -1,70 +1,93 @@
-<form [formGroup]="form" (ngSubmit)="create()" class="edit-form">
-    <h1 mat-dialog-title>Datos del producto a crear</h1>
-    <div id="product" mat-dialog-content>
-        <div class="row form-wrapper">
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <input placeholder="Nombre del producto" matInput formControlName="name">
-                </mat-form-field>
-            </div>
-            <!-- <div class="col-sm-12 col-md-6 form-file-wrapper">
-                <div class='form-field form-file w-100'>
-                    <mat-label>Imagen principal</mat-label><br>
-                    <input (change)="handleChange($event)" formControlName="image" type="file">
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-10 offset-md-1 col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Nuevo producto</h5>
                 </div>
-            </div> -->
-            <div class="col-xs-12 col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <mat-label>Colores</mat-label>
-                    <mat-select formControlName="colors" multiple>
-                      <mat-option #option *ngFor="let color of colors" (click)="onColorSelect($event, option.selected)"  [value]="color">{{color.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field>                  
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class='w-100'>
-                    <mat-label>Existencia</mat-label>
-                    <mat-select formControlName="existence" placeholder="Selecciona uno">
-                        <mat-option value="1">Existente</mat-option>
-                        <mat-option value="0">No existente</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <span matPrefix>$&nbsp;</span>
-                    <input matInput formControlName="price" placeholder="Precio de tallas normales" type="number">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <span matPrefix>$&nbsp;</span>
-                    <input matInput formControlName="price_extra" placeholder="Precio de tallas grandes" type="number">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <mat-label>Categoria</mat-label>
-                    <mat-select formControlName="category_id">
-                      <mat-option #option *ngFor="let category of categories" [value]="category.id">{{category.name | uppercase}}</mat-option>
-                    </mat-select>
-                </mat-form-field>   
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <textarea placeholder="Descripción" matInput formControlName="description"></textarea>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-12 form-file-wrapper mb-3" *ngFor="let arrayItem of imgArray;let i = index">
-                <div class='form-field form-file w-100'>
-                    <mat-label>Agregar 3 imagenes para el color {{arrayItem.name}}</mat-label><br>
-                    <input (change)="handleChange($event)" [formControl]="imagesArray[i]" type="file" multiple>
+                <div class="card-body">
+                    <div *ngIf="isLoading" class="loader w-100 pb-2">
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </div>
+                    <div *ngIf="isCreated" class="successMessage w-100 pb-2">
+                        <p class="text-center text-success mb-0">Producto creado. Redireccionando...</p>
+                    </div>
+                    <form [formGroup]="form" class="edit-form">
+                        <div id="product" mat-dialog-content>
+                            <div class="row form-wrapper">
+                                <div class="col-12">
+                                    <mat-form-field class="w-100">
+                                        <input placeholder="Nombre del producto" matInput formControlName="name">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-6">
+                                    <mat-form-field class="w-100">
+                                        <mat-label>Colores</mat-label>
+                                        <mat-select formControlName="colors" multiple>
+                                            <mat-option
+                                                #option
+                                                *ngFor="let color of colors" 
+                                                (click)="onColorSelect(option)"
+                                                [value]="color"
+                                            >
+                                                {{color.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>                  
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <mat-form-field class='w-100'>
+                                        <mat-label>Existencia</mat-label>
+                                        <mat-select formControlName="existence" placeholder="Selecciona uno">
+                                            <mat-option value="1">Existente</mat-option>
+                                            <mat-option value="0">No existente</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <mat-form-field class="w-100">
+                                        <span matPrefix>$&nbsp;</span>
+                                        <input matInput formControlName="price" placeholder="Precio de tallas normales" type="number">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <mat-form-field class="w-100">
+                                        <span matPrefix>$&nbsp;</span>
+                                        <input matInput formControlName="price_extra" placeholder="Precio de tallas grandes" type="number">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <mat-form-field class="w-100">
+                                        <mat-label>Categoria</mat-label>
+                                        <mat-select formControlName="category_id">
+                                          <mat-option #option *ngFor="let category of categories" [value]="category.id">{{category.name | uppercase}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>   
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <mat-form-field class="w-100">
+                                        <textarea placeholder="Descripción" matInput formControlName="description"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 form-file-wrapper mb-3" *ngFor="let arrayItem of imgArray;let i = index">
+                            <div class='form-field form-file w-100'>
+                                <mat-label>Agregar 3 imagenes para el color {{arrayItem.name}}</mat-label><br>
+                                <input (change)="handleChange($event)" [formControl]="imagesArray[i]" type="file" multiple>
+                            </div>
+                        </div>
+                        <div class="col-12 text-right">
+                            <button mat-button (click)="goBack()">Cancelar</button>
+                            &nbsp;
+                            <button mat-raised-button (click)="create()" [disabled]="!form.valid">Guardar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <mat-dialog-actions align="end">
-        <button mat-button mat-dialog-close>Cancelar</button>
-        <button mat-raised-button type="submit" [disabled]="!form.valid">Guardar</button>
-    </mat-dialog-actions>
-</form>
+</div>

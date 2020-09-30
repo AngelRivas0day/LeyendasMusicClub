@@ -32,6 +32,8 @@
                   <th>Confirmado</th>
                   <th>Fecha</th>
                   <th>Entregado</th>
+                  <th>Estado del pago</th>
+                  <th>ID del pago</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -49,6 +51,10 @@
                   <td>{{ item.checked ? 'Si' : 'No' }}</td>
                   <td>{{ item.created_at | date: 'dd-MM-yyyy' }}</td>
                   <td>{{ item.delivered ? 'Si' : 'No' }}</td>
+                  <td>
+                    <div [ngClass]="{'pagado': item.paymentState.toLowerCase() == 'pagado', 'pendiente': item.paymentState.toLowerCase() != 'pagado'}">{{ item.paymentState }}</div>
+                  </td>
+                  <td>{{ item.uuid }}</td>
                   <td colspan="2">
                     <ng-container *ngIf="!item.delivered">
                       <i

@@ -14,6 +14,7 @@ export class UpdateImageComponent implements OnInit {
   values:any;
   component: string = 'products';
   colors: any[];
+  selectColors: any[];
   form: FormGroup;
   imgArray: any[] = [];
   itemsId:number = 0;
@@ -69,9 +70,15 @@ export class UpdateImageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.apiService.getOne('products/list', this.data.id).subscribe((resp:any)=>{
-      console.log("Products: ", resp.colors);
-      this.colors = resp.colors;
+    this.apiService.getAll('colors/list').subscribe((data:any)=>{
+      this.selectColors = data
+    },err=>{
+      console.log(err)
+    },()=>{
+      this.apiService.getOne('products/list', this.data.id).subscribe((resp:any)=>{
+        console.log("Products: ", resp.colors);
+        this.colors = resp.colors
+      });
     });
   }
 

@@ -225,6 +225,7 @@ export class ApiService {
   }
 
   postDataTables(endpoint: string, DataTableParameters: any){
+    console.log("DataTableParameters: ",DataTableParameters);
     return this.http.post(`${this.base_url}/${endpoint}`, DataTableParameters).pipe(
       retry(3),
       this.catchRequestError()

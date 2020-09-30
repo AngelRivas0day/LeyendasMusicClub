@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ApiService } from 'app/services/services';
 import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-product',
@@ -13,24 +13,23 @@ export class CreateProductComponent implements OnInit {
   form: FormGroup;
   selectedFiles: File[] = [];
   values:any;
-  // colors: any[];
   categories: any[];
   collections: any[];
   colors: any[] = [];
   imgArray: any[] = [];
   itemsId:number = 0;
   noColors: number = 0;
+  isLoading: Boolean = false;
+  isCreated: Boolean = false;
 
   constructor(
-    public dialogRef: MatDialogRef<CreateProductComponent>,
     private apiService: ApiService,
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router
   ) {
     this.form = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       description: new FormControl('',[Validators.required]),
-      // image: new FormControl(null),
       images: this.formBuilder.array([]),
       colors: new FormControl('', [Validators.required]),
       category_id: new FormControl('',[Validators.required]),
@@ -71,15 +70,12 @@ export class CreateProductComponent implements OnInit {
   }
 
   create(){
-    console.log(this.form.value);
+    this.toggleLoading()
     const token = localStorage.getItem('access_token');
-    console.log(this.form.value);
     let formData = new FormData();
     const files: Array<File> = this.selectedFiles;
-    console.log("Files", files);
     formData = this.apiService.toFormData(this.form.value);
     Array.from(files).forEach((file: File)=>{
-      console.log("File", file);
       formData.append("images", file, file.name);
     });
     let colors = this.form.value.colors;
@@ -87,24 +83,25 @@ export class CreateProductComponent implements OnInit {
     console.log(this.form.value);
     this.apiService.post('products/create', formData, token).subscribe((data:any)=>{
       console.log(data);
+      this.isCreated = true
     },(error)=>{
-      console.log("Hubo un error al crear el producto");
       console.log(error);
     },()=>{
-      this.dialogRef.close();
+      this.toggleLoading()
+      setTimeout(()=>this.goBack(), 1000)
     });
   }
 
   handleChange(event){
     Array.from(<Array<File>>event.target.files).forEach((file: File, index)=>{
-      console.log("File:",file);
       this.selectedFiles = [...this.selectedFiles, <File>file];
     });
     this.form.value.images = this.selectedFiles;
   }
 
-  onColorSelect(event, value){
-    var colorName = event.target.innerHTML;
+  onColorSelect(option){
+    const colorName = option.value.name
+    const value = option._selected
     if(value){
       let item = {
         id: this.itemsId,
@@ -120,7 +117,11 @@ export class CreateProductComponent implements OnInit {
     }
   }
 
-  onNoClick(){
-    this.dialogRef.close();
+  goBack(){
+    this.router.navigateByUrl('productos')
+  }
+
+  toggleLoading(){
+    this.isLoading = !this.isLoading
   }
 }

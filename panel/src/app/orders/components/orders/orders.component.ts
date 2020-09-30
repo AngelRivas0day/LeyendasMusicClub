@@ -27,12 +27,12 @@ export class OrdersComponent implements OnInit {
     const that = this;
     this.dtOptions = {
     pagingType: 'full_numbers',
-    pageLength: 5,
+    pageLength: 10,
     serverSide: true,
     processing: true,
-    paging: false,
-    orderCellsTop: false,
-    ordering: false,
+    paging: true,
+    orderCellsTop: true,
+    ordering: true,
     ajax: (DataTablesParemeters: any, callback) => {
       that.apiService.postDataTables(`${this.component}/dataTable`, DataTablesParemeters).
         subscribe((resp:any)=>{
@@ -53,6 +53,8 @@ export class OrdersComponent implements OnInit {
       {data:'checked'},
       {data:'created_at'},
       {data:'delivered'},
+      {data:'paymentState'},
+      {data:'uuid'},
       {data:'actions'}
     ]
     };

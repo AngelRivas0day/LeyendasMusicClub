@@ -11,6 +11,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatChipsModule,
     MatTableModule,
     MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressBarModule
   ]
 })
 export class MaterialModule { }

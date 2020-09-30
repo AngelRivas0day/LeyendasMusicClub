@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { CreateCategoryComponent } from './create-category/create-category.component';
 import { EditCategoryComponent } from './edit-category/edit-category.component';
 import { MaterialModule } from 'app/material/material.module';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { MaterialModule } from 'app/material/material.module';
     LoginComponent,
     CreateCategoryComponent,
     EditCategoryComponent,
+    DeleteDialogComponent,
   ],
   exports: [
     FooterComponent,
@@ -38,6 +40,7 @@ import { MaterialModule } from 'app/material/material.module';
   entryComponents: [
     CreateCategoryComponent,
     EditCategoryComponent,
+    DeleteDialogComponent
   ]
 })
 export class ComponentsModule { }

@@ -26,8 +26,6 @@ import * as  Cloudinary from 'cloudinary-core';
     CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'drs3muxpe'}),
   ],
   entryComponents: [
-    EditProductComponent,
-    CreateProductComponent,
     UpdateImageComponent
   ]
 })

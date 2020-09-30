@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'app/services/services';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-product',
@@ -14,12 +14,14 @@ export class EditProductComponent implements OnInit {
   product: any;
   colors: any[];
   categories: any[];
+  isLoading: Boolean = false;
+  isCreated: Boolean = false;
 
   constructor(
-    public dialogRef: MatDialogRef<EditProductComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
     private apiService: ApiService,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.editProdForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
@@ -34,14 +36,12 @@ export class EditProductComponent implements OnInit {
   ngOnInit() {
     this.apiService.getAll('colors/list').subscribe(resp=>this.colors = resp);
     this.apiService.getAll('products/categories/list').subscribe(resp=>this.categories = resp);
-    this.getProduct(this.data.id);
+    this.getProduct(this.route.snapshot.params.id);
   }
 
   getProduct(id) {
-    if (this.data.id) {
+    if (this.route.snapshot.params.id) {
       this.apiService.getOne('products/list', id).subscribe((data: any) => {
-        console.log("data: ");
-        console.log(data);
         this.product = data;
         this.editProdForm.patchValue(data);
         this.colors = this.product.colors;
@@ -58,11 +58,21 @@ export class EditProductComponent implements OnInit {
     this.apiService.put('products/update', id, this.editProdForm.value, token).subscribe((data) => {
       console.log("Si jalo el update");
       console.log(data);
+      this.isCreated = true
     },(error)=>{
       console.log("Hubo un error al guardar los cambios del producto con el id: "+id);
       console.log(error);
     },()=>{
-      this.dialogRef.close();
+      this.toggleLoading()
+      setTimeout(()=>this.goBack(), 1000)
     });
+  }
+
+  goBack(){
+    this.router.navigateByUrl('productos')
+  }
+
+  toggleLoading(){
+    this.isLoading = !this.isLoading
   }
 }

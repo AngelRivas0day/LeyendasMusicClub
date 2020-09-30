@@ -1,61 +1,122 @@
-<form enctype="multipart/form-data" [formGroup]="editProdForm" class="edit-form" (ngSubmit)="saveChanges(product.id)">
-    <h1 mat-dialog-title>Editar datos del producto</h1>
-    <div id="product" mat-dialog-content>
-        <div class="row no-padding no-margin form-wrapper">
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <mat-label>Producto</mat-label>
-                    <input placeholder="Ej: Playera The Beatles" matInput formControlName="name">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <mat-label>Precio tallas normales</mat-label>
-                    <span matPrefix>$&nbsp;</span>
-                    <input matInput formControlName="price" placeholder="Precio de tallas normales" type="number">
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <mat-label>Precio tallas grandes</mat-label>
-                    <span matPrefix>$&nbsp;</span>
-                    <input matInput formControlName="price_extra" placeholder="Precio de tallas grandes" type="number">
-                </mat-form-field>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-6 mb-2">
-                <mat-label>Colores disponibles para el producto: <br> <small>(se pueden editar desde la seleccion de fotos)</small></mat-label>
-                <mat-chip-list>
-                    <ng-container *ngFor="let color of colors">
-                        <mat-chip>{{color.name}}</mat-chip>
-                    </ng-container>
-                </mat-chip-list>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class='w-100'>
-                    <mat-label>Existencia</mat-label>
-                    <mat-select formControlName="existence" placeholder="Selecciona uno">
-                        <mat-option value="1">Existente</mat-option>
-                        <mat-option value="0">No existente</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <mat-label>Categoria</mat-label>
-                    <mat-select formControlName="category_id">
-                      <mat-option #option *ngFor="let category of categories" [value]="category.id">{{category.name | uppercase}}</mat-option>
-                    </mat-select>
-                </mat-form-field>   
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <mat-form-field class="w-100">
-                    <textarea placeholder="Descripción" matInput formControlName="description"></textarea>
-                </mat-form-field>
+<div class="panel-header panel-header-sm"></div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-10 offset-md-1 col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="title">Editar producto</h5>
+                </div>
+                <div class="card-body">
+                    <div *ngIf="isLoading" class="loader w-100 pb-2">
+                        <mat-progress-bar
+                            mode="indeterminate"
+                        ></mat-progress-bar>
+                    </div>
+                    <div *ngIf="isCreated" class="successMessage w-100 pb-2">
+                        <p class="text-center text-success mb-0">
+                            Producto editado. Redireccionando...
+                        </p>
+                    </div>
+                    <form
+                        enctype="multipart/form-data"
+                        [formGroup]="editProdForm"
+                        class="edit-form"
+                        (ngSubmit)="saveChanges(product.id)"
+                    >
+                        <div class="row no-padding no-margin form-wrapper">
+                            <div class="col-sm-12 col-md-6">
+                                <mat-form-field class="w-100">
+                                    <mat-label>Producto</mat-label>
+                                    <input
+                                        placeholder="Ej: Playera The Beatles"
+                                        matInput
+                                        formControlName="name"
+                                    />
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <mat-form-field class="w-100">
+                                    <mat-label
+                                        >Precio tallas normales</mat-label
+                                    >
+                                    <span matPrefix>$&nbsp;</span>
+                                    <input
+                                        matInput
+                                        formControlName="price"
+                                        placeholder="Precio de tallas normales"
+                                        type="number"
+                                    />
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <mat-form-field class="w-100">
+                                    <mat-label>Precio tallas grandes</mat-label>
+                                    <span matPrefix>$&nbsp;</span>
+                                    <input
+                                        matInput
+                                        formControlName="price_extra"
+                                        placeholder="Precio de tallas grandes"
+                                        type="number"
+                                    />
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 mb-2">
+                                <mat-label>Colores disponibles para el producto:<br/>
+                                    <small>(se pueden editar desde la seleccion de fotos)</small>
+                                </mat-label>
+                                <mat-chip-list>
+                                    <ng-container *ngFor="let color of colors">
+                                        <mat-chip>{{ color.name }}</mat-chip>
+                                    </ng-container>
+                                </mat-chip-list>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <mat-form-field class="w-100">
+                                    <mat-label>Existencia</mat-label>
+                                    <mat-select formControlName="existence" placeholder="Selecciona uno">
+                                        <mat-option value="1">Existente</mat-option>
+                                        <mat-option value="0">No existente</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <mat-form-field class="w-100">
+                                    <mat-label>Categoria</mat-label>
+                                    <mat-select formControlName="category_id">
+                                        <mat-option
+                                            #option
+                                            *ngFor="let category of categories"
+                                            [value]="category.id"
+                                        >{{category.name | uppercase}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <mat-form-field class="w-100">
+                                    <textarea
+                                        placeholder="Descripción"
+                                        matInput
+                                        formControlName="description"
+                                    ></textarea>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 text-right">
+                                <button mat-button (click)="goBack()">
+                                    Cancelar
+                                </button>
+                                &nbsp;
+                                <button
+                                    mat-raised-button
+                                    type="submit"
+                                    [disabled]="!editProdForm.valid"
+                                >
+                                    Guardar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <mat-dialog-actions align="end">
-        <button mat-button mat-dialog-close>Salir</button>
-        <button type="submit" mat-raised-button [disabled]="!editProdForm.valid" color="primary">Guardar</button>
-    </mat-dialog-actions>
-</form>
+</div>

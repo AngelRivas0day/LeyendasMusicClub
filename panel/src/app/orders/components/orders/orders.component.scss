@@ -2,4 +2,24 @@
 
 .dataTable{
     @include table;
+    div{
+        &.pagado{
+            text-transform: uppercase;
+            width: auto;
+            text-align: center;
+            background-color: green;
+            color: white;
+            border-radius: 8px;
+            padding: 3px 8px;
+        }
+        &.pendiente{
+            text-transform: uppercase;
+            width: auto;
+            text-align: center;
+            background-color: orange;
+            color: white;
+            border-radius: 8px;
+            padding: 3px 8px;
+        }
+    }
 }
