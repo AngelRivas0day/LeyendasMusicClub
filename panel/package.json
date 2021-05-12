@@ -35,7 +35,7 @@
     "acorn": "^6.4.1",
     "angular-datatables": "^9.0.1",
     "angular-user-idle": "^2.2.2",
-    "chart.js": "2.7.2",
+    "chart.js": "2.9.4",
     "chartist": "0.11.0",
     "classlist.js": "1.1.20150312",
     "cloudinary-core": "^2.8.2",
